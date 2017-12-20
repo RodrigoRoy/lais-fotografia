@@ -1,0 +1,36 @@
+{
+  "name": "lais-fotografia",
+  "version": "0.1.0",
+  "description": "Herramienta de catalogación fotográfica para la investigación social",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RodrigoRoy/lais-fotografia.git"
+  },
+  "keywords": [
+    "fotografía",
+    "catalogación",
+    "archivo",
+    "imagen",
+    "documentación"
+  ],
+  "author": "Rodrigo Colín",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RodrigoRoy/lais-fotografia/issues"
+  },
+  "homepage": "https://github.com/RodrigoRoy/lais-fotografia#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "method-override": "^2.3.10",
+    "mongoose": "^4.13.6",
+    "morgan": "^1.9.0"
+  }
+}

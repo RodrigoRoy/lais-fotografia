@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<!-- Establece la base ruta de la aplicación(elimina # como base predeterminada) -->
+		<base href="/">
+
+		<!-- Angular Material -->
+		<link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
+		<!-- Roboto Typography -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+		<link rel="stylesheet" href="css/index.css">
+	</head>
+
+	<body ng-app="laisFotoApp" ng-controller="IndexController">
+
+		<md-content class="md-padding">
+			<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+				<md-nav-item md-nav-href="/" name="inicio">
+					Inicio
+				</md-nav-item>
+				<md-nav-item md-nav-href="/conjunto/nuevo" name="conjuntos">
+					Conjunto
+				</md-nav-item>
+			</md-nav-bar>
+		</md-content>
+
+		<div ng-view></div>
+
+		<footer layout="row" layout-wrap layout-align="center" class="footer">
+			<div flex="80">
+				<p>
+					Place sticky footer content here.
+				</p>
+			</div>
+		</footer>
+
+		<!-- Angular -->
+		<script src="libs/angular/angular.min.js"></script>
+		<script src="libs/angular-aria/angular-aria.min.js"></script>
+		<script src="libs/angular-animate/angular-animate.min.js"></script>
+		<script src="libs/angular-messages/angular-messages.min.js"></script>
+		<script src="libs/angular-route/angular-route.min.js"></script>
+		<script src="libs/angular-material/angular-material.min.js"></script>
+
+		<script src="angular/controllers/indexCtrl.js"></script>
+		<script src="angular/controllers/inicioCtrl.js"></script>
+		<script src="angular/controllers/conjuntoDocumentalFormCtrl.js"></script>
+		<script src="angular/appRoutes.js"></script>
+		<script src="angular/app.js"></script>
+	</body>
+</html>

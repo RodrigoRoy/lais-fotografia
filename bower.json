@@ -1,0 +1,29 @@
+{
+  "name": "lais-fotografia",
+  "authors": [
+    "Rodrigo Colín <rodrigo.cln@ciencias.unam.mx>"
+  ],
+  "description": "Diseño front end para el proyecto de catalogación de fotografias",
+  "main": "",
+  "keywords": [
+    "photograph",
+    "research",
+    "social",
+    "science"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/RodrigoRoy/lais-fotografia",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.7",
+    "angular-route": "^1.6.7",
+    "angular-material": "^1.1.5"
+  }
+}
