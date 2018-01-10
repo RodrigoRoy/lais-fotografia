@@ -18,19 +18,18 @@ var router = express.Router(); // para modularizar las rutas
 var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de la colección "ConjuntoDocumental"
 var verifyToken = require('./token'); // Función de verificación de token
 
-// Función a realizar siempre que se utilize esta API
-router.use(function(req, res, next){
-    // console.log('Usando el API de Publicaciones');
-    // Rutas que son excluidas de verificación de token:
-    if(req.method === 'GET')
-        return next();
-    // Antes de usar el API de usuario se verifica que haya token y sea válido
-    verifyToken(req, res, next);
-});
+// // Función a realizar siempre que se utilize esta API
+// router.use(function(req, res, next){
+//     // Rutas que son excluidas de verificación de token:
+//     if(req.method === 'GET')
+//         return next();
+//     // Antes de usar el API de usuario se verifica que haya token y sea válido
+//     verifyToken(req, res, next);
+// });
 
 // En peticiones a la raiz del API
 router.route('/')
-	// Obtener todos los publicacions
+	// Obtener todos los conjuntos documentales
 	.get(function(req, res){
 
         ConjuntoDocumental.find() // encontrar todos
@@ -43,20 +42,21 @@ router.route('/')
 
     })
 
-    // Agregar una nueva publicación
+    // Agregar un nuevo conjunto documental
     .post(function(req, res){
         var conjunto = new ConjuntoDocumental();
         
-        // You can check specific properties before assignment
+        // You can check specific properties before update
+        console.log('req.body: ' + req.body);
         if(req.body)
-            conjunto = req.body;
+            conjunto = new ConjuntoDocumental(req.body);
 
         conjunto.save(function(err){
             if(err)
-                res.send(err);
+                return res.send(err);
             res.json({
                 success: true, 
-                message: "Información del conjunto documental guardado", 
+                message: 'Se ha creado correctamente el conjunto documental "' + conjunto.identificacion.titulo + '"', 
                 data: conjunto
             });
         })
@@ -84,7 +84,7 @@ router.route('/:conjunto_id')
             conjunto.save(function(err){
                 if(err)
                     res.send(err);
-                res.json({success: true, message: "Información del conjunto documental actualizado"});
+                res.json({success: true, message: 'Se ha modificado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
             });
         });
     })
@@ -96,7 +96,7 @@ router.route('/:conjunto_id')
         }, function(err, conjunto){
             if(err)
                 res.send(err);
-            res.json({success: true, message: "Conjunto documental borrado de la base de datos"});
+            res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
         });
     })
 

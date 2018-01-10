@@ -18,7 +18,7 @@ var morgan         = require('morgan'); // usado para ver peticiones (requests)
 var config = require('./config');
 
 // base de datos
-var port = process.env.PORT || config.port || 8080; // establecer puerto
+var port = config.port || process.env.PORT || 8080; // establecer puerto
 mongoose.Promise = global.Promise // Use native promise (avoid DeprecationWarning with mongoose default promise library)
 mongoose.connect(config.db); // conectar a base de datos mongoDB
 //mongoose.connect(config.db, {useMongoClient: true, promiseLibrary: global.Promise}); // conectar a base de datos mongoDB
@@ -45,6 +45,8 @@ var autentificacion = require('./app/api/authentication'); // API para autentifi
 app.use('/api/', autentificacion); // usar el API desde la ruta "/api/authenticate"
 var usuarios = require('./app/api/usuarios'); // API para Usuarios de la base de datos
 app.use('/api/usuarios', usuarios); // usar el API desde la ruta "/api/usuarios"
+var conjuntosDocumentales = require('./app/api/conjuntoDocumental');
+app.use('/api/conjuntosDocumentales', conjuntosDocumentales);
 
 // log de todas las peticiones (request) en consola
 app.use(morgan('dev'));

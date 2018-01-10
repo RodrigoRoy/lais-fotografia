@@ -9,19 +9,19 @@ var Schema = mongoose.Schema; // "Modelo" de la colección
 // Definición del esquema "Conjunto documental":
 var ConjuntoDocumentalSchema = new Schema({
 	identificacion: {
-		codigoReferencia: {type: String},
+		codigoReferencia: {type: String, required: true},
 		institucion: {type: String},
-		titulo: {type: String},
+		titulo: {type: String, required: true},
 		fecha: {
 			ingreso: {type: Date},
 			manufactura: {type: Date}
 		},
-		lugar: {type: String}, // Google Maps ID, INFERIDO
+		lugar: [{type: String}], // Google Maps ID, INFERIDO
 		productor: {type: String},
-		autores: {
-			fotografo: {type: String},
-			editor: {type: String}
-		},
+		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
+			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo']},
+			nombre: {type: String}
+		}],
 		nivelDescripcion: {type: String, enum: ['Fondo', 'Subfondo', 'Colección', 'Serie', 'Subserie', 'Unidad documental compuesta', 'Expediente', 'Grupo']},
 		cantidad: {type: Number, min: 0}, // INFERIDO
 		soporte: {type: String}, // INFERIDO

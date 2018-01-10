@@ -5,10 +5,17 @@ angular.module('laisFotoApp', [
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 
+	'ConjuntoDocumentalService',
+
 	'IndexCtrl',
 	'InicioCtrl',
 	'ConjuntoDocumentalFormCtrl'
 ])
+
+// configuración para AngularJS Material chips
+// .config(['$mdIconProvider', function($mdIconProvider{
+// 	$mdIconProvider.icon('md-close', 'img/ic_close_24ox.svg', 24);
+// })])
 
 // configuración de aplicación para integrar token en peticiones
 // .config(function($httpProvider){
