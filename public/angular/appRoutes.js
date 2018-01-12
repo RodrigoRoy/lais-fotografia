@@ -13,10 +13,10 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'ConjuntoDocumentalFormController'
 		})
 
-		// .when('/unidad/nuevo', {
-		// 	templateUrl: 'angular/views/unidadDocumentalForm.html',
-		// 	controller: 'UnidadDocumentalFormController'
-		// })
+		.when('/unidad/nuevo', {
+			templateUrl: 'angular/views/unidadDocumentalForm.html',
+			controller: 'UnidadDocumentalFormController'
+		})
 
 		// .when('/conjunto', {
 		// 	templateUrl: 'angular/views/conjuntoDocumental.html',

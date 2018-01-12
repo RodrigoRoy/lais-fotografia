@@ -6,10 +6,12 @@ angular.module('laisFotoApp', [
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 
 	'ConjuntoDocumentalService',
+	'UnidadDocumentalService',
 
 	'IndexCtrl',
 	'InicioCtrl',
-	'ConjuntoDocumentalFormCtrl'
+	'ConjuntoDocumentalFormCtrl',
+	'UnidadDocumentalFormCtrl'
 ])
 
 // configuración para AngularJS Material chips

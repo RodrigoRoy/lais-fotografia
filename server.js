@@ -45,8 +45,10 @@ var autentificacion = require('./app/api/authentication'); // API para autentifi
 app.use('/api/', autentificacion); // usar el API desde la ruta "/api/authenticate"
 var usuarios = require('./app/api/usuarios'); // API para Usuarios de la base de datos
 app.use('/api/usuarios', usuarios); // usar el API desde la ruta "/api/usuarios"
-var conjuntosDocumentales = require('./app/api/conjuntoDocumental');
-app.use('/api/conjuntosDocumentales', conjuntosDocumentales);
+var conjuntoDocumental = require('./app/api/conjuntoDocumental');
+app.use('/api/conjuntoDocumental', conjuntoDocumental);
+var unidadDocumental = require('./app/api/unidadDocumental');
+app.use('/api/unidadDocumental', unidadDocumental);
 
 // log de todas las peticiones (request) en consola
 app.use(morgan('dev'));

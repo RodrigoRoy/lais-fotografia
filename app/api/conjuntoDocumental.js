@@ -36,7 +36,7 @@ router.route('/')
         //.sort({fecha: 'desc'})
         .exec(function(err, conjuntos){
             if(err)
-                res.send(err);
+                return res.send(err);
             res.send(conjuntos);
         });
 
@@ -47,7 +47,6 @@ router.route('/')
         var conjunto = new ConjuntoDocumental();
         
         // You can check specific properties before update
-        console.log('req.body: ' + req.body);
         if(req.body)
             conjunto = new ConjuntoDocumental(req.body);
 
@@ -69,7 +68,7 @@ router.route('/:conjunto_id')
         ConjuntoDocumental.findById(req.params.conjunto_id)
         .exec(function(err, conjunto){
             if(err)
-                res.send(err);
+                return res.send(err);
             res.json(conjunto);
         })
     })
@@ -78,12 +77,12 @@ router.route('/:conjunto_id')
     .put(function(req, res){
         ConjuntoDocumental.findById(req.params.conjunto_id, function(err, conjunto){
             if(err)
-                res.send(err);
+                return res.send(err);
             
             // You can check specific properties before update
             conjunto.save(function(err){
                 if(err)
-                    res.send(err);
+                    return res.send(err);
                 res.json({success: true, message: 'Se ha modificado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
             });
         });
@@ -95,7 +94,7 @@ router.route('/:conjunto_id')
             _id: req.params.conjunto_id
         }, function(err, conjunto){
             if(err)
-                res.send(err);
+                return res.send(err);
             res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
         });
     })

@@ -9,7 +9,7 @@ var Schema = mongoose.Schema; // "Modelo" de la colección
 // Definición del esquema "Unidad documental":
 var UnidadDocumentalSchema = new Schema({
 	identificacion: {
-		codigoReferencia: {type: String},
+		codigoReferencia: {type: String, required: true, index: {unique: true}},
 		referenciaProcedencia: {type: String},
 		titulo: {
 			autor: {type: String},
@@ -17,16 +17,14 @@ var UnidadDocumentalSchema = new Schema({
 			otroObjeto: {type: String}
 		},
 		fecha: {type: Date},
-		autores: {
-			comitente: {type: String},
-			productor: {type: String},
-			fotografo: {type: String},
-			editor: {type: String}
-		},
+		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
+			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo']},
+			nombre: {type: String}
+		}],
 		conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'}
 	},
 	contenidoEstructura: {
-		estructuraFormal: {type: String, enum: ['Paisaje', 'Paisaje rural', 'Paisaje urbano', 'Paisaje industrial', 'Roster', 'Escena', 'Retrato', 'Monumento arqueológico', 'Arquitectura']},
+		estructuraFormal: {type: String}, // enum: ['Paisaje', 'Paisaje rural', 'Paisaje urbano', 'Paisaje industrial', 'Roster', 'Escena', 'Retrato', 'Monumento arqueológico', 'Arquitectura']
 		encuadre: {
 			orientacion: {type: String, enum: ['Horizontal', 'Vertical']},
 			plano: {type: String, enum: ['Gran plano general', 'Plano general', 'Plano entero', 'Plano americano', 'Plano medio', 'Primer plano', 'Detalle']},
@@ -43,12 +41,11 @@ var UnidadDocumentalSchema = new Schema({
 	caracteristicasFisicas: {
 		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen de cámara']},
 		soportePrimario: {
-			//materiales: {type: String},
 			procesoFotografico: {type: String},
 			dimension: {
 				x: {type: Number},
 				y: {type: Number},
-				unidad: {type: String, default: 'cm'} // NUEVO
+				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
 			},
 			inscripciones: {
 				ubicacion: {type: String},
@@ -58,9 +55,9 @@ var UnidadDocumentalSchema = new Schema({
 		soporteSecundario: {
 			materiales: {type: String},
 			dimension: {
-				x: {type: Number},
-				y: {type: Number},
-				unidad: {type: String, default: 'cm'} // NUEVO
+				ancho: {type: Number},
+				alto: {type: Number},
+				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
 			},
 			inscripciones: {
 				ubicacion: {type: String},
@@ -73,20 +70,18 @@ var UnidadDocumentalSchema = new Schema({
 		}
 	},
 	documentacionAsociada: {
-		otrosEjemplares: {
-			fotografiaMismoNegativo: {type: String},
-			fotografiaBase: {type: String},
-			reprografia: {type: String},
-			fotografiaMismaSecuencia: {type: String},
-			fotografiaConsecutiva: {type: String},
-			fotografiaConsecutivaOtraCamara: {type: String},
-			fotografiaEncuadreSimilar: {type: String},
-			grabadoRelacionado: {type: String}
-		}
+		fotografiaMismoNegativo: {type: String},
+		fotografiaBase: {type: String},
+		reprografia: {type: String},
+		fotografiaMismaSecuencia: {type: String},
+		fotografiaConsecutiva: {type: String},
+		fotografiaConsecutivaOtraCamara: {type: String},
+		fotografiaEncuadreSimilar: {type: String},
+		grabadoRelacionado: {type: String}
 	},
 	publicaciones: {
 		publicacion: {type: String},
-		exposiciones: {type: String}
+		exposicion: {type: String}
 	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO

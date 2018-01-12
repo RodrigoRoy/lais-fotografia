@@ -9,7 +9,7 @@ var Schema = mongoose.Schema; // "Modelo" de la colección
 // Definición del esquema "Conjunto documental":
 var ConjuntoDocumentalSchema = new Schema({
 	identificacion: {
-		codigoReferencia: {type: String, required: true},
+		codigoReferencia: {type: String, required: true, index: {unique: true}},
 		institucion: {type: String},
 		titulo: {type: String, required: true},
 		fecha: {
@@ -52,7 +52,7 @@ var ConjuntoDocumentalSchema = new Schema({
 	},
 	publicaciones: { // INFERIDO?
 		publicacion: {type: String},
-		exposiciones: {type: String}
+		exposicion: {type: String}
 	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO

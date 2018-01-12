@@ -42,11 +42,12 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     // Envia la información a la base de datos para crear un conjunto documental
     $scope.enviarConjuntoDocumental = function(){
     	cleanConjuntoDocumentalData(); // crear un conjunto documental válido
-    	console.log("Enviar ", $scope.conjuntoDocumental);
     	ConjuntoDocumental.create($scope.conjuntoDocumental).
     	then(function(res){
     		if(res.data.success)
-    			console.log(res.data.message, res.data.data._id);
+                console.log(res.data.message, res.data.data._id);
+            else
+    		  console.error('Error al agregar conjunto documental', res);
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
     	})
