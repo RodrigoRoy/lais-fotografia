@@ -1,6 +1,7 @@
 <div layout="row" layout-wrap layout-align="center">
 	<div flex="80">
-		<h2 class="md-display-2">Unidad documental</h2>
+		<h2 class="md-display-2" ng-if="!edit">Nueva unidad documental</h2>
+		<h2 class="md-display-2" ng-if="edit">Editar unidad documental</h2>
 	</div>
 	
 	<div flex="80">
@@ -340,16 +341,25 @@
 									<label>Documentalistas</label>
 									<input ng-model="unidadDocumental.controlDescripcion.documentalistas"></input>
 								</md-input-container>
+							</div>
+						</md-content>
+					</md-tab>
+					<md-tab label="Datos adicionales">
+						<md-content layout-padding>
+							<div>
 								<md-input-container class="md-block">
-									<label>Reglas o normas</label>
-									<input ng-model="unidadDocumental.controlDescripcion.reglasNormas"></input>
+									<!-- <label>Visibilidad</label> -->
+									<md-checkbox ng-model="unidadDocumental.adicional.isPublic">
+										La unidad documental es pública
+									</md-checkbox>
 								</md-input-container>
 							</div>
 						</md-content>
 					</md-tab>
 				</md-tabs>
 
-				<md-button type="submit" class="md-raised md-primary" ng-click="enviarUnidadDocumental()">Crear unidad documental</md-button>
+				<md-button type="submit" class="md-raised md-primary" ng-if="!edit" ng-click="enviarUnidadDocumental()">Crear unidad documental</md-button>
+				<md-button type="submit" class="md-raised md-primary" ng-if="edit" ng-click="editarUnidadDocumental()">Editar unidad documental</md-button>
 			</form>
 		</md-content>
 	</div>

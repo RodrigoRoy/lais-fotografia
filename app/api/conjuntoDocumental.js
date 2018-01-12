@@ -80,6 +80,21 @@ router.route('/:conjunto_id')
                 return res.send(err);
             
             // You can check specific properties before update
+            if(req.body.identificacion)
+                conjunto.identificacion = req.body.identificacion;
+            if(req.body.contexto)
+                conjunto.contexto = req.body.contexto;
+            if(req.body.contenidoOrganizacion)
+                conjunto.contenidoOrganizacion = req.body.contenidoOrganizacion;
+            if(req.body.condicionesAcceso)
+                conjunto.condicionesAcceso = req.body.condicionesAcceso;
+            if(req.body.documentacionAsociada)
+                conjunto.documentacionAsociada = req.body.documentacionAsociada;
+            if(req.body.publicaciones)
+                conjunto.publicaciones = req.body.publicaciones;
+            if(req.body.controlDescripcion)
+                conjunto.controlDescripcion = req.body.controlDescripcion;
+
             conjunto.save(function(err){
                 if(err)
                     return res.send(err);

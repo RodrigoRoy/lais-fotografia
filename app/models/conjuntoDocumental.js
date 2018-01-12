@@ -30,7 +30,7 @@ var ConjuntoDocumentalSchema = new Schema({
 	contexto: {
 		historiaDocumento: {type: String},
 		historiaArchivistica: {type: String},
-		formaIngreso: {type: String} // enum: [Reproducciones, Préstamos, Donaciones, Compra, Intercambio, etc]
+		formaIngreso: [{type: String}] // enum: [Reproducciones, Préstamos, Donaciones, Compra, Intercambio, etc]
 	},
 	contenidoOrganizacion: {
 		contenido: {type: String},
@@ -56,7 +56,7 @@ var ConjuntoDocumentalSchema = new Schema({
 	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
-		reglasNormas: {type: String, defualt: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
+		reglasNormas: {type: String, default: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	}
 

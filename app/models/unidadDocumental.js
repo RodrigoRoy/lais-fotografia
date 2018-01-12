@@ -85,8 +85,10 @@ var UnidadDocumentalSchema = new Schema({
 	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
-		reglasNormas: {type: String, defualt: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
+	},
+	adicional:{
+		isPublic: {type: Boolean, default: true}
 	}
 }, { // Opciones:
 	collection: 'unidadDocumental',

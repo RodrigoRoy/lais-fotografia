@@ -8,25 +8,35 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'InicioController'
 		})
 
+		// .when('/conjunto', {
+		// 	templateUrl: 'angular/views/conjuntoDocumental.html',
+		// 	controller: 'ConjuntoDocumentalController'
+		// })
+
 		.when('/conjunto/nuevo', {
 			templateUrl: 'angular/views/conjuntoDocumentalForm.html',
 			controller: 'ConjuntoDocumentalFormController'
 		})
+
+		.when('/conjunto/:id/edit', {
+			templateUrl: 'angular/views/conjuntoDocumentalForm.html',
+			controller: 'ConjuntoDocumentalFormController'
+		})
+
+		// .when('/unidad', {
+		// 	templateUrl: 'angular/views/unidadDocumental.html',
+		// 	controller: 'UnidadDocumentalController'
+		// })
 
 		.when('/unidad/nuevo', {
 			templateUrl: 'angular/views/unidadDocumentalForm.html',
 			controller: 'UnidadDocumentalFormController'
 		})
 
-		// .when('/conjunto', {
-		// 	templateUrl: 'angular/views/conjuntoDocumental.html',
-		// 	controller: 'ConjuntoDocumentalController'
-		// })
-
-		// .when('/unidad', {
-		// 	templateUrl: 'angular/views/unidadDocumental.html',
-		// 	controller: 'UnidadDocumentalController'
-		// })
+		.when('/unidad/:id/edit', {
+			templateUrl: 'angular/views/unidadDocumentalForm.html',
+			controller: 'UnidadDocumentalFormController'
+		})
 
 		// RUTAS INVÁLIDAS (no descritas previamente)
 		.otherwise({

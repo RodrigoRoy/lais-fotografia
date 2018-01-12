@@ -80,6 +80,21 @@ router.route('/:unidad_id')
                 return res.send(err);
             
             // You can check specific properties before update
+            if(req.body.identificacion)
+                unidad.identificacion = req.body.identificacion;
+            if(req.body.contenidoEstructura)
+                unidad.contenidoEstructura = req.body.contenidoEstructura;
+            if(req.body.caracteristicasFisicas)
+                unidad.caracteristicasFisicas = req.body.caracteristicasFisicas;
+            if(req.body.documentacionAsociada)
+                unidad.documentacionAsociada = req.body.documentacionAsociada;
+            if(req.body.publicaciones)
+                unidad.publicaciones = req.body.publicaciones;
+            if(req.body.controlDescripcion)
+                unidad.controlDescripcion = req.body.controlDescripcion;
+            if(req.body.adicional)
+                unidad.adicional = req.body.adicional;
+
             unidad.save(function(err){
                 if(err)
                     return res.send(err);
