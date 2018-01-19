@@ -12,9 +12,21 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     			nombre: ''
     		}]
     	},
-		contexto: {},
-		contenidoOrganizacion: {},
-		condicionesAcceso: {},
+		contenidoEstructura: {},
+        caracteristicasFisicas: {
+            soportePrimario:{
+                inscripciones: [{
+                    transcripcion: '',
+                    ubicacion: ''
+                }]
+            },
+            soporteSecundario:{
+                inscripciones: [{
+                    transcripcion: '',
+                    ubicacion: ''
+                }]
+            },
+        },
 		documentacionAsociada: {},
 		publicaciones: {},
 		controlDescripcion: {
@@ -34,6 +46,19 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if($scope.unidadDocumental.identificacion.autores.length == 1 || lastAutor.nombre != '') // se agrega autor vacio cuando es el primer autor agregado o cuando el último no es vacio
     		  $scope.unidadDocumental.identificacion.autores.push({tipo: '', nombre: ''});
     };
+    // Agrega una "nueva" inscripción de manera análoga a la función "agregarAutor"
+    $scope.agregaInscripcionPrimario = function(transcripcion){
+        var lastInscripcion = $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones[$scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.length - 1];
+        if(transcripcion)
+            if($scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
+                $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.push({transcripcion: '', ubicacion: ''});
+    };
+    $scope.agregaInscripcionSecundario = function(transcripcion){
+        var lastInscripcion = $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones[$scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length - 1];
+        if(transcripcion)
+            if($scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
+                $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
+    };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
     var cleanUnidadDocumentalData = function(){
@@ -41,6 +66,14 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     	for(var i = $scope.unidadDocumental.identificacion.autores.length - 1; i >= 0; i--)
     		if(!$scope.unidadDocumental.identificacion.autores[i].nombre || !$scope.unidadDocumental.identificacion.autores[i].tipo)
     			$scope.unidadDocumental.identificacion.autores.splice(i, 1);
+        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte primario)
+        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones[i].transcripcion)
+                $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.splice(i, 1);
+        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte secundario)
+        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones[i].transcripcion)
+                $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.splice(i, 1);
     };
 
     // Envia la información a la base de datos para crear una unidad documental
@@ -81,6 +114,9 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             $scope.unidadDocumental = res.data;
             // Agregar un espacio adicional para seguir agregando autores
             $scope.unidadDocumental.identificacion.autores.push({tipo: '', nombre: ''});
+            // Agregar un espacio adicional para seguir agregando inscripciones (en soporte primario y secundario)
+            $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.push({transcripcion: '', ubicacion: ''});
+            $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
         }, function(res){
             console.log("Error de conexión para obtener información de la unidad documental", res);
         });

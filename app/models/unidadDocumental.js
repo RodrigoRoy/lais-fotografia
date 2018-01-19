@@ -10,78 +10,81 @@ var Schema = mongoose.Schema; // "Modelo" de la colección
 var UnidadDocumentalSchema = new Schema({
 	identificacion: {
 		codigoReferencia: {type: String, required: true, index: {unique: true}},
-		referenciaProcedencia: {type: String},
+		referenciaProcedencia: {type: String, trim: true},
 		titulo: {
-			autor: {type: String},
-			inscrito: {type: String},
-			otroObjeto: {type: String}
+			autor: {type: String, trim: true},
+			inscrito: {type: String, trim: true},
+			otroObjeto: {type: String, trim: true}
 		},
 		fecha: {type: Date},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
 			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo']},
-			nombre: {type: String}
+			nombre: {type: String, trim: true},
+			_id: false
 		}],
 		conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'}
 	},
 	contenidoEstructura: {
-		estructuraFormal: {type: String}, // enum: ['Paisaje', 'Paisaje rural', 'Paisaje urbano', 'Paisaje industrial', 'Roster', 'Escena', 'Retrato', 'Monumento arqueológico', 'Arquitectura']
+		estructuraFormal: {type: String, trim: true}, // enum: ['Paisaje', 'Paisaje rural', 'Paisaje urbano', 'Paisaje industrial', 'Roster', 'Escena', 'Retrato', 'Monumento arqueológico', 'Arquitectura']
 		encuadre: {
 			orientacion: {type: String, enum: ['Horizontal', 'Vertical']},
 			plano: {type: String, enum: ['Gran plano general', 'Plano general', 'Plano entero', 'Plano americano', 'Plano medio', 'Primer plano', 'Detalle']},
 			anguloCamara: {type: String, enum: ['Normal', 'Picado', 'Contrapicado', 'Nadir', 'Cenital']},
 			nivelCamara: {type: String, enum: ['A nivel', 'Bajo', 'Alto']},
-			tipoCamara: {type: String},
-			edicionImagen: {type: String}
+			tipoCamara: {type: String, trim: true},
+			edicionImagen: {type: String, trim: true}
 		},
-		descripcion: {type: String},
-		tomadaDesde: {type: String},
-		tomadaHacia: {type: String},
+		descripcion: {type: String, trim: true},
+		tomadaDesde: {type: String, trim: true},
+		tomadaHacia: {type: String, trim: true},
 		lugarDescrito: {type: String} // Google Maps ID 
 	},
 	caracteristicasFisicas: {
 		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen de cámara']},
 		soportePrimario: {
-			procesoFotografico: {type: String},
+			procesoFotografico: {type: String, trim: true},
 			dimension: {
 				x: {type: Number},
 				y: {type: Number},
 				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
 			},
-			inscripciones: {
-				ubicacion: {type: String},
-				transcripcion: {type: String}
-			}
+			inscripciones: [{
+				transcripcion: {type: String, trim: true},
+				ubicacion: {type: String, trim: true},
+				_id: false
+			}]
 		},
 		soporteSecundario: {
-			materiales: {type: String},
+			materiales: {type: String, trim: true},
 			dimension: {
 				ancho: {type: Number},
 				alto: {type: Number},
 				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
 			},
-			inscripciones: {
-				ubicacion: {type: String},
-				transcripcion: {type: String}
-			}
+			inscripciones: [{
+				transcripcion: {type: String, trim: true},
+				ubicacion: {type: String, trim: true},
+				_id: false
+			}]
 		},
 		sellos: {
-			ubicacion: {type: String},
-			transcripcion: {type: String}
+			transcripcion: {type: String, trim: true},
+			ubicacion: {type: String, trim: true},
 		}
 	},
 	documentacionAsociada: {
-		fotografiaMismoNegativo: {type: String},
-		fotografiaBase: {type: String},
-		reprografia: {type: String},
-		fotografiaMismaSecuencia: {type: String},
-		fotografiaConsecutiva: {type: String},
-		fotografiaConsecutivaOtraCamara: {type: String},
-		fotografiaEncuadreSimilar: {type: String},
-		grabadoRelacionado: {type: String}
+		fotografiaMismoNegativo: {type: String, trim: true},
+		fotografiaBase: {type: String, trim: true},
+		reprografia: {type: String, trim: true},
+		fotografiaMismaSecuencia: {type: String, trim: true},
+		fotografiaConsecutiva: {type: String, trim: true},
+		fotografiaConsecutivaOtraCamara: {type: String, trim: true},
+		fotografiaEncuadreSimilar: {type: String, trim: true},
+		grabadoRelacionado: {type: String, trim: true}
 	},
 	publicaciones: {
-		publicacion: {type: String},
-		exposicion: {type: String}
+		publicacion: {type: String, trim: true},
+		exposicion: {type: String, trim: true}
 	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO

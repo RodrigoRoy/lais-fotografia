@@ -208,16 +208,18 @@
 								</div>
 
 								<!-- Inscripciones -->
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Inscripciones (ubicación)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.ubicacion">
-									</md-input-container>
+								<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones">
+									<div layout-gt-sm="row">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Inscripciones (transcripción)</label>
+											<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionPrimario(inscripcion.transcripcion)">
+										</md-input-container>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Inscripciones (transcripción)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.transcripcion">
-									</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Inscripciones (ubicación)</label>
+											<input ng-model="inscripcion.ubicacion">
+										</md-input-container>
+									</div>
 								</div>
 
 								Soporte secundario
@@ -248,27 +250,29 @@
 								</div>
 
 								<!-- Inscripciones -->
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Inscripciones (ubicación)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.ubicacion">
-									</md-input-container>
+								<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones">
+									<div layout-gt-sm="row">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Inscripciones (transcripción)</label>
+											<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionSecundario(inscripcion.transcripcion)">
+										</md-input-container>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Inscripciones (transcripción)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.transcripcion">
-									</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Inscripciones (ubicación)</label>
+											<input ng-model="inscripcion.ubicacion">
+										</md-input-container>
+									</div>
 								</div>
 
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
-										<label>Sellos (ubicación)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.ubicacion">
+										<label>Sellos (transcripción)</label>
+										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.transcripcion">
 									</md-input-container>
 
 									<md-input-container class="md-block" flex-gt-sm>
-										<label>Sellos (transcripción)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.transcripcion">
+										<label>Sellos (ubicación)</label>
+										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.ubicacion">
 									</md-input-container>
 								</div>
 							</div>
