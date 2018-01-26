@@ -14,7 +14,7 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Código de referencia</label>
-									<input required name="codigoReferencia" ng-model="conjuntoDocumental.identificacion.codigoReferencia">
+									<input required name="codigoReferencia" ng-model="conjuntoDocumental.identificacion.codigoReferencia" disabled>
 									<div ng-messages="conjuntoDocumentalForm.codigoReferencia.$error">
 										<div ng-message="required">Este campo es obligatorio.</div>
 									</div>
@@ -83,12 +83,12 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Historia del documento</label>
-									<textarea ng-model="conjuntoDocumental.contexto.historiaDocumento" rows="3"></textarea>
+									<textarea ng-model="conjuntoDocumental.contexto.historiaDocumento"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Historia archivística</label>
-									<textarea ng-model="conjuntoDocumental.contexto.historiaArchivistica" rows="3"></textarea>
+									<textarea ng-model="conjuntoDocumental.contexto.historiaArchivistica"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
@@ -109,22 +109,22 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Contenido</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.contenido" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.contenido"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Valoración, selección y eliminación</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.valoracionSeleccionEliminacion" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.valoracionSeleccionEliminacion"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Nuevos ingresos</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.nuevosIngresos" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.nuevosIngresos"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Organización</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.organizacion" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.organizacion"></textarea>
 								</md-input-container>
 							</div>
 						</md-content>
@@ -134,22 +134,22 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Condiciones de acceso</label>
-									<textarea ng-model="conjuntoDocumental.condicionesAcceso.condicionesAcceso" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.condicionesAcceso.condicionesAcceso"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Condiciones de reproducción</label>
-									<textarea ng-model="conjuntoDocumental.condicionesAcceso.condicionesReproduccion" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.condicionesAcceso.condicionesReproduccion"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Características físicas</label>
-									<textarea ng-model="conjuntoDocumental.condicionesAcceso.caracteristicasFisicas" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.condicionesAcceso.caracteristicasFisicas"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Estado de conservación</label>
-									<textarea ng-model="conjuntoDocumental.condicionesAcceso.estadoConservacion" rows="2"></textarea>
+									<textarea ng-model="conjuntoDocumental.condicionesAcceso.estadoConservacion"></textarea>
 								</md-input-container>
 							</div>
 						</md-content>

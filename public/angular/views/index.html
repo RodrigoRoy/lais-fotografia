@@ -31,8 +31,44 @@
 				<md-nav-item md-nav-href="/unidad/nuevo" name="unidades">
 					Unidad
 				</md-nav-item>
+				<md-nav-item md-nav-href="/unidad" name="unidad">
+					Unidad (view)
+				</md-nav-item>
+				<md-nav-item md-nav-href="#" name="menu" ng-click="toggleMenu()">
+					Menu
+				</md-nav-item>
 			</md-nav-bar>
 		</md-content>
+
+		<md-sidenav md-component-id="menu">
+			<md-toolbar class="md-theme-indigo">
+				<h1 class="md-toolbar-tools">Colección</h1>
+			</md-toolbar>
+			<md-content layout-padding>
+				<md-list>
+					<md-list-item ng-repeat="conjunto in conjuntosListado"> {{conjunto.identificacion.titulo}} </md-list-item>
+					<md-list-item> Item 1 </md-list-item>
+					<md-list-item> Item 2 </md-list-item>
+					<md-list-item> Item 3 </md-list-item>
+					<md-list-item> Item 4 </md-list-item>
+					<md-list-item>
+						<md-list>
+							<md-list-item> Subitem 1 </md-list-item>
+							<md-list-item> Subitem 2 </md-list-item>
+							<md-list-item>
+								<md-list>
+									<md-list-item> Subsubitem 1 </md-list-item>
+									<md-list-item> Subsubitem 2 </md-list-item>
+								</md-list>
+							</md-list-item>
+							<md-list-item> Subitem 3 </md-list-item>
+						</md-list>
+					</md-list-item>
+				</md-list>
+
+				<md-button ng-click="toggleMenu()" class="md-primary">Cerrar</md-button>
+			</md-content>
+		</md-sidenav>
 
 		<div ng-view></div>
 
@@ -59,6 +95,7 @@
 		<script src="angular/controllers/inicioCtrl.js"></script>
 		<script src="angular/controllers/conjuntoDocumentalFormCtrl.js"></script>
 		<script src="angular/controllers/unidadDocumentalFormCtrl.js"></script>
+		<script src="angular/controllers/unidadesDocumentalesCtrl.js"></script>
 		<script src="angular/appRoutes.js"></script>
 		<script src="angular/app.js"></script>
 	</body>

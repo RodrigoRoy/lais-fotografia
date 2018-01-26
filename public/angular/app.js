@@ -11,7 +11,8 @@ angular.module('laisFotoApp', [
 	'IndexCtrl',
 	'InicioCtrl',
 	'ConjuntoDocumentalFormCtrl',
-	'UnidadDocumentalFormCtrl'
+	'UnidadDocumentalFormCtrl',
+	'UnidadesDocumentalesCtrl'
 ])
 
 // configuración para AngularJS Material chips

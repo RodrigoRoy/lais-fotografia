@@ -14,6 +14,8 @@ DELETE http://localhost:8080/api/conjuntoDocumental/1234567890
 // Dependencias
 var express = require('express');
 var mongoose = require('mongoose');
+var config = require('../../config');
+var prefijo = config.prefix;
 var router = express.Router(); // para modularizar las rutas
 var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de la colección "ConjuntoDocumental"
 var verifyToken = require('./token'); // Función de verificación de token
@@ -59,7 +61,70 @@ router.route('/')
                 data: conjunto
             });
         })
-    })
+    });
+
+// En peticiones específicas
+
+// Obtener el prefijo común a todos los conjuntos (por ejemplo: MXIM)
+router.route('/prefix')
+    .get(function(req, res){
+        res.send({prefijo: prefijo});
+    });
+
+// Obtiene un arreglo de todos los subconjuntos contenido en un conjunto en particular.
+// Se debe incluir el parámetro "prefix" para indicar la numeración del conjunto documental
+// Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/contains?prefix=3-1
+// El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: {"_id", "codigoReferencia"}
+router.route('/contains')
+    .get(function(req,res){
+        var regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
+        ConjuntoDocumental.
+            find({'identificacion.codigoReferencia': regex}).
+            select({'identificacion.codigoReferencia': 1}).
+            exec(function(err, conjuntos){
+                if(err)
+                    return res.send(err);
+                var subconjuntos = [];
+                for(var i in conjuntos)
+                    subconjuntos.push({
+                        _id: conjuntos[i]._id,
+                        codigoReferencia: conjuntos[i].identificacion.codigoReferencia
+                    });
+                subconjuntos.sort(function(a,b){
+                    var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
+                        second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
+                    return first-second;
+                });
+                res.send({subconjuntos});
+            })
+    });
+
+// Obtiene la información sobre qué numeración continua al desear crear un nuevo conjunto documental
+// Se debe incluir el parámetro "prefix" para indicar la numeración del conjunto documental
+// Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/next?prefix=3-1
+// El resultado es un objeto con las propiedades {"next", "str"} que indica el número consecutivo y su representación en texto
+// Ejemplo: {"next": 4, "str": "MXIM-3-1-4"}
+router.route('/next')
+    .get(function(req, res){
+        var regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
+        ConjuntoDocumental.
+            find({'identificacion.codigoReferencia': regex}).
+            select({'identificacion.codigoReferencia': 1}).
+            exec(function(err, conjuntos){
+                if(err)
+                    return res.send(err);
+                var numeracion = [], result, number = 0;
+                for(var i in conjuntos){
+                    result = regex.exec(conjuntos[i].identificacion.codigoReferencia);
+                    numeracion.push(parseInt(result[1]));
+                }
+                numeracion.sort(function(a,b){return a-b});
+                for(var i in numeracion)
+                    if(parseInt(i)+1 != numeracion[i])
+                        return res.send({next: parseInt(i)+1, str: prefijo + (req.query.prefix ? '-' + req.query.prefix : '') + '-' + (parseInt(i)+1)});
+                return res.send({next: numeracion.length+1, str: prefijo + (req.query.prefix? '-' + req.query.prefix : '') + '-' + (numeracion.length+1)});
+            })
+    });
 
 // En peticiones con un ID
 router.route('/:conjunto_id')
@@ -112,6 +177,6 @@ router.route('/:conjunto_id')
                 return res.send(err);
             res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
         });
-    })
+    });
 
 module.exports = router; // Exponer el API para ser utilizado en server.js

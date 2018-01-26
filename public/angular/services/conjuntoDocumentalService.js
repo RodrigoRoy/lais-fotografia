@@ -25,6 +25,18 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 		// Elimina un conjunto documental. Recibe como parámetro el Id a borrar
 		delete: function(conjuntoDocumentalId){
 			return $http.delete('/api/conjuntoDocumental/' + conjuntoDocumentalId);
+		},
+
+		// Obtiene el prefijo común de los conjuntos documentales
+		prefix: function(){
+			return $http.get('/api/conjuntoDocumental/prefix');
+		},
+
+		// Obtiene la información sobre el próximo elemento en la numeración de los conjuntos documentales.
+		// El prefijo dado como parámetro solamente incluye la numeración, por ejemplo: 3-1, 2-4-1, 1, etc.
+		// En caso de que el parámetro sea vacío, se considera como la cadena vacia, haciendo referencia al conjunto documental "raíz"
+		next: function(conjuntoDocumentalPrefijo){
+			return $http.get('/api/conjuntoDocumental/next?prefix=' + (conjuntoDocumentalPrefijo ? conjuntoDocumentalPrefijo : ''));
 		}
 	}
 }]);

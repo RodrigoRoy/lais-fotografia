@@ -1,12 +1,11 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, ConjuntoDocumental){
+angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $mdToast, ConjuntoDocumental){
 	
     // Objeto que representa toda la información del conjunto documental, como se describe en el modelo conjuntoDocumental.
     // Se pueden inicializar algunos valores por default.
     $scope.conjuntoDocumental = {
     	identificacion: {
-    		//conjuntoPertenencia: "Conjunto 'padre'", // Referencia al conjunto padre
     		autores: [{
     			tipo: '',
     			nombre: ''
@@ -68,6 +67,23 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             console.error('Error de conexión a la base de datos', res);
         })
     };
+
+    // Inicializaciones
+
+    // Código de referencia
+    ConjuntoDocumental.next($routeParams.p).
+    then(function(res){
+        $scope.conjuntoDocumental.identificacion.codigoReferencia = res.data.str;
+        ConjuntoDocumental.prefix().
+        then(function(res){
+            $scope.conjuntoDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.p;
+        }, function(res){
+            //fail
+        });
+    }, function(res){
+        //fail
+    });
+
 
     // EDICION
     // Si se desea editar un conjunto documental obtenemos la información almacenada en la base de datos
