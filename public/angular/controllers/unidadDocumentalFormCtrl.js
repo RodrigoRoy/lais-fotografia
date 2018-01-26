@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, UnidadDocumental){
+angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, UnidadDocumental, ConjuntoDocumental){
 	
     // Objeto que representa toda la información de la unidad documental, como se describe en el modelo unidadDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -88,7 +88,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 console.error('Error al agregar unidad documental', res);
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
-    	})
+    	});
     };
 
     // Envia la información a la base de datos para actualizar una unidad documental
@@ -102,8 +102,24 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 console.error('Error al actualizar la unidad documental', res);
         }, function(res){
             console.error('Error de conexión a la base de datos', res);
-        })
+        });
     };
+
+    // Inicializaciones
+
+    // Código de referencia
+    UnidadDocumental.next($routeParams.c).
+    then(function(res){
+        $scope.unidadDocumental.identificacion.codigoReferencia = res.data.str;
+        ConjuntoDocumental.prefix().
+        then(function(res){
+            $scope.unidadDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
+        }, function(res){
+            //fail
+        });
+    }, function(res){
+        //fail
+    });
 
     // EDICION
     // Si se desea editar una unidad documental obtenemos la información almacenada en la base de datos

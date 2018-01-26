@@ -51,7 +51,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
                 console.error('Error al agregar conjunto documental', res);
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
-    	})
+    	});
     };
 
     // Envia la información a la base de datos para actualizar un conjunto documental
@@ -65,7 +65,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
                 console.error('Error al actualizar el conjunto documental', res);
         }, function(res){
             console.error('Error de conexión a la base de datos', res);
-        })
+        });
     };
 
     // Inicializaciones

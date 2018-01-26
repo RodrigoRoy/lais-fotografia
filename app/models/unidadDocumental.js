@@ -91,6 +91,7 @@ var UnidadDocumentalSchema = new Schema({
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	},
 	adicional:{
+		imagen: {type: String}, // Referencia nombre de la imagen
 		isPublic: {type: Boolean, default: true}
 	}
 }, { // Opciones:

@@ -14,8 +14,11 @@ DELETE http://localhost:8080/api/unidadDocumental/1234567890
 // Dependencias
 var express = require('express');
 var mongoose = require('mongoose');
+var config = require('../../config');
+var prefijo = config.prefix;
 var router = express.Router(); // para modularizar las rutas
 var UnidadDocumental = require('../models/unidadDocumental'); // Modelo de la colección "UnidadDocumental"
+var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de la colección "ConjuntoDocumental"
 var verifyToken = require('./token'); // Función de verificación de token
 
 // // Función a realizar siempre que se utilize esta API
@@ -59,7 +62,36 @@ router.route('/')
                 data: unidad
             });
         })
-    })
+    });
+
+// Obtiene la información sobre qué numeración continua al desear crear una nueva unidad documental
+// Se debe incluir el parámetro "from" para indicar el conjunto documental de pertenencia
+// Por ejemplo: GET http://localhost:8080/api/unidadDocumental/next?from=3-1
+// El resultado es un objeto con las propiedades {"next", "str"} que indica el número consecutivo y su representación en texto
+// Ejemplo: {"next": 4, "str": "MXIM-3-1-4"}
+router.route('/next')
+    .get(function(req, res){
+        if(!req.query.from)
+            return res.status(400).send({success: false, message: 'No se especifica el parámetro del conjunto documental (?from=)'});
+        var regex = new RegExp('^' + prefijo + '-' + req.query.from + '-(\\d+)$');
+        UnidadDocumental.
+            find({'identificacion.codigoReferencia': regex}).
+            select({'identificacion.codigoReferencia': 1}).
+            exec(function(err, unidades){
+                if(err)
+                    return res.send(err);
+                var numeracion = [], result, number = 0;
+                for(var i in unidades){
+                    result = regex.exec(unidades[i].identificacion.codigoReferencia);
+                    numeracion.push(parseInt(result[1]));
+                }
+                numeracion.sort(function(a,b){return a-b});
+                for(var i in numeracion)
+                    if(parseInt(i)+1 != numeracion[i])
+                        return res.send({next: parseInt(i)+1, str: prefijo + '-' + req.query.from + '-' + (parseInt(i)+1)});
+                return res.send({next: numeracion.length+1, str: prefijo + '-' + req.query.from + '-' + (numeracion.length+1)});
+            });
+    });
 
 // En peticiones con un ID
 router.route('/:unidad_id')
@@ -70,7 +102,7 @@ router.route('/:unidad_id')
             if(err)
                 return res.send(err);
             res.json(unidad);
-        })
+        });
     })
 
     // Actualizar una unidad en particular (mediante el ID)
@@ -112,6 +144,6 @@ router.route('/:unidad_id')
                 return res.send(err);
             res.json({success: true, message: 'Se ha borrado la información de la unidad documental "' + unidad.identificacion.codigoReferencia + '"'});
         });
-    })
+    });
 
 module.exports = router; // Exponer el API para ser utilizado en server.js
