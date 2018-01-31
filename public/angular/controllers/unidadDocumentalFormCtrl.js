@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, UnidadDocumental, ConjuntoDocumental){
+angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, UnidadDocumental, ConjuntoDocumental, File){
 	
     // Objeto que representa toda la información de la unidad documental, como se describe en el modelo unidadDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -58,6 +58,23 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         if(transcripcion)
             if($scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
                 $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
+    };
+
+    // Sube una imagen al servidor.
+    // El parametro element representa el contenido de <input type="file">
+    // Si la imagen se sube al servidor exitosamente, se asigna el nombre del archivo al campo de imagen
+    $scope.uploadFile = function(element){
+        File.upload(element.files[0], $scope.unidadDocumental.identificacion.codigoReferencia).
+        then(function(res){
+            if(res.data){
+                if(res.data.success){
+                    $scope.unidadDocumental.adicional.imagen = res.data.imagen;
+                    console.log(res.data.message);
+                }
+            }
+        }, function(res){
+            console.error('Error de conexión con el servidor', res);
+        })
     };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
@@ -134,7 +151,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.push({transcripcion: '', ubicacion: ''});
             $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
         }, function(res){
-            console.log("Error de conexión para obtener información de la unidad documental", res);
+            console.error("Error de conexión para obtener información de la unidad documental", res);
         });
     } // FIN EDICION
 });

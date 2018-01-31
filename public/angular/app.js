@@ -7,6 +7,7 @@ angular.module('laisFotoApp', [
 
 	'ConjuntoDocumentalService',
 	'UnidadDocumentalService',
+	'FileService',
 
 	'IndexCtrl',
 	'InicioCtrl',

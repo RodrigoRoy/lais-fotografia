@@ -16,4 +16,4 @@ public/libs
 # Project private files
 config.js
 app/dataset
-public/files
+files

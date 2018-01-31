@@ -352,6 +352,11 @@
 						<md-content layout-padding>
 							<div>
 								<md-input-container class="md-block">
+									<!-- <label>Imagen</label> -->
+									<input type="file" accept="image/*" ng-model="unidadDocumental.adicional.imagen" onchange="angular.element(this).scope().uploadFile(this)">
+								</md-input-container>
+
+								<md-input-container class="md-block">
 									<!-- <label>Visibilidad</label> -->
 									<md-checkbox ng-model="unidadDocumental.adicional.isPublic">
 										La unidad documental es pública

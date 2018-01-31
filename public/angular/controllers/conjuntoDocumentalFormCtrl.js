@@ -95,7 +95,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             // Agregar un espacio adicional para seguir agregando autores
             $scope.conjuntoDocumental.identificacion.autores.push({tipo: '', nombre: ''});
         }, function(res){
-            console.log("Error de conexión para obtener información del conjunto documental", res);
+            console.error("Error de conexión para obtener información del conjunto documental", res);
         });
     } // FIN EDICION
 });

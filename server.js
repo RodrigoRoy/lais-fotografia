@@ -49,6 +49,8 @@ var conjuntoDocumental = require('./app/api/conjuntoDocumental');
 app.use('/api/conjuntoDocumental', conjuntoDocumental);
 var unidadDocumental = require('./app/api/unidadDocumental');
 app.use('/api/unidadDocumental', unidadDocumental);
+var file = require('./app/api/file');
+app.use('/api/file', file);
 
 // log de todas las peticiones (request) en consola
 app.use(morgan('dev'));
