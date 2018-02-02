@@ -14,11 +14,24 @@
 		<link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
 		<!-- Roboto Typography -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<!-- Material Icons -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+		<!-- <link rel="stylesheet" href="css/material-icons.css"> -->
 		<link rel="stylesheet" href="css/index.css">
 	</head>
 
 	<body ng-app="laisFotoApp" ng-controller="IndexController">
+
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<md-button class="md-icon-button" aria-label="Menu" ng-click="toggleMenu()">
+					<i class="material-icons">menu</i>
+				</md-button>
+
+				<h2 flex md-truncate>Fotografía e investigación</h2>
+			</div>
+		</md-toolbar>
 
 		<md-content class="md-padding">
 			<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
@@ -33,9 +46,6 @@
 				</md-nav-item>
 				<md-nav-item md-nav-href="/unidad" name="unidad">
 					Unidad (view)
-				</md-nav-item>
-				<md-nav-item md-nav-href="#" name="menu" ng-click="toggleMenu()">
-					Menu
 				</md-nav-item>
 			</md-nav-bar>
 		</md-content>

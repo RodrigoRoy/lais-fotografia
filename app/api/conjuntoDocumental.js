@@ -14,6 +14,7 @@ DELETE http://localhost:8080/api/conjuntoDocumental/1234567890
 // Dependencias
 var express = require('express');
 var mongoose = require('mongoose');
+var async = require('async');
 var config = require('../../config');
 var prefijo = config.prefix;
 var router = express.Router(); // para modularizar las rutas
@@ -71,6 +72,85 @@ router.route('/prefix')
         res.send({prefijo: prefijo});
     });
 
+// Devuelve una función asíncrona para obtener los subconjuntos documentales contenidos en una colección 
+// El parámetro dado representa el conjunto del que se desean obtener sus subconjuntos contenidos
+// La función es análoga a la función del api "/obtains"
+var getSubconjuntos = function(prefix){
+    return new Promise(function(resolve, reject){
+        var regex = new RegExp('^' + prefijo + '-(\\d+)$');
+        ConjuntoDocumental.
+            find({'identificacion.codigoReferencia': regex}).
+            select({'identificacion.codigoReferencia': 1}).
+            exec(function(err, conjuntos){
+                if (err)
+                    return reject(err);
+                if(!conjuntos)
+                    return resolve([]);
+                var subconjuntos = [],
+                    funciones = [];
+                
+                for(var i in conjuntos)
+                    subconjuntos.push({
+                        _id: conjuntos[i]._id,
+                        codigoReferencia: conjuntos[i].identificacion.codigoReferencia
+                    });
+                subconjuntos.sort(function(a,b){
+                    var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
+                        second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
+                    return first-second;
+                });
+                return resolve(subconjuntos);
+            });
+    });
+};
+
+// Función análoga a "getSubconjuntos" pero de manera síncrona.
+// TODO: async no convierte llamadas a síncronas.
+var getSubconjuntosSync = function(prefix){
+    async.waterfall([
+        function(resolve, reject){
+            var regex = new RegExp('^' + prefijo + '-(\\d+)$');
+            ConjuntoDocumental.
+                find({'identificacion.codigoReferencia': regex}).
+                select({'identificacion.codigoReferencia': 1}).
+                exec(function(err, conjuntos){
+                    if (err)
+                        return reject(err);
+                    if(!conjuntos)
+                        return resolve([]);
+                    var subconjuntos = [],
+                        funciones = [];
+                    
+                    for(var i in conjuntos)
+                        subconjuntos.push({
+                            _id: conjuntos[i]._id,
+                            codigoReferencia: conjuntos[i].identificacion.codigoReferencia
+                        });
+                    subconjuntos.sort(function(a,b){
+                        var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
+                            second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
+                        return first-second;
+                    });
+                    return resolve(subconjuntos);
+                });
+        }
+    ], function(err, result){
+        return result;
+    });
+};
+
+// Obtiene una estructura de árbol embebida en un objeto json para representar la estructura de los conjuntos documentales
+// TODO: Incompleto debido a problemas para hacer recursión con llamadas asíncronas
+router.route('/tree')
+    .get(function(req, res){
+        getSubconjuntos('MXIM').
+        then(function(value){
+            res.send(value);
+        });
+        // var results = getSubconjuntosSync('MXIM');
+        // res.send(results);
+    });
+
 // Obtiene un arreglo de todos los subconjuntos contenido en un conjunto en particular.
 // Se debe incluir el parámetro "prefix" para indicar la numeración del conjunto documental
 // Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/contains?prefix=3-1
@@ -95,7 +175,7 @@ router.route('/contains')
                         second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
                     return first-second;
                 });
-                res.send({subconjuntos});
+                res.send(subconjuntos);
             })
     });
 

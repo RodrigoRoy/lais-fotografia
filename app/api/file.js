@@ -25,12 +25,13 @@ var verifyToken = require('./token'); // Función de verificación de token
 // });
 
 // En peticiones a la raiz del API
+// TODO: Generalizar para otro tipo de archivos (no solo imágenes)... tal vez.
 router.route('/')
 	// Subir una imagen al servidor
 	.post(function(req, res){
 		// Uso de formidable para recibir info. Se configuran opciones básicas:
 		var form = new formidable.IncomingForm();
-		form.uploadDir = path.dirname(require.main.filename) + '/files/unidades';
+		form.uploadDir = path.dirname(require.main.filename) + '/public/files/unidades';
 		form.keepExtensions = true;
 		form.type = 'multipart';
 		form.maxFieldsSize = 2 * 1024 * 1024; // 2MB
@@ -40,7 +41,7 @@ router.route('/')
 			if(err)
 				return res.send(err);
 			// Renombrar la imagen para coincidir con su codigo de referencia
-			fs.rename(files.file.path, path.dirname(require.main.filename) + '/files/unidades/' + fields.codigoReferencia + path.extname(files.file.name), function(err){
+			fs.rename(files.file.path, path.dirname(require.main.filename) + '/public/files/unidades/' + fields.codigoReferencia + path.extname(files.file.name), function(err){
 				if(err)
 					return res.send({success:true, message: 'Archivo subido correctamente. \nAdvertencia: No se pudo renombrar el archivo', imagen: files.file.name});
 				return res.send({success: true, message: 'Archivo subido correctamente', imagen: fields.codigoReferencia + path.extname(files.file.name)});
