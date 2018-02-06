@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $mdToast, ConjuntoDocumental){
+angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, $mdToast, ConjuntoDocumental){
 	
     // Objeto que representa toda la información del conjunto documental, como se describe en el modelo conjuntoDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -45,10 +45,16 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     	cleanConjuntoDocumentalData(); // crear un conjunto documental válido
     	ConjuntoDocumental.create($scope.conjuntoDocumental).
     	then(function(res){
-    		if(res.data.success)
+    		if(res.data.success){
                 console.log(res.data.message, res.data.data._id);
-            else
+                alert(res.data.message);
+                $route.reload();
+            }
+            else{
                 console.error('Error al agregar conjunto documental', res);
+                alert(res.data.message);
+                $route.reload();
+            }
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
     	});

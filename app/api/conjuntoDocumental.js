@@ -32,12 +32,13 @@ var verifyToken = require('./token'); // Función de verificación de token
 
 // En peticiones a la raiz del API
 router.route('/')
-	// Obtener todos los conjuntos documentales
+	// Obtener el _id y codigo de referencia de todos los conjuntos documentales
 	.get(function(req, res){
 
-        ConjuntoDocumental.find() // encontrar todos
-        //.sort({fecha: 'desc'})
-        .exec(function(err, conjuntos){
+        ConjuntoDocumental.find().
+        select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
+        sort({'identificacion.codigoReferencia': 'asc'}).
+        exec(function(err, conjuntos){
             if(err)
                 return res.send(err);
             res.send(conjuntos);
@@ -72,83 +73,49 @@ router.route('/prefix')
         res.send({prefijo: prefijo});
     });
 
-// Devuelve una función asíncrona para obtener los subconjuntos documentales contenidos en una colección 
-// El parámetro dado representa el conjunto del que se desean obtener sus subconjuntos contenidos
-// La función es análoga a la función del api "/obtains"
-var getSubconjuntos = function(prefix){
-    return new Promise(function(resolve, reject){
-        var regex = new RegExp('^' + prefijo + '-(\\d+)$');
-        ConjuntoDocumental.
-            find({'identificacion.codigoReferencia': regex}).
-            select({'identificacion.codigoReferencia': 1}).
-            exec(function(err, conjuntos){
-                if (err)
-                    return reject(err);
-                if(!conjuntos)
-                    return resolve([]);
-                var subconjuntos = [],
-                    funciones = [];
-                
-                for(var i in conjuntos)
-                    subconjuntos.push({
-                        _id: conjuntos[i]._id,
-                        codigoReferencia: conjuntos[i].identificacion.codigoReferencia
-                    });
-                subconjuntos.sort(function(a,b){
-                    var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
-                        second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
-                    return first-second;
-                });
-                return resolve(subconjuntos);
-            });
+// Auxiliar para filtrar una lista de conjuntos y devolver solamente sus subconjuntos.
+// El primer parámetro es la lista de conjuntos y el segundo parámetro es el prefijo con el que se desea filtrar
+// Devuelve la lista ordenada de conjuntos con el mismo prefijo dado como parámetro, en caso de no haber, devuelve una lista vacia
+var filterByPrefix = function(listaConjuntos, prefix){
+    var subconjuntos = [];
+    var regex = new RegExp('^' + prefix + '-(\\d+)$');
+    listaConjuntos.forEach(conjunto => {
+        if(regex.test(conjunto.identificacion.codigoReferencia))
+            subconjuntos.push(conjunto);
     });
+    subconjuntos.sort(function(a,b){
+        var first = parseInt(/(\d+)$/.exec(a.identificacion.codigoReferencia)[1]),
+            second = parseInt(/(\d+)$/.exec(b.identificacion.codigoReferencia)[1]);
+        return first-second;
+    });
+    return subconjuntos;
 };
 
-// Función análoga a "getSubconjuntos" pero de manera síncrona.
-// TODO: async no convierte llamadas a síncronas.
-var getSubconjuntosSync = function(prefix){
-    async.waterfall([
-        function(resolve, reject){
-            var regex = new RegExp('^' + prefijo + '-(\\d+)$');
-            ConjuntoDocumental.
-                find({'identificacion.codigoReferencia': regex}).
-                select({'identificacion.codigoReferencia': 1}).
-                exec(function(err, conjuntos){
-                    if (err)
-                        return reject(err);
-                    if(!conjuntos)
-                        return resolve([]);
-                    var subconjuntos = [],
-                        funciones = [];
-                    
-                    for(var i in conjuntos)
-                        subconjuntos.push({
-                            _id: conjuntos[i]._id,
-                            codigoReferencia: conjuntos[i].identificacion.codigoReferencia
-                        });
-                    subconjuntos.sort(function(a,b){
-                        var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
-                            second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
-                        return first-second;
-                    });
-                    return resolve(subconjuntos);
-                });
-        }
-    ], function(err, result){
-        return result;
-    });
+// Construye la lista que contiene los conjuntos y sus respectivos subconjuntos en orden numérico
+// Se espera que su uso inicial sea: recursiveTree(todosConjuntos, 'MXIM');
+var recursiveTree = function(listaConjuntos, prefix){
+    var tree = [];
+    tree = filterByPrefix(listaConjuntos, prefix);
+    if(tree.length === 0)
+        return tree;
+    for(var i in tree)
+        tree[i].subconjuntos = recursiveTree(listaConjuntos, tree[i].identificacion.codigoReferencia);
+    return tree;
 };
 
 // Obtiene una estructura de árbol embebida en un objeto json para representar la estructura de los conjuntos documentales
-// TODO: Incompleto debido a problemas para hacer recursión con llamadas asíncronas
 router.route('/tree')
     .get(function(req, res){
-        getSubconjuntos('MXIM').
-        then(function(value){
-            res.send(value);
-        });
-        // var results = getSubconjuntosSync('MXIM');
-        // res.send(results);
+        ConjuntoDocumental.find().
+        lean().
+        select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
+        exec(function(err, conjuntos){
+            if(err)
+                return res.send(err);
+            var tree = [];
+            tree = recursiveTree(conjuntos, prefijo);
+            res.send(tree);
+        });        
     });
 
 // Obtiene un arreglo de todos los subconjuntos contenido en un conjunto en particular.

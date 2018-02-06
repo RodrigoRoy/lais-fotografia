@@ -49,18 +49,22 @@
 				</md-nav-item>
 			</md-nav-bar>
 		</md-content>
-
+		
 		<md-sidenav md-component-id="menu">
 			<md-toolbar class="md-theme-indigo">
 				<h1 class="md-toolbar-tools">Colección</h1>
 			</md-toolbar>
 			<md-content layout-padding>
 				<md-list>
-					<md-list-item ng-repeat="conjunto in conjuntosListado"> {{conjunto.identificacion.titulo}} </md-list-item>
+					<div ng-repeat="conjunto in subconjuntos"> <!-- Uso de ng-repeat y ng-include para crear lista de conjuntos recursivamente -->
+						<md-list-item>{{conjunto.identificacion.titulo}}</md-list-item>
+						<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
+					</div>
+				</md-list>
+				<!-- <md-list>
 					<md-list-item> Item 1 </md-list-item>
 					<md-list-item> Item 2 </md-list-item>
 					<md-list-item> Item 3 </md-list-item>
-					<md-list-item> Item 4 </md-list-item>
 					<md-list-item>
 						<md-list>
 							<md-list-item> Subitem 1 </md-list-item>
@@ -74,8 +78,7 @@
 							<md-list-item> Subitem 3 </md-list-item>
 						</md-list>
 					</md-list-item>
-				</md-list>
-
+				</md-list> -->
 				<md-button ng-click="toggleMenu()" class="md-primary">Cerrar</md-button>
 			</md-content>
 		</md-sidenav>
@@ -89,6 +92,16 @@
 				</p>
 			</div>
 		</footer>
+
+		<!-- Script auxiliar para la creación recursiva de la lista de conjuntos -->
+		<script type="text/ng-template" id="menu.html">
+			<md-list>
+				<div ng-repeat="conjunto in conjunto.subconjuntos">
+					<md-list-item>{{conjunto.identificacion.titulo}}</md-list-item>
+					<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
+				</div>
+			</md-list>
+		</script>
 
 		<!-- Angular -->
 		<script src="libs/angular/angular.min.js"></script>

@@ -2,20 +2,23 @@
 
 angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $mdSidenav, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
+	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 
+	// Muestra/oculta el menu con la lista de conjuntos/subconjuntos
 	$scope.toggleMenu = function(){
 		$mdSidenav('menu').toggle();
 	};
 
-	// $scope.conjuntosListado = [];
-	// $scope.getConjuntosDocumentales = function(){
-	// 	ConjuntoDocumental.all().
-	// 	then(function(res){
-	// 		$scope.conjuntosListado = res.data;
-	// 		console.log('conjuntosListado', $scope.conjuntosListado);
-	// 	}, function(res){
-	// 		console.error('Error de conexión a la base de datos', res);
-	// 	})
-	// };
-	// $scope.getConjuntosDocumentales();
+	// Obtiene la lista con los conjuntos y subconjuntos ordenados
+	$scope.getConjuntosDocumentales = function(){
+		ConjuntoDocumental.tree().
+		then(function(res){
+			$scope.subconjuntos = res.data;
+		}, function(res){
+			console.error('Error de conexión a la base de datos', res);
+		})
+	};
+
+	// INICIALIZACION
+	$scope.getConjuntosDocumentales();
 });

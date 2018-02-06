@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, UnidadDocumental, ConjuntoDocumental, File){
+angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, UnidadDocumental, ConjuntoDocumental, File){
 	
     // Objeto que representa toda la información de la unidad documental, como se describe en el modelo unidadDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -99,10 +99,16 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     	console.log("Enviar ", $scope.unidadDocumental);
     	UnidadDocumental.create($scope.unidadDocumental).
     	then(function(res){
-    		if(res.data.success)
-    			console.log(res.data.message, res.data.data._id);
-            else
+    		if(res.data.success){
+                console.log(res.data.message, res.data.data._id);
+    			alert(res.data.message);
+                $route.reload();
+            }
+            else{
                 console.error('Error al agregar unidad documental', res);
+                alert(res.data.message);
+                $route.reload();
+            }
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
     	});
