@@ -7,6 +7,12 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 			return $http.get('/api/unidadDocumental');
 		},
 
+		// Obtiene todas las unidades documentales de un conjunto documental específico
+		// El parámetro indica la numeración del conjunto documental deseado, por ejemplo: 3-1. 2-4-1, 1, etc.
+		getByConjunto: function(conjuntoDocumentalPrefijo){
+			return $http.get('/api/unidadDocumental?from=' + conjuntoDocumentalPrefijo);
+		},
+
 		// Obtiene una unidad documental. Recibe como parámetro el Id deseado
 		get: function(unidadDocumentalId){
 			return $http.get('/api/unidadDocumental/' + unidadDocumentalId);
@@ -29,8 +35,8 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 
 		// Obtiene la información sobre el próximo elemento en la numeración de las unidades documentales.
 		// El parámetro no puede ser vacío y hace referencia al conjunto documental de pertenencia, por ejemplo: 3-1, 2-4-1, 1, etc.
-		next: function(conjuntoDocumental){
-			return $http.get('/api/unidadDocumental/next?from=' + conjuntoDocumental);
+		next: function(conjuntoDocumentalPrefijo){
+			return $http.get('/api/unidadDocumental/next?from=' + conjuntoDocumentalPrefijo);
 		}
 	}
 }]);

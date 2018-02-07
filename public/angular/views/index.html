@@ -57,7 +57,7 @@
 			<md-content layout-padding>
 				<md-list>
 					<div ng-repeat="conjunto in subconjuntos"> <!-- Uso de ng-repeat y ng-include para crear lista de conjuntos recursivamente -->
-						<md-list-item>{{conjunto.identificacion.titulo}}</md-list-item>
+						<md-list-item ng-click="gotoUnidad(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 						<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 					</div>
 				</md-list>
@@ -85,19 +85,19 @@
 
 		<div ng-view></div>
 
-		<footer layout="row" layout-wrap layout-align="center" class="footer">
+		<!-- <footer layout="row" layout-wrap layout-align="center" class="footer">
 			<div flex="80">
 				<p>
 					Place footer content here.
 				</p>
 			</div>
-		</footer>
+		</footer> -->
 
 		<!-- Script auxiliar para la creación recursiva de la lista de conjuntos -->
 		<script type="text/ng-template" id="menu.html">
 			<md-list>
 				<div ng-repeat="conjunto in conjunto.subconjuntos">
-					<md-list-item>{{conjunto.identificacion.titulo}}</md-list-item>
+					<md-list-item ng-click="gotoUnidad(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 					<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 				</div>
 			</md-list>

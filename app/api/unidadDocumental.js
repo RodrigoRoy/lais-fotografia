@@ -34,15 +34,33 @@ var verifyToken = require('./token'); // Función de verificación de token
 router.route('/')
 	// Obtener todas las unidades documentales
 	.get(function(req, res){
-
-        UnidadDocumental.find() // encontrar todos
-        //.sort({fecha: 'desc'})
-        .exec(function(err, unidades){
-            if(err)
-                return res.send(err);
-            res.send(unidades);
-        });
-
+        // Obtener todas las unidades documentales de un cierto conjunto documental
+        // El parámetro 'from' nos indica la numeración del conjunto de pertenencia deseado
+        if(req.query.from){
+            let regex = new RegExp('^' + prefijo + '-' + req.query.from + '-(\\d+)$');
+            UnidadDocumental.
+                find({'identificacion.codigoReferencia': regex}).
+                exec(function(err, unidades){
+                    if(err)
+                        return res.send(err);
+                    let unidadesOrdenadas = unidades;
+                    unidadesOrdenadas.sort(function(a,b){
+                        var first = parseInt(/(\d+)$/.exec(a.identificacion.codigoReferencia)[1]),
+                            second = parseInt(/(\d+)$/.exec(b.identificacion.codigoReferencia)[1]);
+                        return first-second;
+                    });
+                    res.send(unidades);
+                });
+        }
+        else{
+            UnidadDocumental.find() // encontrar todos
+            //.sort({fecha: 'desc'})
+            .exec(function(err, unidades){
+                if(err)
+                    return res.send(err);
+                res.send(unidades);
+            });
+        }
     })
 
     // Agregar una nueva unidad documental

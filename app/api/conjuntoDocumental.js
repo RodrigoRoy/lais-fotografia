@@ -14,7 +14,6 @@ DELETE http://localhost:8080/api/conjuntoDocumental/1234567890
 // Dependencias
 var express = require('express');
 var mongoose = require('mongoose');
-var async = require('async');
 var config = require('../../config');
 var prefijo = config.prefix;
 var router = express.Router(); // para modularizar las rutas
@@ -112,7 +111,12 @@ router.route('/tree')
         exec(function(err, conjuntos){
             if(err)
                 return res.send(err);
-            var tree = [];
+            let tree = [],
+                conjuntosSuffix = conjuntos,
+                regex = new RegExp('^' + prefijo + '-(.*)$');
+            // Agregar sufijo en cada conjunto (útil en la navegación del sitio)
+            for(let i in conjuntosSuffix)
+                conjuntosSuffix[i].sufijo = regex.exec(conjuntosSuffix[i].identificacion.codigoReferencia)[1];
             tree = recursiveTree(conjuntos, prefijo);
             res.send(tree);
         });        
