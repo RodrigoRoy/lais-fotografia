@@ -22,6 +22,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
         }
     };
 
+    // Crea una nueva instancia de mdDialog para mostrar la información de una unidad documental
     $scope.showTabDialog = function(event, id){
         $mdDialog.show({
             controller: DialogController,
@@ -30,45 +31,50 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
             targetEvent: event,
             clickOutsideToClose:true,
             locals: {
-                unidadId: id
+                unidad: id
             }
         })
-        .then(function(answer){
-            console.log('You said the information was "' + answer + '".');
-            console.log('$scope.unidadesDocumentales', $scope.unidadesDocumentales);
-        }, function(){
-            console.log('You cancelled the dialog.');
+        .then(function(res){ // res es cualquier objeto devuelto de la llamada hide()
+            // Success
+        }, function(res){ // res es cualquier objeto devuelto de la llamada cancel()
+            // Fail
         });
     };
 
-    function DialogController($scope, $mdDialog, $location, unidadId, UnidadDocumental){
+    // Controlador interno para la creación de un mdDialog
+    // Incluye servicios como $scope y $mdDialog.
+    // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidadId')
+    function DialogController($scope, $mdDialog, $location, unidad, UnidadDocumental){
         $scope.unidad = {};
 
-        UnidadDocumental.get(unidadId).
-        then(function(res){
-            $scope.unidad = res.data;
-        }, function(res){
-            console.error('Error de conexión con la base de datos', err);
-        });
+        // Obtiene la información de la unidad documental mediante el id dado como parámetro en los services del controlador (unidad)
+        $scope.getUnidadDocumental = function(){
+            UnidadDocumental.get(unidad).
+            then(function(res){
+                $scope.unidad = res.data;
+            }, function(res){
+                console.error('Error de conexión con la base de datos', err);
+            });
+        };
 
+        // Envia a la página de edición para la unidad documental actual (mediante su Id)
         $scope.editarUnidad = function(){
-            $mdDialog.hide('Editar');
+            $mdDialog.hide();
             $location.path('/unidad/' + $scope.unidad._id + '/edit');
         };
 
-        $scope.hide = function(){
-            $mdDialog.hide();
+        // Esconde el dialogo existente y acepta el promise devuelto desde $mdDialog.show()
+        $scope.hide = function(res){
+            $mdDialog.hide(res);
+        };
+        // Esconde el dialogo existente y rechaza el promise devuelto desde $mdDialog.show()
+        $scope.cancel = function(res){
+            $mdDialog.cancel(res);
         };
 
-        $scope.cancel = function(){
-            $mdDialog.cancel();
-        };
-
-        $scope.answer = function(answer){
-            $mdDialog.hide(answer);
-        };
+        // INICIALIZACIÓN
+        $scope.getUnidadDocumental();
     }
-
 
     // INICIALIZACIÓN
     $scope.getUnidadesDocumentales();
