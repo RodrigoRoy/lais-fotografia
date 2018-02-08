@@ -1,7 +1,7 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="0.5em">
-			<md-grid-tile ng-repeat="unidad in unidadesDocumentales">
+			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)">
 				<img ng-src="{{unidad.adicional.imagen ? 'files/unidades/' + unidad.adicional.imagen : 'http://lorempixel.com/400/200'}}" layout-fill>
 				<md-grid-tile-footer>
 					<h3 md-truncate style="max-width: 100%;">{{unidad.identificacion.titulo.autor}}</h3>
@@ -33,3 +33,51 @@
 		</md-card> -->
 	</div>
 </div>
+
+<script type="text/ng-template" id="tabDialog.tmpl.html">
+	<md-dialog aria-label="Unidad documental">
+		<form>
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<h2>Título de la unidad</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons" aria-label="Close dialog">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+			<md-dialog-content style="max-width:800px;max-height:810px; ">
+				<md-tabs md-dynamic-height md-border-bottom>
+					<md-tab label="Ficha">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Ficha</h1> -->
+							<p><pre>{{unidad | json}}</pre></p>
+						</md-content>
+					</md-tab>
+					<md-tab label="Imagen">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Imagen</h1> -->
+							<img ng-src="{{unidad.adicional.imagen ? 'files/unidades/' + unidad.adicional.imagen : 'http://lorempixel.com/400/200'}}" layout-fill>
+						</md-content>
+					</md-tab>
+				</md-tabs>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+				<!-- <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+					More on Wikipedia
+				</md-button> -->
+				<span flex></span>
+				<!-- <md-button ng-click="answer('not useful')" >
+					Not Useful
+				</md-button>
+				<md-button ng-click="answer('useful')" style="margin-right:20px;" >
+					Useful
+				</md-button> -->
+				<md-button ng-click="editarUnidad()">
+					Editar
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>

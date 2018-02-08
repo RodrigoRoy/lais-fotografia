@@ -1,3 +1,4 @@
+'use strict';
 /*
 API para manejo de la base de datos con la colección de "UnidadDocumental"
 Permite obtener datos en formato JSON mediante HTTP (GET, POST, PUT, DELETE)
