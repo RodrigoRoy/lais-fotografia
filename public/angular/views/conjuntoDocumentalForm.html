@@ -29,7 +29,7 @@
 								</md-input-container>
 
 								<md-input-container class="md-block">
-									<label>Institución</label>
+									<label>Referencia de procedencia</label>
 									<input ng-model="conjuntoDocumental.identificacion.institucion">
 								</md-input-container>
 
@@ -82,12 +82,12 @@
 						<md-content layout-padding>
 							<div>
 								<md-input-container class="md-block">
-									<label>Historia del documento</label>
+									<label>Historia institucional / biográfica</label>
 									<textarea ng-model="conjuntoDocumental.contexto.historiaDocumento"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
-									<label>Historia archivística</label>
+									<label>Historia en el archivo de procedencia</label>
 									<textarea ng-model="conjuntoDocumental.contexto.historiaArchivistica"></textarea>
 								</md-input-container>
 
@@ -104,21 +104,21 @@
 							</div>
 						</md-content>
 					</md-tab>
-					<md-tab label="Contenido y organización">
+					<md-tab label="Estructura y contenido">
 						<md-content layout-padding>
 							<div>
 								<md-input-container class="md-block">
-									<label>Contenido</label>
+									<label>Alcance y contenido</label>
 									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.contenido"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
-									<label>Valoración, selección y eliminación</label>
+									<label>Valoración y selección en el archivo de procedencia</label>
 									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.valoracionSeleccionEliminacion"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
-									<label>Nuevos ingresos</label>
+									<label>Nuevos ingresos en el archivo de procedencia</label>
 									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.nuevosIngresos"></textarea>
 								</md-input-container>
 
@@ -129,7 +129,7 @@
 							</div>
 						</md-content>
 					</md-tab>
-					<md-tab label="Condiciones de acceso y utilización">
+					<md-tab label="Condiciones de acceso">
 						<md-content layout-padding>
 							<div>
 								<md-input-container class="md-block">
