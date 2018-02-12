@@ -209,6 +209,8 @@ router.route('/:conjunto_id')
                 conjunto.documentacionAsociada = req.body.documentacionAsociada;
             if(req.body.publicaciones)
                 conjunto.publicaciones = req.body.publicaciones;
+            if(req.body.notas)
+                conjunto.notas = req.body.notas;
             if(req.body.controlDescripcion)
                 conjunto.controlDescripcion = req.body.controlDescripcion;
 

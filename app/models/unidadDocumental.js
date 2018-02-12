@@ -86,6 +86,9 @@ var UnidadDocumentalSchema = new Schema({
 		publicacion: {type: String, trim: true},
 		exposicion: {type: String, trim: true}
 	},
+	notas: {
+		notas: {type: String, trim: true}
+	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO

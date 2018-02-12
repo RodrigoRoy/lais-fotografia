@@ -59,12 +59,17 @@ var ConjuntoDocumentalSchema = new Schema({
 		publicacion: {type: String, trim: true},
 		exposicion: {type: String, trim: true}
 	},
+	notas: {
+		notas: {type: String, trim: true}
+	},
 	controlDescripcion: {
 		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		reglasNormas: {type: String, trim: true, default: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
+	},
+	adicional:{
+		presentacion: {type: String}
 	}
-
 }, { // Opciones:
 	collection: 'conjuntoDocumental',
 	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}

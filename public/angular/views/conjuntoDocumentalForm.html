@@ -194,6 +194,16 @@
 							</div>
 						</md-content>
 					</md-tab>
+					<md-tab label="Notas">
+						<md-content layout-padding>
+							<div>
+								<md-input-container class="md-block">
+									<label>Notas</label>
+									<textarea ng-model="conjuntoDocumental.notas.notas"></textarea>
+								</md-input-container>
+							</div>
+						</md-content>
+					</md-tab>
 					<md-tab label="Control de la descripción">
 						<md-content layout-padding>
 							<div>
@@ -208,6 +218,16 @@
 								<md-input-container class="md-block">
 									<label>Reglas o normas</label>
 									<input ng-model="conjuntoDocumental.controlDescripcion.reglasNormas"></input>
+								</md-input-container>
+							</div>
+						</md-content>
+					</md-tab>
+					<md-tab label="Datos adicionales">
+						<md-content layout-padding>
+							<div>
+								<md-input-container class="md-block">
+									<label>Texto de presentación</label>
+									<textarea ng-model="conjuntoDocumental.adicional.presentacion"></textarea>
 								</md-input-container>
 							</div>
 						</md-content>

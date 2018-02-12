@@ -141,6 +141,8 @@ router.route('/:unidad_id')
                 unidad.documentacionAsociada = req.body.documentacionAsociada;
             if(req.body.publicaciones)
                 unidad.publicaciones = req.body.publicaciones;
+            if(req.body.notas)
+                unidad.notas = req.body.notas;
             if(req.body.controlDescripcion)
                 unidad.controlDescripcion = req.body.controlDescripcion;
             if(req.body.adicional)
