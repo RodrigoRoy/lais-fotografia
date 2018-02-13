@@ -1,9 +1,9 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="0.5em">
-			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)">
+			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)" style="background: #ff8a80">
 				<md-grid-tile-footer>
-					<h3 md-truncate style="max-width: 100%;">{{conjunto.identificacion.codigoReferencia}}</h3>
+					<h3 md-truncate>{{conjunto.identificacion.codigoReferencia}}</h3>
 				</md-grid-tile-footer>
 			</md-grid-tile>
 		</md-grid-list>
@@ -22,11 +22,15 @@
 					</md-button>
 				</div>
 			</md-toolbar>
-			<md-dialog-content style="max-width:800px;max-height:810px; ">
+			<md-dialog-content style="max-width:800px;max-height:810px;">
 				<md-tabs md-dynamic-height md-border-bottom>
+					<md-tab label="Presentación" ng-if="conjunto.adicional.presentacion">
+						<md-content class="md-padding">
+							<p>{{conjunto.adicional.presentacion}}</p>
+						</md-content>
+					</md-tab>
 					<md-tab label="Identificación">
 						<md-content class="md-padding">
-							<!-- <h1 class="md-display-2">Tab One</h1> -->
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
@@ -34,7 +38,7 @@
 											<td md-cell>Código de referencia</td>
 											<td md-cell>{{conjunto.identificacion.codigoReferencia}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.identificacion.institucion">
 											<td md-cell>Institución</td>
 											<td md-cell>{{conjunto.identificacion.institucion}}</td>
 										</tr>
@@ -42,74 +46,218 @@
 											<td md-cell>Título</td>
 											<td md-cell>{{conjunto.identificacion.titulo}}</td>
 										</tr>
+										<!-- <tr md-row ng-if="conjunto.identificacion.fecha && conjunto.identificacion.fecha.inicio">
+											<td md-cell>Periodo</td>
+											<td md-cell>{{conjunto.identificacion.inicio | date:'yyyy'}} <span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fin | date:'yyyy'}}</span></td>
+										</tr> -->
+										<tr md-row ng-if="conjunto.identificacion.productor">
+											<td md-cell>Productor</td>
+											<td md-cell>{{conjunto.identificacion.productor}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.identificacion.autores && conjunto.identificacion.autores.length > 0">
+											<td md-cell>Autores</td>
+											<td md-cell>
+												<tr md-row ng-repeat="autor in conjunto.identificacion.autores">
+													<td md-cell>{{autor.tipo}}</td>
+													<td md-cell>{{autor.nombre}}</td>
+												</tr>
+											</td>
+										</tr>
+										<tr md-row ng-if="conjunto.identificacion.nivelDescripcion">
+											<td md-cell>Nivel de descripción</td>
+											<td md-cell>{{conjunto.identificacion.nivelDescripcion}}</td>
+										</tr>
+										<!-- <tr md-row ng-if="conjunto.identificacion.cantidad">
+											<td md-cell>Cantidad</td>
+											<td md-cell>{{conjunto.identificacion.cantidad}}</td>
+										</tr> -->
+										<!-- <tr md-row ng-if="conjunto.identificacion.soporte">
+											<td md-cell>Soporte</td>
+											<td md-cell>{{conjunto.identificacion.soporte}}</td>
+										</tr> -->
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Contexto">
+					<md-tab label="Contexto" ng-if="conjunto.contexto.historiaDocumento || conjunto.contexto.historiaArchivistica || (conjunto.contexto.formaIngreso && conjunto.contexto.formaIngreso.length > 0)">
 						<md-content class="md-padding">
-							<!-- <h1 class="md-display-2">Tab Two</h1> -->
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contexto.historiaDocumento">
 											<td md-cell>Historia del documento</td>
 											<td md-cell>{{conjunto.contexto.historiaDocumento}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contexto.historiaArchivistica">
 											<td md-cell>Historia archivística</td>
 											<td md-cell>{{conjunto.contexto.historiaArchivistica}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contexto.formaIngreso && conjunto.contexto.formaIngreso.length > 0">
 											<td md-cell>Forma de ingreso</td>
-											<td md-cell>{{conjunto.contexto.formaIngreso}}</td>
+											<td md-cell>{{conjunto.contexto.formaIngreso.join(', ')}}</td>
 										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Estructura y contenido">
+					<md-tab label="Estructura y contenido" ng-if="conjunto.contenidoOrganizacion.contenido || conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion || conjunto.contenidoOrganizacion.nuevosIngresos || conjunto.contenidoOrganizacion.organizacion">
 						<md-content class="md-padding">
-							<!-- <h1 class="md-display-2">Tab Three</h1> -->
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contenidoOrganizacion.contenido">
 											<td md-cell>Contenido</td>
 											<td md-cell>{{conjunto.contenidoOrganizacion.contenido}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion">
 											<td md-cell>Valoracion, seleccion y eliminacion</td>
 											<td md-cell>{{conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.contenidoOrganizacion.nuevosIngresos">
 											<td md-cell>Nuevos ingresos</td>
 											<td md-cell>{{conjunto.contenidoOrganizacion.nuevosIngresos}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.contenidoOrganizacion.organizacion">
+											<td md-cell>Organización</td>
+											<td md-cell>{{conjunto.contenidoOrganizacion.organizacion}}</td>
 										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Condiciones de acceso">
+					<md-tab label="Condiciones de acceso" ng-if="conjunto.condicionesAcceso.condicionesAcceso || conjunto.condicionesAcceso.condicionesReproduccion || conjunto.condicionesAcceso.caracteristicasFisicas || conjunto.condicionesAcceso.estadoConservacion">
 						<md-content class="md-padding">
-							<!-- <h1 class="md-display-2">Tab Three</h1> -->
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.condicionesAcceso.condicionesAcceso">
 											<td md-cell>Condiciones de acceso</td>
 											<td md-cell>{{conjunto.condicionesAcceso.condicionesAcceso}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.condicionesAcceso.condicionesReproduccion">
 											<td md-cell>Condiciones de reproducción</td>
 											<td md-cell>{{conjunto.condicionesAcceso.condicionesReproduccion}}</td>
 										</tr>
-										<tr md-row>
+										<tr md-row ng-if="conjunto.condicionesAcceso.caracteristicasFisicas">
 											<td md-cell>Características físicas</td>
 											<td md-cell>{{conjunto.condicionesAcceso.caracteristicasFisicas}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.condicionesAcceso.estadoConservacion">
+											<td md-cell>Estado de conservación</td>
+											<td md-cell>{{conjunto.condicionesAcceso.estadoConservacion}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Documentación asociada" ng-if="conjunto.documentacionAsociada.condicionesAcceso || conjunto.documentacionAsociada.condicionesReproduccion || conjunto.documentacionAsociada.caracteristicasFisicas || conjunto.documentacionAsociada.estadoConservacion">
+						<md-content class="md-padding">
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row ng-if="conjunto.documentacionAsociada.condicionesAcceso">
+											<td md-cell>Condiciones de acceso</td>
+											<td md-cell>{{conjunto.documentacionAsociada.condicionesAcceso}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.condicionesReproduccion">
+											<td md-cell>Condiciones de reproducción</td>
+											<td md-cell>{{conjunto.documentacionAsociada.condicionesReproduccion}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.caracteristicasFisicas">
+											<td md-cell>Características físicas</td>
+											<td md-cell>{{conjunto.documentacionAsociada.caracteristicasFisicas}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.estadoConservacion">
+											<td md-cell>Estado de conservación</td>
+											<td md-cell>{{conjunto.documentacionAsociada.estadoConservacion}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Documentación asociada" ng-if="conjunto.documentacionAsociada.serieFotograficaIgualManufactura || conjunto.documentacionAsociada.registrosBase || conjunto.documentacionAsociada.reprografias || conjunto.documentacionAsociada.grabadosRelacionados">
+						<md-content class="md-padding">
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row ng-if="conjunto.documentacionAsociada.serieFotograficaIgualManufactura">
+											<td md-cell>serieFotograficaIgualManufactura</td>
+											<td md-cell>{{conjunto.documentacionAsociada.serieFotograficaIgualManufactura}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.registrosBase">
+											<td md-cell>registrosBase</td>
+											<td md-cell>{{conjunto.documentacionAsociada.registrosBase}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.reprografias">
+											<td md-cell>reprografias</td>
+											<td md-cell>{{conjunto.documentacionAsociada.reprografias}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.documentacionAsociada.grabadosRelacionados">
+											<td md-cell>grabadosRelacionados</td>
+											<td md-cell>{{conjunto.documentacionAsociada.grabadosRelacionados}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Publicaciones" ng-if="conjunto.publicaciones.publicacion || conjunto.publicaciones.exposicion">
+						<md-content class="md-padding">
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row ng-if="conjunto.publicaciones.publicacion">
+											<td md-cell></td>
+											<td md-cell>{{conjunto.publicaciones.publicacion}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.publicaciones.exposicion">
+											<td md-cell></td>
+											<td md-cell>{{conjunto.publicaciones.exposicion}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Notas" ng-if="conjunto.notas.notas">
+						<md-content class="md-padding">
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row ng-if="conjunto.notas.notas">
+											<td md-cell>Notas</td>
+											<td md-cell>{{conjunto.notas.notas}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Control de la descripción" ng-if="(conjunto.controlDescripcion.documentalistas && conjunto.controlDescripcion.documentalistas.length > 0) || conjunto.controlDescripcion.reglasNormas || conjunto.createdAt || conjunto.updatedAt">
+						<md-content class="md-padding">
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<!-- <tr md-row ng-if="conjunto.controlDescripcion.documentalistas && conjunto.controlDescripcion.documentalistas.length > 0">
+											<td md-cell>Documentalistas</td>
+											<td md-cell>{{conjunto.controlDescripcion.documentalistas.join(', ')}}</td>
+										</tr> -->
+										<tr md-row ng-if="conjunto.controlDescripcion.reglasNormas">
+											<td md-cell>Reglas o normas</td>
+											<td md-cell>{{conjunto.controlDescripcion.reglasNormas}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.createdAt">
+											<td md-cell>Fecha de creación</td>
+											<td md-cell>{{conjunto.createdAt | date:'dd/MM/y HH:mm'}}</td>
+										</tr>
+										<tr md-row ng-if="conjunto.updatedAt">
+											<td md-cell>Fecha de última actualización</td>
+											<td md-cell>{{conjunto.updatedAt | date:'dd/MM/y HH:mm'}}</td>
 										</tr>
 									</tbody>
 								</table>

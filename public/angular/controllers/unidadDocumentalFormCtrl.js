@@ -70,7 +70,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
-    $scope.cleanUnidadDocumentalData = function(){
+    var cleanUnidadDocumentalData = function(){
     // var cleanUnidadDocumentalData = function(){
         // Limpia nombres (y tipos) de autores vacios
         for(var i = $scope.unidadDocumental.identificacion.autores.length - 1; i >= 0; i--)
