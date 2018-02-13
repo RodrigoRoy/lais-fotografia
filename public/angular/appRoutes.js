@@ -8,10 +8,10 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'InicioController'
 		})
 
-		// .when('/conjunto', {
-		// 	templateUrl: 'angular/views/conjuntoDocumental.html',
-		// 	controller: 'ConjuntoDocumentalController'
-		// })
+		.when('/conjunto', {
+			templateUrl: 'angular/views/conjuntosDocumentales.html',
+			controller: 'ConjuntosDocumentalesController'
+		})
 
 		.when('/conjunto/nuevo', {
 			templateUrl: 'angular/views/conjuntoDocumentalForm.html',

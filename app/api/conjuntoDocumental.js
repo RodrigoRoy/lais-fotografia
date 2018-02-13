@@ -129,22 +129,20 @@ router.route('/tree')
 // El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: {"_id", "codigoReferencia"}
 router.route('/contains')
     .get(function(req,res){
-        var regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
+        let regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
         ConjuntoDocumental.
             find({'identificacion.codigoReferencia': regex}).
-            select({'identificacion.codigoReferencia': 1}).
+            select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
             exec(function(err, conjuntos){
                 if(err)
                     return res.send(err);
-                var subconjuntos = [];
-                for(var i in conjuntos)
-                    subconjuntos.push({
-                        _id: conjuntos[i]._id,
-                        codigoReferencia: conjuntos[i].identificacion.codigoReferencia
-                    });
+                let subconjuntos = [];
+                conjuntos.forEach(conjunto => {
+                    subconjuntos.push(conjunto);
+                });
                 subconjuntos.sort(function(a,b){
-                    var first = parseInt(/(\d+)$/.exec(a.codigoReferencia)[1]),
-                        second = parseInt(/(\d+)$/.exec(b.codigoReferencia)[1]);
+                    let first = parseInt(/(\d+)$/.exec(a.identificacion.codigoReferencia)[1]),
+                        second = parseInt(/(\d+)$/.exec(b.identificacion.codigoReferencia)[1]);
                     return first-second;
                 });
                 res.send(subconjuntos);

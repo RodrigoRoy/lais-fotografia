@@ -37,6 +37,10 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 			return $http.get('/api/conjuntoDocumental/tree');
 		},
 
+		contains: function(conjuntoDocumentalPrefijo){
+			return $http.get('/api/conjuntoDocumental/contains?prefix=' + conjuntoDocumentalPrefijo)
+		},
+
 		// Obtiene la información sobre el próximo elemento en la numeración de los conjuntos documentales.
 		// El prefijo dado como parámetro solamente incluye la numeración, por ejemplo: 3-1, 2-4-1, 1, etc.
 		// En caso de que el parámetro sea vacío, se considera como la cadena vacia, haciendo referencia al conjunto documental "raíz"

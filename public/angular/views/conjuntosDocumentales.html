@@ -1,0 +1,136 @@
+<div layout="row" layout-align="center start">
+	<div flex="90">
+		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="0.5em">
+			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)">
+				<md-grid-tile-footer>
+					<h3 md-truncate style="max-width: 100%;">{{conjunto.identificacion.codigoReferencia}}</h3>
+				</md-grid-tile-footer>
+			</md-grid-tile>
+		</md-grid-list>
+	</div>
+</div>
+
+<script type="text/ng-template" id="tabDialog.tmpl.html">
+	<md-dialog aria-label="Conjunto documental">
+		<form>
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<h2>{{conjunto.identificacion.titulo}}</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<i class="material-icons" aria-label="Cerrar">close</i>
+					</md-button>
+				</div>
+			</md-toolbar>
+			<md-dialog-content style="max-width:800px;max-height:810px; ">
+				<md-tabs md-dynamic-height md-border-bottom>
+					<md-tab label="Identificación">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Tab One</h1> -->
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row>
+											<td md-cell>Código de referencia</td>
+											<td md-cell>{{conjunto.identificacion.codigoReferencia}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Institución</td>
+											<td md-cell>{{conjunto.identificacion.institucion}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Título</td>
+											<td md-cell>{{conjunto.identificacion.titulo}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Contexto">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Tab Two</h1> -->
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row>
+											<td md-cell>Historia del documento</td>
+											<td md-cell>{{conjunto.contexto.historiaDocumento}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Historia archivística</td>
+											<td md-cell>{{conjunto.contexto.historiaArchivistica}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Forma de ingreso</td>
+											<td md-cell>{{conjunto.contexto.formaIngreso}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Estructura y contenido">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Tab Three</h1> -->
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row>
+											<td md-cell>Contenido</td>
+											<td md-cell>{{conjunto.contenidoOrganizacion.contenido}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Valoracion, seleccion y eliminacion</td>
+											<td md-cell>{{conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Nuevos ingresos</td>
+											<td md-cell>{{conjunto.contenidoOrganizacion.nuevosIngresos}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Condiciones de acceso">
+						<md-content class="md-padding">
+							<!-- <h1 class="md-display-2">Tab Three</h1> -->
+							<md-table-container>
+								<table md-table>
+									<tbody md-body>
+										<tr md-row>
+											<td md-cell>Condiciones de acceso</td>
+											<td md-cell>{{conjunto.condicionesAcceso.condicionesAcceso}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Condiciones de reproducción</td>
+											<td md-cell>{{conjunto.condicionesAcceso.condicionesReproduccion}}</td>
+										</tr>
+										<tr md-row>
+											<td md-cell>Características físicas</td>
+											<td md-cell>{{conjunto.condicionesAcceso.caracteristicasFisicas}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</md-table-container>
+						</md-content>
+					</md-tab>
+				</md-tabs>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+				<md-button class="md-icon-button md-primary" aria-label="Editar" ng-click="editarConjunto()">
+					<i class="material-icons">edit</i>
+				</md-button>
+				<md-button class="md-icon-button md-primary" ng-disabled="true" aria-label="Borrar">
+					<i class="material-icons">delete</i>
+				</md-button>
+				<span flex></span>
+				<md-button ng-click="hide()" md-autofocus>
+					Cerrar
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>

@@ -1,36 +1,13 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="0.5em">
-			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)">
+			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id>
 				<img ng-src="{{'files/unidades/' + unidad.adicional.imagen}}" layout-fill>
 				<md-grid-tile-footer>
 					<h3 md-truncate style="max-width: 100%;">{{unidad.identificacion.titulo.autor}}</h3>
 				</md-grid-tile-footer>
 			</md-grid-tile>
 		</md-grid-list>
-
-		<!-- <md-card ng-repeat="unidad in unidadesDocumentales">
-			<img ng-src="{{'files/unidades/' + unidad.adicional.imagen}}">
-			<md-card-title-text>
-				<span>{{unidad.identificacion.titulo.autor}}</span>
-			</md-card-title-text>
-			<md-card-content>
-				<p>Código de referencia: {{unidad.identificacion.codigoReferencia}}</p>
-				<p>Referencia de procedencia: {{unidad.identificacion.referenciaProcedencia}}</p>
-			</md-card-content>
-
-			<md-card-actions layout="row" layout-align="end center">
-				<md-button class="md-icon-button" aria-label="Favorite">
-					<i class="material-icons">face</i>
-				</md-button>
-				<md-button class="md-icon-button" aria-label="Settings">
-					<i class="material-icons">menu</i>
-				</md-button>
-				<md-button class="md-icon-button" aria-label="Share">
-					<i class="material-icons">share</i>
-				</md-button>
-			</md-card-actions>
-		</md-card> -->
 	</div>
 </div>
 
@@ -42,7 +19,7 @@
 					<h2>Título de la unidad</h2>
 					<span flex></span>
 					<md-button class="md-icon-button" ng-click="cancel()">
-						<i class="material-icons" aria-label="Close dialog">close</i>
+						<i class="material-icons" aria-label="Cerrar">close</i>
 					</md-button>
 				</div>
 			</md-toolbar>

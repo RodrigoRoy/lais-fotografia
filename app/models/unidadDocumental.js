@@ -83,7 +83,7 @@ var UnidadDocumentalSchema = new Schema({
 		grabadoRelacionado: {type: String, trim: true}
 	},
 	publicaciones: {
-		publicacion: {type: String, trim: true},
+		publicacion: [{type: String, trim: true}],
 		exposicion: {type: String, trim: true}
 	},
 	notas: {

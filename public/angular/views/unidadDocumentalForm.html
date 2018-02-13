@@ -326,10 +326,15 @@
 					<md-tab label="Publicaciones">
 						<md-content layout-padding>
 							<div>
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="publicacion in publicaciones">
+									<label>Publicación</label>
+									<input ng-model="publicacion.nombre" ng-blur="agregarPublicacion(publicacion.nombre)">
+								</md-input-container>
+
+								<!-- <md-input-container class="md-block">
 									<label>Publicación</label>
 									<input ng-model="unidadDocumental.publicaciones.publicacion"></input>
-								</md-input-container>
+								</md-input-container> -->
 
 								<md-input-container class="md-block">
 									<label>Exposición</label>
@@ -378,11 +383,14 @@
 				</md-tabs>
 
 				<md-button type="submit" class="md-raised md-primary" ng-if="!edit" ng-click="enviarUnidadDocumental()">Crear unidad documental</md-button>
+				<md-button type="submit" class="md-raised" ng-click="cleanUnidadDocumentalData()">Testing (no presionar)</md-button>
 				<md-button type="submit" class="md-raised md-primary" ng-if="edit" ng-click="editarUnidadDocumental()">Editar unidad documental</md-button>
 			</form>
 		</md-content>
 	</div>
 </div>
 
-<!-- <br>
-<pre>{{unidadDocumental | json}}</pre> -->
+<br>
+<pre>{{publicaciones | json}}</pre>
+<br>
+<pre>{{unidadDocumental | json}}</pre>

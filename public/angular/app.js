@@ -2,6 +2,7 @@ angular.module('laisFotoApp', [
 	'ngRoute', // Front end router
 	'ngMessages', // Manejador de validación en formularios
 	'ngMaterial', // Angular Material (front end)
+	'md.data.table', // Material design data table
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 
@@ -11,9 +12,10 @@ angular.module('laisFotoApp', [
 
 	'IndexCtrl',
 	'InicioCtrl',
+	'ConjuntosDocumentalesCtrl',
+	'UnidadesDocumentalesCtrl',
 	'ConjuntoDocumentalFormCtrl',
-	'UnidadDocumentalFormCtrl',
-	'UnidadesDocumentalesCtrl'
+	'UnidadDocumentalFormCtrl'
 ])
 
 // configuración de aplicación para integrar token en peticiones

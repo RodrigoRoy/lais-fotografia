@@ -43,7 +43,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
 
     // Controlador interno para la creación de un mdDialog
     // Incluye servicios como $scope y $mdDialog.
-    // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidadId')
+    // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidad')
     function DialogController($scope, $mdDialog, $location, unidad, UnidadDocumental){
         $scope.unidad = {};
 

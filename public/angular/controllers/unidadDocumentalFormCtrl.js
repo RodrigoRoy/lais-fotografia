@@ -36,6 +36,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             isPublic: true,
         }
     };
+    $scope.publicaciones = [{nombre: ''}]; // Auxiliar para manejar el arreglo de publicaciones
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
 
     // Agrega un "nuevo" autor.
@@ -59,6 +60,38 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if($scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
                 $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
     };
+    // Agrega una "nueva" publicacion de manera análoga a la función "agregaAutor" pero empleando el auxiliar $scope.publicaciones
+    // $scope.publicaciones = [{nombre: ''}];
+    $scope.agregarPublicacion = function(publicacionText){
+        var lastPublicacion = $scope.publicaciones[$scope.publicaciones.length - 1];
+        if(publicacionText.trim() != '')
+            if($scope.publicaciones.length == 1 || lastPublicacion.nombre != '')
+                $scope.publicaciones.push({nombre: ''});
+    };
+
+    // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
+    $scope.cleanUnidadDocumentalData = function(){
+    // var cleanUnidadDocumentalData = function(){
+        // Limpia nombres (y tipos) de autores vacios
+        for(var i = $scope.unidadDocumental.identificacion.autores.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.identificacion.autores[i].nombre || !$scope.unidadDocumental.identificacion.autores[i].tipo)
+                $scope.unidadDocumental.identificacion.autores.splice(i, 1);
+        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte primario)
+        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones[i].transcripcion)
+                $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.splice(i, 1);
+        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte secundario)
+        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones[i].transcripcion)
+                $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.splice(i, 1);
+        // Copiar $scope.publicaciones a $scope.unidadDocumental.publicaciones.publicacion
+        $scope.unidadDocumental.publicaciones.publicacion = [];
+        $scope.publicaciones.forEach(publicacion => {
+            if(publicacion.nombre != '')
+                $scope.unidadDocumental.publicaciones.publicacion.push(publicacion.nombre);
+        });
+        $scope.unidadDocumental.publicaciones.publicacion = $scope.unidadDocumental.publicaciones.publicacion.length > 0 ? $scope.unidadDocumental.publicaciones.publicacion : undefined;
+    };
 
     // Sube una imagen al servidor.
     // El parametro element representa el contenido de <input type="file">
@@ -75,22 +108,6 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         }, function(res){
             console.error('Error de conexión con el servidor', res);
         })
-    };
-
-    // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
-    var cleanUnidadDocumentalData = function(){
-        // Limpia nombres (y tipos) de autores vacios
-    	for(var i = $scope.unidadDocumental.identificacion.autores.length - 1; i >= 0; i--)
-    		if(!$scope.unidadDocumental.identificacion.autores[i].nombre || !$scope.unidadDocumental.identificacion.autores[i].tipo)
-    			$scope.unidadDocumental.identificacion.autores.splice(i, 1);
-        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte primario)
-        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.length - 1; i >= 0; i--)
-            if(!$scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones[i].transcripcion)
-                $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.splice(i, 1);
-        // Limpia transcripciones (y ubicaciones) de inscripciones vacias (en soporte secundario)
-        for(var i = $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length - 1; i >= 0; i--)
-            if(!$scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones[i].transcripcion)
-                $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.splice(i, 1);
     };
 
     // Envia la información a la base de datos para crear una unidad documental
@@ -156,6 +173,14 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             // Agregar un espacio adicional para seguir agregando inscripciones (en soporte primario y secundario)
             $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.push({transcripcion: '', ubicacion: ''});
             $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
+            // Parse para $scope.unidadDocumental.publicaciones.publicacion -> $scope.publicaciones. Se agrega un espacio en blanco para seguir agregando publicaciones
+            if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.publicacion && $scope.unidadDocumental.publicaciones.publicacion.length > 0){
+                $scope.publicaciones = [];
+                $scope.unidadDocumental.publicaciones.publicacion.forEach(publicacion => {
+                    $scope.publicaciones.push({nombre: publicacion});
+                });
+                $scope.publicaciones.push({nombre: ''});
+            }
         }, function(res){
             console.error("Error de conexión para obtener información de la unidad documental", res);
         });
