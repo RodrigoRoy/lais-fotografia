@@ -60,9 +60,9 @@
 											<td md-cell>Referencia de procedencia</td>
 											<td md-cell>{{unidad.identificacion.referenciaProcedencia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.autor">
-											<td md-cell>Título del autor</td>
-											<td md-cell>{{unidad.identificacion.titulo.autor}}</td>
+										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.archivoProcedencia">
+											<td md-cell>Título generado por el archivo de procedencia</td>
+											<td md-cell>{{unidad.identificacion.titulo.archivoProcedencia}}</td>
 										</tr>
 										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.inscrito">
 											<td md-cell>Título inscrito</td>
@@ -90,50 +90,50 @@
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Estructura y contenido" ng-if="unidad.contenidoEstructura.estructuraFormal || (unidad.contenidoEstructura.encuadre && (unidad.contenidoEstructura.encuadre.orientacion || unidad.contenidoEstructura.encuadre.plano || unidad.contenidoEstructura.encuadre.anguloCamara || unidad.contenidoEstructura.encuadre.nivelCamara || unidad.contenidoEstructura.encuadre.tipoCamara || unidad.contenidoEstructura.encuadre.edicionImagen)) || unidad.contenidoEstructura.descripcion || unidad.contenidoEstructura.tomadaDesde || unidad.contenidoEstructura.tomadaHacia">
+					<md-tab label="Estructura y contenido" ng-if="unidad.estructuraContenido.estructuraFormal || (unidad.estructuraContenido.encuadre && (unidad.estructuraContenido.encuadre.orientacion || unidad.estructuraContenido.encuadre.plano || unidad.estructuraContenido.encuadre.anguloCamara || unidad.estructuraContenido.encuadre.nivelCamara || unidad.estructuraContenido.encuadre.tipoCamara || unidad.estructuraContenido.encuadre.edicionImagen)) || unidad.estructuraContenido.descripcion || unidad.estructuraContenido.tomadaDesde || unidad.estructuraContenido.tomadaHacia">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row ng-if="unidad.contenidoEstructura.estructuraFormal">
+										<tr md-row ng-if="unidad.estructuraContenido.estructuraFormal">
 											<td md-cell>Estructura formal</td>
-											<td md-cell>{{unidad.contenidoEstructura.estructuraFormal}}</td>
+											<td md-cell>{{unidad.estructuraContenido.estructuraFormal}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.orientacion">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.orientacion">
 											<td md-cell>Orientación</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.orientacion}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.orientacion}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.plano">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.plano">
 											<td md-cell>Plano</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.plano}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.plano}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.anguloCamara">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.anguloCamara">
 											<td md-cell>Ángulo de la cámara</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.anguloCamara}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.anguloCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.nivelCamara">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.nivelCamara">
 											<td md-cell>Nivel de la cámara</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.nivelCamara}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.nivelCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.tipoCamara">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.tipoCamara">
 											<td md-cell>Tipo de cámara</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.tipoCamara}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.tipoCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.encuadre.edicionImagen">
+										<tr md-row ng-if="unidad.estructuraContenido.encuadre.edicionImagen">
 											<td md-cell>Edición de la imagen</td>
-											<td md-cell>{{unidad.contenidoEstructura.encuadre.edicionImagen}}</td>
+											<td md-cell>{{unidad.estructuraContenido.encuadre.edicionImagen}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.descripcion">
+										<tr md-row ng-if="unidad.estructuraContenido.descripcion">
 											<td md-cell>Descripción</td>
-											<td md-cell>{{unidad.contenidoEstructura.descripcion}}</td>
+											<td md-cell>{{unidad.estructuraContenido.descripcion}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.tomadaDesde">
+										<tr md-row ng-if="unidad.estructuraContenido.tomadaDesde">
 											<td md-cell>Tomada desde</td>
-											<td md-cell>{{unidad.contenidoEstructura.tomadaDesde}}</td>
+											<td md-cell>{{unidad.estructuraContenido.tomadaDesde}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.contenidoEstructura.tomadaHacia">
+										<tr md-row ng-if="unidad.estructuraContenido.tomadaHacia">
 											<td md-cell>Tomada hacia</td>
-											<td md-cell>{{unidad.contenidoEstructura.tomadaHacia}}</td>
+											<td md-cell>{{unidad.estructuraContenido.tomadaHacia}}</td>
 										</tr>
 									</tbody>
 								</table>

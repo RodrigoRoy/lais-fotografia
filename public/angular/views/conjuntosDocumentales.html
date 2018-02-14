@@ -80,18 +80,18 @@
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Contexto" ng-if="conjunto.contexto.historiaDocumento || conjunto.contexto.historiaArchivistica || (conjunto.contexto.formaIngreso && conjunto.contexto.formaIngreso.length > 0)">
+					<md-tab label="Contexto" ng-if="conjunto.contexto.historiaInstitucionalBiografica || conjunto.contexto.historiaArchivoProcedencia || (conjunto.contexto.formaIngreso && conjunto.contexto.formaIngreso.length > 0)">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row ng-if="conjunto.contexto.historiaDocumento">
-											<td md-cell>Historia del documento</td>
-											<td md-cell>{{conjunto.contexto.historiaDocumento}}</td>
+										<tr md-row ng-if="conjunto.contexto.historiaInstitucionalBiografica">
+											<td md-cell>Historia institucional / biográfica</td>
+											<td md-cell>{{conjunto.contexto.historiaInstitucionalBiografica}}</td>
 										</tr>
-										<tr md-row ng-if="conjunto.contexto.historiaArchivistica">
-											<td md-cell>Historia archivística</td>
-											<td md-cell>{{conjunto.contexto.historiaArchivistica}}</td>
+										<tr md-row ng-if="conjunto.contexto.historiaArchivoProcedencia">
+											<td md-cell>Historia en el archivo de procedencia</td>
+											<td md-cell>{{conjunto.contexto.historiaArchivoProcedencia}}</td>
 										</tr>
 										<tr md-row ng-if="conjunto.contexto.formaIngreso && conjunto.contexto.formaIngreso.length > 0">
 											<td md-cell>Forma de ingreso</td>
@@ -102,26 +102,26 @@
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Estructura y contenido" ng-if="conjunto.contenidoOrganizacion.contenido || conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion || conjunto.contenidoOrganizacion.nuevosIngresos || conjunto.contenidoOrganizacion.organizacion">
+					<md-tab label="Estructura y contenido" ng-if="conjunto.estructuraContenido.alcanceContenido || conjunto.estructuraContenido.valoracionSeleccionEliminacion || conjunto.estructuraContenido.nuevosIngresos || conjunto.estructuraContenido.organizacion">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table md-table>
 									<tbody md-body>
-										<tr md-row ng-if="conjunto.contenidoOrganizacion.contenido">
-											<td md-cell>Contenido</td>
-											<td md-cell>{{conjunto.contenidoOrganizacion.contenido}}</td>
+										<tr md-row ng-if="conjunto.estructuraContenido.alcanceContenido">
+											<td md-cell>Alcance y contenido</td>
+											<td md-cell>{{conjunto.estructuraContenido.alcanceContenido}}</td>
 										</tr>
-										<tr md-row ng-if="conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion">
+										<tr md-row ng-if="conjunto.estructuraContenido.valoracionSeleccionEliminacion">
 											<td md-cell>Valoracion, seleccion y eliminacion</td>
-											<td md-cell>{{conjunto.contenidoOrganizacion.valoracionSeleccionEliminacion}}</td>
+											<td md-cell>{{conjunto.estructuraContenido.valoracionSeleccionEliminacion}}</td>
 										</tr>
-										<tr md-row ng-if="conjunto.contenidoOrganizacion.nuevosIngresos">
+										<tr md-row ng-if="conjunto.estructuraContenido.nuevosIngresos">
 											<td md-cell>Nuevos ingresos</td>
-											<td md-cell>{{conjunto.contenidoOrganizacion.nuevosIngresos}}</td>
+											<td md-cell>{{conjunto.estructuraContenido.nuevosIngresos}}</td>
 										</tr>
-										<tr md-row ng-if="conjunto.contenidoOrganizacion.organizacion">
+										<tr md-row ng-if="conjunto.estructuraContenido.organizacion">
 											<td md-cell>Organización</td>
-											<td md-cell>{{conjunto.contenidoOrganizacion.organizacion}}</td>
+											<td md-cell>{{conjunto.estructuraContenido.organizacion}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -275,6 +275,9 @@
 					<i class="material-icons">delete</i>
 				</md-button>
 				<span flex></span>
+				<md-button ng-click="verConjunto(conjunto.identificacion.codigoReferencia)" md-autofocus>
+					Ver colección
+				</md-button>
 				<md-button ng-click="hide()" md-autofocus>
 					Cerrar
 				</md-button>

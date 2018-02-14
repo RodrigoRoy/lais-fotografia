@@ -54,6 +54,20 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
             $location.path('/conjunto/' + $scope.conjunto._id + '/edit');
         };
 
+        $scope.verConjunto = function(codigoReferencia){
+            $mdDialog.hide();
+            let prefijo = /(\d+-?)*$/.exec(codigoReferencia)[0];
+            ConjuntoDocumental.isLeaf(prefijo).
+            then(function(res){
+                if(res.data)
+                    $location.url('/unidad?c=' + prefijo);
+                else
+                    $location.url('/conjunto?c=' + prefijo);
+            }, function(res){
+                console.error('Error de conexión con la base de datos', res);
+            });
+        };
+
         // Esconde el dialogo existente y acepta el promise devuelto desde $mdDialog.show()
         $scope.hide = function(res){
             $mdDialog.hide(res);

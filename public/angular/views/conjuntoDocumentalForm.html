@@ -66,6 +66,8 @@
 												<md-option value="Editor">Editor</md-option>
 												<md-option value="Productor">Productor</md-option>
 												<md-option value="Comitente">Comitente</md-option>
+												<md-option value="Impresor">Impresor</md-option>
+												<md-option value="Dibujante">Dibujante</md-option>
 											</md-select>
 										</md-input-container>
 									</div>
@@ -83,12 +85,12 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Historia institucional / biográfica</label>
-									<textarea ng-model="conjuntoDocumental.contexto.historiaDocumento"></textarea>
+									<textarea ng-model="conjuntoDocumental.contexto.historiaInstitucionalBiografica"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Historia en el archivo de procedencia</label>
-									<textarea ng-model="conjuntoDocumental.contexto.historiaArchivistica"></textarea>
+									<textarea ng-model="conjuntoDocumental.contexto.historiaArchivoProcedencia"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
@@ -109,22 +111,22 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Alcance y contenido</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.contenido"></textarea>
+									<textarea ng-model="conjuntoDocumental.estructuraContenido.alcanceContenido"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Valoración y selección en el archivo de procedencia</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.valoracionSeleccionEliminacion"></textarea>
+									<textarea ng-model="conjuntoDocumental.estructuraContenido.valoracionSeleccionEliminacion"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Nuevos ingresos en el archivo de procedencia</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.nuevosIngresos"></textarea>
+									<textarea ng-model="conjuntoDocumental.estructuraContenido.nuevosIngresos"></textarea>
 								</md-input-container>
 
 								<md-input-container class="md-block">
 									<label>Organización</label>
-									<textarea ng-model="conjuntoDocumental.contenidoOrganizacion.organizacion"></textarea>
+									<textarea ng-model="conjuntoDocumental.estructuraContenido.organizacion"></textarea>
 								</md-input-container>
 							</div>
 						</md-content>

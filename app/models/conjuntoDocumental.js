@@ -23,7 +23,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		lugar: [{type: String}], // Google Maps ID, INFERIDO
 		productor: {type: String, trim: true},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
-			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo']},
+			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Dibujante']},
 			nombre: {type: String, trim: true},
 			_id: false
 		}],
@@ -33,12 +33,12 @@ var ConjuntoDocumentalSchema = new Schema({
 		conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'}
 	},
 	contexto: {
-		historiaDocumento: {type: String, trim: true},
-		historiaArchivistica: {type: String, trim: true},
+		historiaInstitucionalBiografica: {type: String, trim: true},
+		historiaArchivoProcedencia: {type: String, trim: true},
 		formaIngreso: [{type: String, trim: true}] // enum: [Reproducciones, Préstamos, Donaciones, Compra, Intercambio, etc]
 	},
-	contenidoOrganizacion: {
-		contenido: {type: String, trim: true},
+	estructuraContenido: {
+		alcanceContenido: {type: String, trim: true},
 		valoracionSeleccionEliminacion: {type: String, trim: true},
 		nuevosIngresos: {type: String, trim: true},
 		organizacion: {type: String, trim: true}

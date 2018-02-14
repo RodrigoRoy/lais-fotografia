@@ -12,19 +12,19 @@ var UnidadDocumentalSchema = new Schema({
 		codigoReferencia: {type: String, required: true, index: {unique: true}},
 		referenciaProcedencia: {type: String, trim: true},
 		titulo: {
-			autor: {type: String, trim: true},
+			archivoProcedencia: {type: String, trim: true},
 			inscrito: {type: String, trim: true},
 			otroObjeto: {type: String, trim: true}
 		},
 		fecha: {type: Date},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
-			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo']},
+			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Dibujante']},
 			nombre: {type: String, trim: true},
 			_id: false
 		}],
 		conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'}
 	},
-	contenidoEstructura: {
+	estructuraContenido: {
 		estructuraFormal: {type: String, trim: true}, // enum: ['Paisaje', 'Paisaje rural', 'Paisaje urbano', 'Paisaje industrial', 'Roster', 'Escena', 'Retrato', 'Monumento arqueológico', 'Arquitectura']
 		encuadre: {
 			orientacion: {type: String, enum: ['Horizontal', 'Vertical']},
@@ -42,7 +42,7 @@ var UnidadDocumentalSchema = new Schema({
 	caracteristicasFisicas: {
 		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen de cámara']},
 		soportePrimario: {
-			procesoFotografico: {type: String, trim: true},
+			materiales: {type: String, trim: true},
 			dimension: {
 				x: {type: Number},
 				y: {type: Number},

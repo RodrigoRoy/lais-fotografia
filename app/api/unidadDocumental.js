@@ -133,8 +133,8 @@ router.route('/:unidad_id')
             // You can check specific properties before update
             if(req.body.identificacion)
                 unidad.identificacion = req.body.identificacion;
-            if(req.body.contenidoEstructura)
-                unidad.contenidoEstructura = req.body.contenidoEstructura;
+            if(req.body.estructuraContenido)
+                unidad.estructuraContenido = req.body.estructuraContenido;
             if(req.body.caracteristicasFisicas)
                 unidad.caracteristicasFisicas = req.body.caracteristicasFisicas;
             if(req.body.documentacionAsociada)

@@ -12,7 +12,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     			nombre: ''
     		}]
     	},
-		contenidoEstructura: {},
+		estructuraContenido: {},
         caracteristicasFisicas: {
             soportePrimario:{
                 inscripciones: [{

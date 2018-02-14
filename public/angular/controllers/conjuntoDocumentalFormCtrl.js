@@ -12,7 +12,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     		}]
     	},
 		contexto: {},
-		contenidoOrganizacion: {},
+		estructuraContenido: {},
 		condicionesAcceso: {},
 		documentacionAsociada: {},
 		publicaciones: {},

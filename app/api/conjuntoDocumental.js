@@ -128,7 +128,7 @@ router.route('/tree')
 // Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/contains?prefix=3-1
 // El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: {"_id", "codigoReferencia"}
 router.route('/contains')
-    .get(function(req,res){
+    .get(function(req, res){
         let regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
         ConjuntoDocumental.
             find({'identificacion.codigoReferencia': regex}).
@@ -146,7 +146,22 @@ router.route('/contains')
                     return first-second;
                 });
                 res.send(subconjuntos);
-            })
+            });
+    });
+
+router.route('/isLeaf')
+    .get(function(req, res){
+        let regex = new RegExp('^' + prefijo + '-' + req.query.prefix + '-\\d+$');
+        ConjuntoDocumental.
+            find({'identificacion.codigoReferencia': regex}).
+            select({'identificacion.codigoReferencia': 1, '_id': -1}).
+            exec(function(err, conjuntos){
+                if(err)
+                    return res.send(err);
+                if(conjuntos && conjuntos.length > 0)
+                    return res.send(false);
+                return res.send(true);
+            });
     });
 
 // Obtiene la información sobre qué numeración continua al desear crear un nuevo conjunto documental
@@ -199,8 +214,8 @@ router.route('/:conjunto_id')
                 conjunto.identificacion = req.body.identificacion;
             if(req.body.contexto)
                 conjunto.contexto = req.body.contexto;
-            if(req.body.contenidoOrganizacion)
-                conjunto.contenidoOrganizacion = req.body.contenidoOrganizacion;
+            if(req.body.estructuraContenido)
+                conjunto.estructuraContenido = req.body.estructuraContenido;
             if(req.body.condicionesAcceso)
                 conjunto.condicionesAcceso = req.body.condicionesAcceso;
             if(req.body.documentacionAsociada)

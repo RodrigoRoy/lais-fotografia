@@ -21,14 +21,14 @@
 								</md-input-container>
 
 								<md-input-container class="md-block">
-									<label>Institución de procedencia</label>
+									<label>Referencia de procedencia</label>
 									<input ng-model="unidadDocumental.identificacion.referenciaProcedencia">
 								</md-input-container>
 
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Título generado por el archivo de procedencia</label>
-										<input ng-model="unidadDocumental.identificacion.titulo.autor">
+										<input ng-model="unidadDocumental.identificacion.titulo.archivoProcedencia">
 									</md-input-container>
 
 									<md-input-container class="md-block" flex-gt-sm>
@@ -61,6 +61,8 @@
 												<md-option value="Editor">Editor</md-option>
 												<md-option value="Productor">Productor</md-option>
 												<md-option value="Comitente">Comitente</md-option>
+												<md-option value="Impresor">Impresor</md-option>
+												<md-option value="Dibujante">Dibujante</md-option>
 											</md-select>
 										</md-input-container>
 									</div>
@@ -73,8 +75,8 @@
 							<div>
 								<md-input-container class="md-block">
 									<label>Estructura formal</label>
-									<input ng-model="unidadDocumental.contenidoEstructura.estructuraFormal">
-									<!-- <md-select ng-model="unidadDocumental.contenidoEstructura.estructuraFormal">
+									<input ng-model="unidadDocumental.estructuraContenido.estructuraFormal">
+									<!-- <md-select ng-model="unidadDocumental.estructuraContenido.estructuraFormal">
 										<md-option value="Paisaje">Paisaje</md-option>
 										<md-option value="Paisaje rural">Paisaje rural</md-option>
 										<md-option value="Paisaje urbano">Paisaje urbano</md-option>
@@ -92,7 +94,7 @@
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Orientación</label>
-										<md-select ng-model="unidadDocumental.contenidoEstructura.encuadre.orientacion">
+										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.orientacion">
 											<md-option value="Horizontal">Horizontal</md-option>
 											<md-option value="Vertical">Vertical</md-option>
 										</md-select>
@@ -100,7 +102,7 @@
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Plano</label>
-										<md-select ng-model="unidadDocumental.contenidoEstructura.encuadre.plano">
+										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.plano">
 											<md-option value="Gran plano general">Gran plano general</md-option>
 											<md-option value="Plano general">Plano general</md-option>
 											<md-option value="Plano entero">Plano entero</md-option>
@@ -113,7 +115,7 @@
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Ángulo de la cámara</label>
-										<md-select ng-model="unidadDocumental.contenidoEstructura.encuadre.anguloCamara">
+										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.anguloCamara">
 											<md-option value="Normal">Normal</md-option>
 											<md-option value="Picado">Picado</md-option>
 											<md-option value="Contrapicado">Contrapicado</md-option>
@@ -126,7 +128,7 @@
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Nivel de la cámara</label>
-										<md-select ng-model="unidadDocumental.contenidoEstructura.encuadre.nivelCamara">
+										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.nivelCamara">
 											<md-option value="A nivel">A nivel</md-option>
 											<md-option value="Bajo">Bajo</md-option>
 											<md-option value="Alto">Alto</md-option>
@@ -135,35 +137,35 @@
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Tipo de cámara</label>
-										<input ng-model="unidadDocumental.contenidoEstructura.encuadre.tipoCamara">
+										<input ng-model="unidadDocumental.estructuraContenido.encuadre.tipoCamara">
 									</md-input-container>
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Edición de la imágen</label>
-										<input ng-model="unidadDocumental.contenidoEstructura.encuadre.edicionImagen">
+										<input ng-model="unidadDocumental.estructuraContenido.encuadre.edicionImagen">
 									</md-input-container>
 								</div>
 
 								<md-input-container class="md-block">
 									<label>Descripción</label>
-									<textarea ng-model="unidadDocumental.contenidoEstructura.descripcion"></textarea>
+									<textarea ng-model="unidadDocumental.estructuraContenido.descripcion"></textarea>
 								</md-input-container>
 
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Fotografía tomada desde</label>
-										<input ng-model="unidadDocumental.contenidoEstructura.tomadaDesde">
+										<input ng-model="unidadDocumental.estructuraContenido.tomadaDesde">
 									</md-input-container>
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Fotografía tomada hacia</label>
-										<input ng-model="unidadDocumental.contenidoEstructura.tomadaHacia">
+										<input ng-model="unidadDocumental.estructuraContenido.tomadaHacia">
 									</md-input-container>
 								</div>
 
 								<md-input-container class="md-block">
 									<label>Lugar descrito</label>
-									<input ng-model="unidadDocumental.contenidoEstructura.lugarDescrito">
+									<input ng-model="unidadDocumental.estructuraContenido.lugarDescrito">
 								</md-input-container>
 							</div>
 						</md-content>
@@ -184,7 +186,7 @@
 
 								<md-input-container class="md-block">
 									<label>Materiales</label>
-									<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.procesoFotografico">
+									<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales">
 								</md-input-container>
 
 								<div layout-gt-sm="row">

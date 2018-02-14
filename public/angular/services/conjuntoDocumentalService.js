@@ -38,7 +38,11 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 		},
 
 		contains: function(conjuntoDocumentalPrefijo){
-			return $http.get('/api/conjuntoDocumental/contains?prefix=' + conjuntoDocumentalPrefijo)
+			return $http.get('/api/conjuntoDocumental/contains?prefix=' + conjuntoDocumentalPrefijo);
+		},
+
+		isLeaf: function(conjuntoDocumentalPrefijo){
+			return $http.get('/api/conjuntoDocumental/isLeaf?prefix=' + conjuntoDocumentalPrefijo);
 		},
 
 		// Obtiene la información sobre el próximo elemento en la numeración de los conjuntos documentales.

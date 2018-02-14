@@ -9,10 +9,18 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 		$mdSidenav('menu').toggle();
 	};
 
-	// Reenvia a la página con las unidades documentales con mismo prefijo (que es el sufijo de la colección)
-	$scope.gotoUnidad = function(suffix){
-		$location.url('/unidad?c=' + suffix);
-	};
+	// Reenvia a la página del conjunto documental con el prefijo dado (que es en realidad el sufijo de la colección)
+	$scope.verConjunto = function(suffix){
+        ConjuntoDocumental.isLeaf(suffix).
+        then(function(res){
+            if(res.data)
+                $location.url('/unidad?c=' + suffix);
+            else
+                $location.url('/conjunto?c=' + suffix);
+        }, function(res){
+            console.error('Error de conexión con la base de datos', res);
+        });
+    };
 
 	// Obtiene la lista con los conjuntos y subconjuntos ordenados
 	$scope.getConjuntosDocumentales = function(){

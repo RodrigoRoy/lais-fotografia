@@ -46,9 +46,6 @@
 				<md-nav-item md-nav-href="/unidad/nuevo" name="unidades">
 					Unidad
 				</md-nav-item>
-				<md-nav-item md-nav-href="/unidad" name="unidad">
-					Unidad (view)
-				</md-nav-item>
 			</md-nav-bar>
 		</md-content>
 		
@@ -59,7 +56,7 @@
 			<md-content layout-padding>
 				<md-list>
 					<div ng-repeat="conjunto in subconjuntos"> <!-- Uso de ng-repeat y ng-include para crear lista de conjuntos recursivamente -->
-						<md-list-item ng-click="gotoUnidad(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
+						<md-list-item ng-click="verConjunto(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 						<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 					</div>
 				</md-list>
