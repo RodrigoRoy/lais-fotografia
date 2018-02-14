@@ -1,5 +1,5 @@
 // Controlador de la vista para unidades documentales
-angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesController', function ($scope, $routeParams, $mdDialog, UnidadDocumental){
+angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesController', function ($scope, $routeParams, $location, $mdDialog, UnidadDocumental){
     $scope.unidadesDocumentales = []; // Lista con toda la información de las unidades documentales
 
     // Obtiene la información de todas las unidades documentales. Se pueden filtrar solo aquellas de pertenecen a una colección.
@@ -20,6 +20,11 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
                 console.error('Error de conexión a la base de datos', res);
             });
         }
+    };
+
+    // Redirige a la página para crear una unidad e integra el parámetro que indica el conjunto de procedencia
+    $scope.crearUnidad = function(){
+        $location.url('/unidad/nuevo?c=' + $routeParams.c);
     };
 
     // Crea una nueva instancia de mdDialog para mostrar la información de una unidad documental

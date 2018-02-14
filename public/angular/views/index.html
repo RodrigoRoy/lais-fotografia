@@ -96,7 +96,7 @@
 		<script type="text/ng-template" id="menu.html">
 			<md-list>
 				<div ng-repeat="conjunto in conjunto.subconjuntos">
-					<md-list-item ng-click="gotoUnidad(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
+					<md-list-item ng-click="verConjunto(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 					<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 				</div>
 			</md-list>

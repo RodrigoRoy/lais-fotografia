@@ -77,12 +77,12 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     // Inicializaciones
 
     // Código de referencia
-    ConjuntoDocumental.next($routeParams.p).
+    ConjuntoDocumental.next($routeParams.c).
     then(function(res){
         $scope.conjuntoDocumental.identificacion.codigoReferencia = res.data.str;
         ConjuntoDocumental.prefix().
         then(function(res){
-            $scope.conjuntoDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.p;
+            $scope.conjuntoDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
         }, function(res){
             //fail
         });

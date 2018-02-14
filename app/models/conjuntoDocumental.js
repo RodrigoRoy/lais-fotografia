@@ -23,7 +23,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		lugar: [{type: String}], // Google Maps ID, INFERIDO
 		productor: {type: String, trim: true},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
-			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Dibujante']},
+			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Taller de imprenta', 'Dibujante', 'Dirección', 'Responsable', 'Levantamiento', 'Litógrafo']},
 			nombre: {type: String, trim: true},
 			_id: false
 		}],

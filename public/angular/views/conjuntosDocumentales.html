@@ -7,6 +7,11 @@
 				</md-grid-tile-footer>
 			</md-grid-tile>
 		</md-grid-list>
+
+		<section layout="row" layout-align="end center" layout-wrap>
+			<md-button class="md-raised md-primary" ng-if="!isLeaf" ng-click="crearConjunto()">Agregar conjunto</md-button>
+			<md-button class="md-raised md-primary" ng-if="isLeaf || !isEmpty" ng-click="crearUnidad()">Agregar unidad</md-button>
+		</section>
 	</div>
 </div>
 

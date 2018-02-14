@@ -19,6 +19,7 @@ var config = require('../../config');
 var prefijo = config.prefix;
 var router = express.Router(); // para modularizar las rutas
 var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de la colección "ConjuntoDocumental"
+var UnidadDocumental = require('../models/unidadDocumental') // Modelo de la colleción "UnidadDocumental"
 var verifyToken = require('./token'); // Función de verificación de token
 
 // // Función a realizar siempre que se utilize esta API
@@ -149,6 +150,9 @@ router.route('/contains')
             });
     });
 
+// Determina si un conjunto es una "hoja" en la jerarquia de todos los conjuntos y subconjuntos.
+// Un conjunto se considera hoja o nodo terminal si no contiene más subconjuntos o si además de ser vacio, no contiene unidades documentales en él.
+// En otro caso, no se le considera hoja.
 router.route('/isLeaf')
     .get(function(req, res){
         let regex = new RegExp('^' + prefijo + '-' + req.query.prefix + '-\\d+$');
@@ -158,9 +162,22 @@ router.route('/isLeaf')
             exec(function(err, conjuntos){
                 if(err)
                     return res.send(err);
-                if(conjuntos && conjuntos.length > 0)
+                if(conjuntos && conjuntos.length > 0){
                     return res.send(false);
-                return res.send(true);
+                }
+                else{
+                    UnidadDocumental.
+                        find({'identificacion.codigoReferencia': regex}).
+                        select({'identificacion.codigoReferencia': 1, '_id': -1}).
+                        exec(function(err, unidades){
+                            if(err)
+                                return res.send(err);
+                            if(unidades && unidades.length > 0)
+                                return res.send(true);
+                            else
+                                return res.send(false);
+                        });
+                }
             });
     });
 
