@@ -68,6 +68,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	},
 	adicional:{
+		imagen: {type: String}, // Referencia nombre de la imagen
 		presentacion: {type: String}
 	}
 }, { // Opciones:

@@ -38,11 +38,11 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
 
     // Redirige a la página para crear un conjunto e integra el parámetro que indica el conjunto de procedencia
     $scope.crearConjunto = function(){
-        $location.url('/conjunto/nuevo?c=' + $routeParams.c);
+        $location.url('/conjunto/nuevo?c=' + ($routeParams.c || ''));
     };
     // Redirige a la página para crear una unidad e integra el parámetro que indica el conjunto de procedencia
     $scope.crearUnidad = function(){
-        $location.url('/unidad/nuevo?c=' + $routeParams.c);
+        $location.url('/unidad/nuevo?c=' + ($routeParams.c || ''));
     };
 
     // Crea una nueva instancia de mdDialog para mostrar la información de un conjunto documental

@@ -24,7 +24,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
 
     // Redirige a la página para crear una unidad e integra el parámetro que indica el conjunto de procedencia
     $scope.crearUnidad = function(){
-        $location.url('/unidad/nuevo?c=' + $routeParams.c);
+        $location.url('/unidad/nuevo?c=' + ($routeParams.c || ''));
     };
 
     // Crea una nueva instancia de mdDialog para mostrar la información de una unidad documental

@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, $mdToast, ConjuntoDocumental){
+angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, $mdToast, ConjuntoDocumental, File){
 	
     // Objeto que representa toda la información del conjunto documental, como se describe en el modelo conjuntoDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -19,7 +19,8 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
 		controlDescripcion: {
 			//documentalistas: [],
 			reglasNormas: "LAIS, Lineamientos para la descripción de fotografías, 2011"
-		}
+		},
+        adicional: {}
     };
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
 
@@ -38,6 +39,23 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     	for(var i = $scope.conjuntoDocumental.identificacion.autores.length - 1; i >= 0; i--)
     		if(!$scope.conjuntoDocumental.identificacion.autores[i].nombre || !$scope.conjuntoDocumental.identificacion.autores[i].tipo)
     			$scope.conjuntoDocumental.identificacion.autores.splice(i, 1);
+    };
+
+    // Sube una imagen al servidor.
+    // El parametro element representa el contenido de <input type="file">
+    // Si la imagen se sube al servidor exitosamente, se asigna el nombre del archivo al campo de imagen
+    $scope.uploadFile = function(element){
+        File.upload(element.files[0], '/imagenes', $scope.conjuntoDocumental.identificacion.codigoReferencia).
+        then(function(res){
+            if(res.data){
+                if(res.data.success){
+                    $scope.conjuntoDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
+                    // console.log(res.data.message);
+                }
+            }
+        }, function(res){
+            console.error('Error de conexión con el servidor', res);
+        })
     };
 
     // Envia la información a la base de datos para crear un conjunto documental

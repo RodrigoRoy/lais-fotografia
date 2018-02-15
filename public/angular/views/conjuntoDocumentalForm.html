@@ -236,6 +236,10 @@
 									<label>Texto de presentación</label>
 									<textarea ng-model="conjuntoDocumental.adicional.presentacion"></textarea>
 								</md-input-container>
+								<md-input-container class="md-block">
+									<!-- <label>Imagen</label> -->
+									<input type="file" accept="image/*" ng-model="conjuntoDocumental.adicional.imagen" onchange="angular.element(this).scope().uploadFile(this)">
+								</md-input-container>
 							</div>
 						</md-content>
 					</md-tab>

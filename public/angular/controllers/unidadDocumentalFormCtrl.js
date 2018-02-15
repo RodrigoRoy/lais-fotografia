@@ -97,12 +97,12 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // El parametro element representa el contenido de <input type="file">
     // Si la imagen se sube al servidor exitosamente, se asigna el nombre del archivo al campo de imagen
     $scope.uploadFile = function(element){
-        File.upload(element.files[0], $scope.unidadDocumental.identificacion.codigoReferencia).
+        File.upload(element.files[0], '/imagenes', $scope.unidadDocumental.identificacion.codigoReferencia).
         then(function(res){
             if(res.data){
                 if(res.data.success){
-                    $scope.unidadDocumental.adicional.imagen = res.data.imagen;
-                    console.log(res.data.message);
+                    $scope.unidadDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
+                    // console.log(res.data.message);
                 }
             }
         }, function(res){
@@ -113,11 +113,11 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // Envia la información a la base de datos para crear una unidad documental
     $scope.enviarUnidadDocumental = function(){
     	cleanUnidadDocumentalData(); // crear una unidad documental válida
-    	console.log("Enviar ", $scope.unidadDocumental);
+    	// console.log("Enviar ", $scope.unidadDocumental);
     	UnidadDocumental.create($scope.unidadDocumental).
     	then(function(res){
     		if(res.data.success){
-                console.log(res.data.message, res.data.data._id);
+                // console.log(res.data.message, res.data.data._id);
     			alert(res.data.message);
                 $route.reload();
             }
