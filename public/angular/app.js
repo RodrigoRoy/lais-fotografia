@@ -1,8 +1,10 @@
 angular.module('laisFotoApp', [
 	'ngRoute', // Front end router
 	'ngMessages', // Manejador de validación en formularios
+	'ngSanitize', // Mostrar HTML de manera segura
 	'ngMaterial', // Angular Material (front end)
 	'md.data.table', // Material design data table
+	'angularTrix', // WYSIWYG text editor
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 

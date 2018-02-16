@@ -133,7 +133,7 @@ router.route('/contains')
         let regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
         ConjuntoDocumental.
             find({'identificacion.codigoReferencia': regex}).
-            select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
+            select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1, 'adicional.imagen': 1}).
             exec(function(err, conjuntos){
                 if(err)
                     return res.send(err);
@@ -243,6 +243,8 @@ router.route('/:conjunto_id')
                 conjunto.notas = req.body.notas;
             if(req.body.controlDescripcion)
                 conjunto.controlDescripcion = req.body.controlDescripcion;
+            if(req.body.adicional)
+                conjunto.adicional = req.body.adicional;
 
             conjunto.save(function(err){
                 if(err)

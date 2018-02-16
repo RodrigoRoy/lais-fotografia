@@ -1,6 +1,6 @@
 // Controlador principal que tiene alcanze en todo la página (incluyendo navbar y footer)
 
-angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $mdSidenav, ConjuntoDocumental){
+angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $mdSidenav, $mdToast, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 
@@ -30,6 +30,16 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 		}, function(res){
 			console.error('Error de conexión a la base de datos', res);
 		})
+	};
+
+	// Muestra un mensaje simple en pantalla. Su intención es dar aviso de ciertas alertas
+	$scope.showToast = function(textMessage){
+		$mdToast.show(
+			$mdToast.simple()
+				.textContent(textMessage)
+				.position('bottom left')
+				.hideDelay(5000)
+		);
 	};
 
 	// INICIALIZACION

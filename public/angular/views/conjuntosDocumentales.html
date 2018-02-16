@@ -2,6 +2,7 @@
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="0.5em">
 			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)" style="background: #ff8a80">
+				<img ng-if="conjunto.adicional.imagen" ng-src="{{'files/imagenes/' + conjunto.adicional.imagen}}" layout-fill>
 				<md-grid-tile-footer>
 					<h3 md-truncate>{{conjunto.identificacion.codigoReferencia}}</h3>
 				</md-grid-tile-footer>
@@ -31,7 +32,8 @@
 				<md-tabs md-dynamic-height md-border-bottom>
 					<md-tab label="Presentación" ng-if="conjunto.adicional.presentacion">
 						<md-content class="md-padding">
-							<p>{{conjunto.adicional.presentacion}}</p>
+							<!-- <p>{{conjunto.adicional.presentacion}}</p> -->
+							<div ng-bind-html="conjunto.adicional.presentacion"></div>
 						</md-content>
 					</md-tab>
 					<md-tab label="Identificación">
@@ -283,9 +285,9 @@
 				<md-button ng-click="verConjunto(conjunto.identificacion.codigoReferencia)" md-autofocus>
 					Ver colección
 				</md-button>
-				<md-button ng-click="hide()" md-autofocus>
+				<!-- <md-button ng-click="hide()" md-autofocus>
 					Cerrar
-				</md-button>
+				</md-button> -->
 			</md-dialog-actions>
 		</form>
 	</md-dialog>

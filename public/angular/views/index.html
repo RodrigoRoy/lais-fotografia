@@ -19,7 +19,9 @@
 
 		<!-- md-data-table -->
 		<link rel="stylesheet" href="libs/angular-material-data-table/dist/md-data-table.min.css">
-		<!-- <link rel="stylesheet" href="css/material-icons.css"> -->
+		<!-- angular-trix (WYSIWYG text editor) -->
+		<link rel="stylesheet" href="libs/trix/dist/trix.css">
+
 		<link rel="stylesheet" href="css/index.css">
 	</head>
 
@@ -51,7 +53,7 @@
 		
 		<md-sidenav md-component-id="menu">
 			<md-toolbar class="md-theme-indigo">
-				<h1 class="md-toolbar-tools">Colección</h1>
+				<h1 class="md-toolbar-tools"><a href="/conjunto?c=">Colección</a></h1>
 			</md-toolbar>
 			<md-content layout-padding>
 				<md-list>
@@ -108,8 +110,11 @@
 		<script src="libs/angular-animate/angular-animate.min.js"></script>
 		<script src="libs/angular-messages/angular-messages.min.js"></script>
 		<script src="libs/angular-route/angular-route.min.js"></script>
+		<script src="libs/angular-sanitize/angular-sanitize.min.js"></script>
 		<script src="libs/angular-material/angular-material.min.js"></script>
 		<script src="libs/angular-material-data-table/dist/md-data-table.min.js"></script>
+		<script src="libs/trix/dist/trix.js"></script>
+		<script src="libs/angular-trix/dist/angular-trix.min.js"></script>
 
 		<script src="angular/services/conjuntoDocumentalService.js"></script>
 		<script src="angular/services/unidadDocumentalService.js"></script>

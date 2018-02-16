@@ -232,10 +232,11 @@
 					<md-tab label="Datos adicionales">
 						<md-content layout-padding>
 							<div>
-								<md-input-container class="md-block">
+								<trix-editor angular-trix ng-model="conjuntoDocumental.adicional.presentacion" class="trix-content"></trix-editor>
+								<!-- <md-input-container class="md-block">
 									<label>Texto de presentación</label>
 									<textarea ng-model="conjuntoDocumental.adicional.presentacion"></textarea>
-								</md-input-container>
+								</md-input-container> -->
 								<md-input-container class="md-block">
 									<!-- <label>Imagen</label> -->
 									<input type="file" accept="image/*" ng-model="conjuntoDocumental.adicional.imagen" onchange="angular.element(this).scope().uploadFile(this)">
@@ -252,5 +253,5 @@
 	</div>
 </div>
 
-<!-- <br>
-<pre>{{conjuntoDocumental | json}}</pre> -->
+<br>
+<pre>{{conjuntoDocumental | json}}</pre>

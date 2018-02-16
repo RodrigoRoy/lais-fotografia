@@ -118,16 +118,16 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     	then(function(res){
     		if(res.data.success){
                 // console.log(res.data.message, res.data.data._id);
-    			alert(res.data.message);
-                $route.reload();
+                $scope.showToast(res.data.message);
+                $location.url('/unidad?c=' + $routeParams.c);
             }
             else{
                 console.error('Error al agregar unidad documental', res);
-                alert(res.data.message);
-                $route.reload();
+                $scope.showToast(res.data.message);
             }
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
+            $scope.showToast('Error de conexión');
     	});
     };
 
@@ -136,12 +136,17 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         cleanUnidadDocumentalData(); // crear una unidad documental válida
         UnidadDocumental.update($routeParams.id, $scope.unidadDocumental).
         then(function(res){
-            if(res.data.success)
-                console.log(res.data.message);
-            else
+            if(res.data.success){
+                $scope.showToast(res.data.message);
+                $location.url('/unidad?c=' + $routeParams.c);
+            }
+            else{
                 console.error('Error al actualizar la unidad documental', res);
+                $scope.showToast(res.data.message);
+            }
         }, function(res){
             console.error('Error de conexión a la base de datos', res);
+            $scope.showToast('Error de conexión');
         });
     };
 

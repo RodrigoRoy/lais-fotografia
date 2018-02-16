@@ -50,7 +50,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             if(res.data){
                 if(res.data.success){
                     $scope.conjuntoDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
-                    // console.log(res.data.message);
+                    console.log(res.data.message);
                 }
             }
         }, function(res){
@@ -65,16 +65,16 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     	then(function(res){
     		if(res.data.success){
                 console.log(res.data.message, res.data.data._id);
-                alert(res.data.message);
-                $route.reload();
+                $scope.showToast(res.data.message);
+                $location.url('/conjunto?c=' + $routeParams.c);
             }
             else{
                 console.error('Error al agregar conjunto documental', res);
-                alert(res.data.message);
-                $route.reload();
+                $scope.showToast(res.data.message);
             }
     	}, function(res){
     		console.error('Error de conexión a la base de datos', res);
+            $scope.showToast('Error de conexión');
     	});
     };
 
@@ -83,12 +83,17 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
         cleanConjuntoDocumentalData(); // crear un conjunto documental válido
         ConjuntoDocumental.update($routeParams.id, $scope.conjuntoDocumental).
         then(function(res){
-            if(res.data.success)
-                console.log(res.data.message);
-            else
+            if(res.data.success){
+                $scope.showToast(res.data.message);
+                $location.url('/conjunto?c=' + $routeParams.c);
+            }
+            else{
                 console.error('Error al actualizar el conjunto documental', res);
+                $scope.showToast(res.data.message);
+            }
         }, function(res){
             console.error('Error de conexión a la base de datos', res);
+            $scope.showToast('Error de conexión');
         });
     };
 
