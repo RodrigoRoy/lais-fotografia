@@ -2,7 +2,7 @@
 
 angular.module('FileService', []).factory('File', ['$http', function($http){
 	return {
-		// Envia el contenido de una imagen, el nombre del directorio a guardar y su código de referencia al api de archivos
+		// Envia el contenido de un archivo, el nombre del directorio a guardar y su código de referencia al api de archivos
 		upload: function(fileData, filePath, codigoReferencia){
 			var formData = new FormData(); // Equivalente a enviar un formulario
 			formData.append('file', fileData);
@@ -14,6 +14,11 @@ angular.module('FileService', []).factory('File', ['$http', function($http){
 				headers: {'Content-Type': undefined},
 				transformRequest: angular.identity
 			});
+		},
+
+		// Elimina el archivo (incluyendo ruta) dado como parámetro y que está contenido en la carpeta '/public/files'
+		delete: function(fileLocation){
+			return $http.delete('/api/file' + (fileLocation.charAt(0) === '/' ? fileLocation : '/' + fileLocation)); // Asegurar que fileLocation empieze con '/'
 		}
 	}
 }]);

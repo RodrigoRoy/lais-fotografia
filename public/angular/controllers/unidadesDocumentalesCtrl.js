@@ -1,5 +1,5 @@
 // Controlador de la vista para unidades documentales
-angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesController', function ($scope, $routeParams, $location, $mdDialog, UnidadDocumental){
+angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesController', function ($scope, $routeParams, $location, $mdDialog, UnidadDocumental, File){
     $scope.unidadesDocumentales = []; // Lista con toda la información de las unidades documentales
 
     // Obtiene la información de todas las unidades documentales. Se pueden filtrar solo aquellas de pertenecen a una colección.
@@ -35,6 +35,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
             parent: angular.element(document.body),
             targetEvent: event,
             clickOutsideToClose:true,
+            scope: $scope,
             locals: {
                 unidad: id
             }
@@ -66,6 +67,49 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
         $scope.editarUnidad = function(){
             $mdDialog.hide();
             $location.path('/unidad/' + $scope.unidad._id + '/edit');
+        };
+
+        // Elimina la unidad documental
+        $scope.borrarUnidad = function(){
+            UnidadDocumental.get(unidad). // Obtener la información (especialmente 'adicional.imagen')
+            then(function(res){
+                var unidadInfo = res.data;
+                UnidadDocumental.delete(unidad). // Borrar el registro de la base de datos
+                then(function(res){
+                    if(res.data.success){
+                        if(unidadInfo.adicional.imagen){ // Si la unidad tiene una imagen, borrarla
+                            var filePath = '/imagenes/' + unidadInfo.adicional.imagen; // la ubicacion por default es '/imagenes'
+                            File.delete(filePath).
+                            then(function(response){
+                                $scope.showToast(res.data.message);
+                                $mdDialog.hide();
+                                $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                            }, function(response){
+                                console.error('Error al borrar la imagen de la unidad documental', response);
+                                $scope.showToast(res.data.message);
+                                $mdDialog.hide();
+                                $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                            });
+                        }
+                        else{
+                            $scope.showToast(res.data.message);
+                            $mdDialog.hide();
+                            $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                        }
+                    }
+                    else{
+                        console.error('Error al borrar la unidad documental', res);
+                        $scope.showToast(res.data.message);
+                    }
+                }, function(res){
+                    console.error('Error de conexión a la base de datos', res);
+                    $scope.showToast('Error de conexión');
+                });
+            }, function(res){
+                console.error('Error de conexión a la base de datos', res);
+                $scope.showToast('Error de conexión');
+            });
+
         };
 
         // Esconde el dialogo existente y acepta el promise devuelto desde $mdDialog.show()

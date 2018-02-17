@@ -160,10 +160,10 @@ router.route('/:unidad_id')
     .delete(function(req, res){
         UnidadDocumental.remove({
             _id: req.params.unidad_id
-        }, function(err, unidad){
+        }, function(err){
             if(err)
                 return res.send(err);
-            res.json({success: true, message: 'Se ha borrado la información de la unidad documental "' + unidad.identificacion.codigoReferencia + '"'});
+            res.json({success: true, message: 'Se ha borrado la información de la unidad documental'});
         });
     });
 

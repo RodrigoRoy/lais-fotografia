@@ -63,6 +63,34 @@ router.route('/')
 			}
 		});
 		// return res.send({success:false, message: 'No se envió ningún archivo'}); // TODO: No hay manera de comprobar (asincronamente) si la información de la imagen es vacia para enviar este error
-	})
+	});
+
+// Borra un archivo en el sistema de archivos. Ejemplo:
+// DELETE api/file/Carpeta ejemplo/Subcarpeta/archivo.jpg
+// Borrará el archivo contenido en public/files/Carpeta ejemplo/Subcarpeta/archivo.jpg
+router.route('/:folder*?/:filename')
+	.delete(function(req, res){
+		fs.access('public/files' + decodeURI(req.path), (fs.constants || fs).F_OK, function(err){
+			if(err)
+				return res.status(404).send({
+					success: false,
+					message: "File " + req.params.filename + " don't exist",
+					path: decodeURI(req.path),
+					err: err
+				});
+			fs.unlink('public/files' + decodeURI(req.path), function(err){
+				if(err)
+					return res.status(404).send({
+						success: false,
+						message: "Can't delete " + decodeURI(req.path),
+						err: err
+					});
+				res.send({
+					success: true, 
+					message: 'Archivo ' + req.params.filename + ' borrado del servidor'
+				});
+			});
+		});
+	});
 
 module.exports = router; // Exponer el API para ser utilizado en server.js

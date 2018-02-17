@@ -50,7 +50,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             if(res.data){
                 if(res.data.success){
                     $scope.conjuntoDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
-                    console.log(res.data.message);
+                    // console.log(res.data.message);
                 }
             }
         }, function(res){
@@ -64,7 +64,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
     	ConjuntoDocumental.create($scope.conjuntoDocumental).
     	then(function(res){
     		if(res.data.success){
-                console.log(res.data.message, res.data.data._id);
+                // console.log(res.data.message, res.data.data._id);
                 $scope.showToast(res.data.message);
                 $location.url('/conjunto?c=' + $routeParams.c);
             }
