@@ -50,12 +50,15 @@ router.route('/')
 				fs.ensureDir(absFilePath, function(err){
 					if(err)
 						return res.send({success:false, message: 'Error el verificar/crear el directorio: ' + filePath, err: err});
-					// Renombrar la imagen para coincidir con su codigo de referencia
-					fs.rename(files.file.path, absFilePath + fields.codigoReferencia + path.extname(files.file.name), function(err){
-						if(err)
-							return res.send({success:true, message: 'Archivo subido correctamente. \nAdvertencia: No se pudo renombrar el archivo', imagen: files.file.name});
-						return res.send({success: true, message: 'Archivo subido correctamente', imagen: fields.codigoReferencia + path.extname(files.file.name)});
-					});
+					if(files.file)
+						// Renombrar la imagen para coincidir con su codigo de referencia
+						fs.rename(files.file.path, absFilePath + fields.codigoReferencia + path.extname(files.file.name), function(err){
+							if(err)
+								return res.send({success:true, message: 'Archivo subido correctamente. \nAdvertencia: No se pudo renombrar el archivo', imagen: files.file.name});
+							return res.send({success: true, message: 'Archivo subido correctamente', imagen: fields.codigoReferencia + path.extname(files.file.name)});
+						});
+					else
+						return res.send({success: false, message: 'El archivo enviado es vacio. Posiblemente se canceló la selección del archivo'});
 				});
 			}
 			else{

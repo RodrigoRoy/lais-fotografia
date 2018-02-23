@@ -36,7 +36,9 @@ angular.module('laisFotoApp', [
 
 // Configuración de temas: elección de colores y creación de temas propios para AngularJS Material
 .config(function($mdThemingProvider) {
+	$mdThemingProvider.alwaysWatchTheme(true); // Dynamic themes
 	$mdThemingProvider.theme('default').primaryPalette('indigo').accentPalette('pink'); // Changing the default theme
 	$mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark(); // Custom theme
-	$mdThemingProvider.setDefaultTheme('default');
+	$mdThemingProvider.theme('new-blue-grey').primaryPalette('blue-grey').accentPalette('grey').warnPalette('red').backgroundPalette('grey'); // Custom theme
+	$mdThemingProvider.setDefaultTheme('new-blue-grey');
 });
