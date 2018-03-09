@@ -37,7 +37,7 @@
 </div>
 
 <script type="text/ng-template" id="tabDialog.tmpl.html">
-	<md-dialog aria-label="Unidad documental">
+	<md-dialog aria-label="Unidad documental"> <!-- flex="75" For sizing-->
 		<form>
 			<md-toolbar>
 				<div class="md-toolbar-tools">
@@ -53,39 +53,41 @@
 					<md-tab label="Identificación">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row>
-											<td md-cell>Código de referencia</td>
-											<td md-cell>{{unidad.identificacion.codigoReferencia}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<tr>
+											<td>Código de referencia</td>
+											<td>{{unidad.identificacion.codigoReferencia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.referenciaProcedencia">
-											<td md-cell>Referencia de procedencia</td>
-											<td md-cell>{{unidad.identificacion.referenciaProcedencia}}</td>
+										<tr ng-if="unidad.identificacion.referenciaProcedencia">
+											<td>Referencia de procedencia</td>
+											<td>{{unidad.identificacion.referenciaProcedencia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.archivoProcedencia">
-											<td md-cell>Título generado por el archivo de procedencia</td>
-											<td md-cell>{{unidad.identificacion.titulo.archivoProcedencia}}</td>
+										<tr ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.archivoProcedencia">
+											<td>Título generado por el archivo de procedencia</td>
+											<td>{{unidad.identificacion.titulo.archivoProcedencia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.inscrito">
-											<td md-cell>Título inscrito</td>
-											<td md-cell>{{unidad.identificacion.titulo.inscrito}}</td>
+										<tr ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.inscrito">
+											<td>Título inscrito</td>
+											<td>{{unidad.identificacion.titulo.inscrito}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.otroObjeto">
-											<td md-cell>Título a partir de otro objeto</td>
-											<td md-cell>{{unidad.identificacion.titulo.otroObjeto}}</td>
+										<tr ng-if="unidad.identificacion.titulo && unidad.identificacion.titulo.otroObjeto">
+											<td>Título a partir de otro objeto</td>
+											<td>{{unidad.identificacion.titulo.otroObjeto}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.fecha">
-											<td md-cell>Fecha</td>
-											<td md-cell>{{unidad.identificacion.fecha | date:'yyyy'}}</td>
+										<tr ng-if="unidad.identificacion.fecha">
+											<td>Fecha</td>
+											<td>{{unidad.identificacion.fecha | date:'yyyy'}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.identificacion.autores && unidad.identificacion.autores.length > 0">
-											<td md-cell>Autores</td>
-											<td md-cell>
-												<tr md-row ng-repeat="autor in unidad.identificacion.autores">
-													<td md-cell>{{autor.tipo}}</td>
-													<td md-cell>{{autor.nombre}}</td>
-												</tr>
+										<tr ng-if="unidad.identificacion.autores && unidad.identificacion.autores.length > 0">
+											<td>Autores</td>
+											<td>
+												<table>
+													<tr ng-repeat="autor in unidad.identificacion.autores">
+														<td>{{autor.tipo}}</td>
+														<td>{{autor.nombre}}</td>
+													</tr>
+												</table>
 											</td>
 										</tr>
 									</tbody>
@@ -96,47 +98,47 @@
 					<md-tab label="Estructura y contenido" ng-if="unidad.estructuraContenido.estructuraFormal || (unidad.estructuraContenido.encuadre && (unidad.estructuraContenido.encuadre.orientacion || unidad.estructuraContenido.encuadre.plano || unidad.estructuraContenido.encuadre.anguloCamara || unidad.estructuraContenido.encuadre.nivelCamara || unidad.estructuraContenido.encuadre.tipoCamara || unidad.estructuraContenido.encuadre.edicionImagen)) || unidad.estructuraContenido.descripcion || unidad.estructuraContenido.tomadaDesde || unidad.estructuraContenido.tomadaHacia">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row ng-if="unidad.estructuraContenido.estructuraFormal">
-											<td md-cell>Estructura formal</td>
-											<td md-cell>{{unidad.estructuraContenido.estructuraFormal}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<tr ng-if="unidad.estructuraContenido.estructuraFormal">
+											<td>Estructura formal</td>
+											<td>{{unidad.estructuraContenido.estructuraFormal}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.orientacion">
-											<td md-cell>Orientación</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.orientacion}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.orientacion">
+											<td>Orientación</td>
+											<td>{{unidad.estructuraContenido.encuadre.orientacion}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.plano">
-											<td md-cell>Plano</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.plano}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.plano">
+											<td>Plano</td>
+											<td>{{unidad.estructuraContenido.encuadre.plano}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.anguloCamara">
-											<td md-cell>Ángulo de la cámara</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.anguloCamara}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.anguloCamara">
+											<td>Ángulo de la cámara</td>
+											<td>{{unidad.estructuraContenido.encuadre.anguloCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.nivelCamara">
-											<td md-cell>Nivel de la cámara</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.nivelCamara}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.nivelCamara">
+											<td>Nivel de la cámara</td>
+											<td>{{unidad.estructuraContenido.encuadre.nivelCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.tipoCamara">
-											<td md-cell>Tipo de cámara</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.tipoCamara}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.tipoCamara">
+											<td>Tipo de cámara</td>
+											<td>{{unidad.estructuraContenido.encuadre.tipoCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.encuadre.edicionImagen">
-											<td md-cell>Edición de la imagen</td>
-											<td md-cell>{{unidad.estructuraContenido.encuadre.edicionImagen}}</td>
+										<tr ng-if="unidad.estructuraContenido.encuadre.edicionImagen">
+											<td>Edición de la imagen</td>
+											<td>{{unidad.estructuraContenido.encuadre.edicionImagen}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.descripcion">
-											<td md-cell>Descripción</td>
-											<td md-cell>{{unidad.estructuraContenido.descripcion}}</td>
+										<tr ng-if="unidad.estructuraContenido.descripcion">
+											<td>Descripción</td>
+											<td>{{unidad.estructuraContenido.descripcion}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.tomadaDesde">
-											<td md-cell>Tomada desde</td>
-											<td md-cell>{{unidad.estructuraContenido.tomadaDesde}}</td>
+										<tr ng-if="unidad.estructuraContenido.tomadaDesde">
+											<td>Tomada desde</td>
+											<td>{{unidad.estructuraContenido.tomadaDesde}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.estructuraContenido.tomadaHacia">
-											<td md-cell>Tomada hacia</td>
-											<td md-cell>{{unidad.estructuraContenido.tomadaHacia}}</td>
+										<tr ng-if="unidad.estructuraContenido.tomadaHacia">
+											<td>Tomada hacia</td>
+											<td>{{unidad.estructuraContenido.tomadaHacia}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -146,11 +148,11 @@
 					<!-- <md-tab label="Características físicas" ng-if="">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row ng-if="unidad.caracteristicasFisicas">
-											<td md-cell></td>
-											<td md-cell>{{unidad.caracteristicasFisicas}}</td>
+								<table>
+									<tbody>
+										<tr ng-if="unidad.caracteristicasFisicas">
+											<td></td>
+											<td>{{unidad.caracteristicasFisicas}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -160,39 +162,39 @@
 					<md-tab label="Documentación asociada" ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo || unidad.documentacionAsociada.fotografiaBase || unidad.documentacionAsociada.reprografia || unidad.documentacionAsociada.fotografiaMismaSecuencia || unidad.documentacionAsociada.fotografiaConsecutiva || unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara || unidad.documentacionAsociada.fotografiaEncuadreSimilar || unidad.documentacionAsociada.grabadoRelacionado">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo">
-											<td md-cell>Fotografía a partir del mismo negativo</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaMismoNegativo}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo">
+											<td>Fotografía a partir del mismo negativo</td>
+											<td>{{unidad.documentacionAsociada.fotografiaMismoNegativo}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaBase">
-											<td md-cell>Fotografía base</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaBase}}</td>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaBase">
+											<td>Fotografía base</td>
+											<td>{{unidad.documentacionAsociada.fotografiaBase}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.reprografia">
-											<td md-cell>Reprografía</td>
-											<td md-cell>{{unidad.documentacionAsociada.reprografia}}</td>
+										<tr ng-if="unidad.documentacionAsociada.reprografia">
+											<td>Reprografía</td>
+											<td>{{unidad.documentacionAsociada.reprografia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaMismaSecuencia">
-											<td md-cell>Fotografía de la misma secuencia</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaMismaSecuencia}}</td>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaMismaSecuencia">
+											<td>Fotografía de la misma secuencia</td>
+											<td>{{unidad.documentacionAsociada.fotografiaMismaSecuencia}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaConsecutiva">
-											<td md-cell>Fotografía consecutiva</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaConsecutiva}}</td>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutiva">
+											<td>Fotografía consecutiva</td>
+											<td>{{unidad.documentacionAsociada.fotografiaConsecutiva}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara">
-											<td md-cell>Fotografía consecutiva con otra cámara</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara}}</td>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara">
+											<td>Fotografía consecutiva con otra cámara</td>
+											<td>{{unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.fotografiaEncuadreSimilar">
-											<td md-cell>Fotografía con encuadre similar</td>
-											<td md-cell>{{unidad.documentacionAsociada.fotografiaEncuadreSimilar}}</td>
+										<tr ng-if="unidad.documentacionAsociada.fotografiaEncuadreSimilar">
+											<td>Fotografía con encuadre similar</td>
+											<td>{{unidad.documentacionAsociada.fotografiaEncuadreSimilar}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.documentacionAsociada.grabadoRelacionado">
-											<td md-cell>Grabado relacionado</td>
-											<td md-cell>{{unidad.documentacionAsociada.grabadoRelacionado}}</td>
+										<tr ng-if="unidad.documentacionAsociada.grabadoRelacionado">
+											<td>Grabado relacionado</td>
+											<td>{{unidad.documentacionAsociada.grabadoRelacionado}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -202,15 +204,15 @@
 					<md-tab label="Publicaciones" ng-if="(unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0) || unidad.publicaciones.exposicion">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row ng-if="unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0" ng-repeat="publicacion in unidad.publicaciones.publicacion">
-											<td md-cell>Publicación</td>
-											<td md-cell>{{publicacion}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<tr ng-if="unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0" ng-repeat="publicacion in unidad.publicaciones.publicacion">
+											<td>Publicación</td>
+											<td>{{publicacion}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.publicaciones.exposicion">
-											<td md-cell></td>
-											<td md-cell>{{unidad.publicaciones.exposicion}}</td>
+										<tr ng-if="unidad.publicaciones.exposicion">
+											<td></td>
+											<td>{{unidad.publicaciones.exposicion}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -220,11 +222,11 @@
 					<md-tab label="Notas" ng-if="unidad.notas.notas">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<tr md-row ng-if="unidad.notas.notas">
-											<td md-cell>Notas</td>
-											<td md-cell>{{unidad.notas.notas}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<tr ng-if="unidad.notas.notas">
+											<td>Notas</td>
+											<td>{{unidad.notas.notas}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -234,19 +236,19 @@
 					<md-tab label="Control de la descripción" ng-if="(unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0) || unidad.createdAt || unidad.updatedAt">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table md-table>
-									<tbody md-body>
-										<!-- <tr md-row ng-if="unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0">
-											<td md-cell>Documentalistas</td>
-											<td md-cell>{{unidad.controlDescripcion.documentalistas.join(', ')}}</td>
+								<table class="my-table-md-dialog">
+									<tbody>
+										<!-- <tr ng-if="unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0">
+											<td>Documentalistas</td>
+											<td>{{unidad.controlDescripcion.documentalistas.join(', ')}}</td>
 										</tr> -->
-										<tr md-row ng-if="unidad.createdAt">
-											<td md-cell>Fecha de creación</td>
-											<td md-cell>{{unidad.createdAt | date:'dd/MM/y HH:mm'}}</td>
+										<tr ng-if="unidad.createdAt">
+											<td>Fecha de creación</td>
+											<td>{{unidad.createdAt | date:'dd/MM/y HH:mm'}}</td>
 										</tr>
-										<tr md-row ng-if="unidad.updatedAt">
-											<td md-cell>Fecha de última actualización</td>
-											<td md-cell>{{unidad.updatedAt | date:'dd/MM/y HH:mm'}}</td>
+										<tr ng-if="unidad.updatedAt">
+											<td>Fecha de última actualización</td>
+											<td>{{unidad.updatedAt | date:'dd/MM/y HH:mm'}}</td>
 										</tr>
 									</tbody>
 								</table>

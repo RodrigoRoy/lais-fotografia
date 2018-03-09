@@ -23,12 +23,14 @@ Abrir una terminal y descargar el proyecto usando git:
 `git clone https://github.com/RodrigoRoy/lais-fotografia`
 
 Dentro de la carpeta del proyecto nombrada *lais-fotografia*, crear el archivo de configuración **config.js**:
-`module.exports = {
+```javascript
+module.exports = {
 	port: 8080, // Puerto del servidor
 	db: 'mongodb://localhost:27017/database-name', // Dirección de la base de datos
 	prefix: 'MXIM', // Prefijo para el código de referencia
 	name: 'Fototecas Digitales' // Nombre de la fototeca
-}`
+}
+```
 
 Crear el directorio *files* dentro de la ubicación *public/*.
 
