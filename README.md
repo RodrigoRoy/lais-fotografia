@@ -7,7 +7,7 @@ Este proyecto nace como alternativa a software similar para catalogación fotogr
 
 ## Requisitos de instalación
 
-- Sistema operativo Windows, Mac o Linux.
+- Sistema operativo Windows, Mac o Linux
 - Instalar el ambiente [NodeJS](https://nodejs.org) (version LTS)
 - Instalar la base de datos [MongoDB](https://www.mongodb.org/) (Community Server)
 - Instalar [Git](https://git-scm.com/)
@@ -17,10 +17,12 @@ Este proyecto nace como alternativa a software similar para catalogación fotogr
 
 ## Intrucciones de instalación
 
-NOTA: El proyecto aún se encuentra en desarrollo, se recomienda instalarlo como ambiente de prueba desde una computadora personal o laptop y evitar usarlo en ambiente de producción por las actualizaciones constantes.
+**NOTA**: El proyecto aún se encuentra en desarrollo, se recomienda instalarlo como ambiente de prueba desde una computadora personal o laptop y evitar usarlo en ambiente de producción por las actualizaciones constantes.
 
 Abrir una terminal y descargar el proyecto usando git:
-`git clone https://github.com/RodrigoRoy/lais-fotografia`
+```
+git clone https://github.com/RodrigoRoy/lais-fotografia
+```
 
 Dentro de la carpeta del proyecto nombrada *lais-fotografia*, crear el archivo de configuración **config.js**:
 ```javascript
@@ -35,21 +37,33 @@ module.exports = {
 Crear el directorio *files* dentro de la ubicación *public/*.
 
 Ubicarse en el directorio del proyecto (lais-fotografia) e instalar las dependencias del servidor (back-end):
-`npm install`
+```
+npm install
+```
 
 Instalar las dependencias del navegador web (front-end):
-`bower install`
+```
+bower install
+```
 
 Ejecutar el proyecto con node:
-`node server.js`
+```
+node server.js
+```
 
 Estando ubicado en la carpeta del proyecto, ejecutar en terminal:
-`npm install`
-`bower install`
-`node server.js`
+```
+npm install
+bower install
+node server.js
+```
 
-Abrir el navegador web (Firefox, Chrome, por ejemplo) y escribir la siguiente dirección:
-`http://localhost:8080`
+Abrir el navegador web (Firefox o Chrome, por ejemplo) y escribir la siguiente dirección:
+```
+http://localhost:8080
+```
 
-En caso de consultarlo desde un dispositivo externo (como smartphones y tables) que se encuentre conectado a la misma red local, entonces escribir la dirección de la ip del equipo, por ejemplo:
-`http://192.168.0.10:8080`
+En caso de consultarlo desde un dispositivo externo (como smartphones y tables) que se encuentre conectado a la misma red local, entonces escribir la dirección de la IP del equipo, por ejemplo:
+```
+http://192.168.0.10:8080
+```

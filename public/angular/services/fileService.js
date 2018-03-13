@@ -16,7 +16,7 @@ angular.module('FileService', []).factory('File', ['$http', function($http){
 			});
 		},
 
-		// Elimina el archivo (incluyendo ruta) dado como parámetro y que está contenido en la carpeta '/public/files'
+		// Elimina el archivo (incluyendo ruta) dado como parámetro y que está contenido en la carpeta '/public/files'. Ejemplo: delete(/imagenes/MX-1-2-1.jpg)
 		delete: function(fileLocation){
 			return $http.delete('/api/file' + (fileLocation.charAt(0) === '/' ? fileLocation : '/' + fileLocation)); // Asegurar que fileLocation empieze con '/'
 		}

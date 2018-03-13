@@ -20,7 +20,9 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
 			//documentalistas: [],
 			reglasNormas: "LAIS, Lineamientos para la descripción de fotografías, 2011"
 		},
-        adicional: {}
+        adicional: {
+            presentacion: ''
+        }
     };
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
 
@@ -50,7 +52,17 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             if(res.data){
                 if(res.data.success){
                     $scope.conjuntoDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
-                    // console.log(res.data.message);
+
+                    // Preview image. Source: https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
+                    let img = document.getElementById('img-preview');
+                    img.file = element.files[0];
+                    let reader = new FileReader();
+                    reader.onload = (function(image){
+                        return function(e){
+                            image.src = e.target.result;
+                        }
+                    })(img);
+                    reader.readAsDataURL(element.files[0]);
                 }
             }
         }, function(res){
@@ -58,7 +70,26 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
         })
     };
 
-    // Envia la información a la base de datos para crear un conjunto documental
+    // Borrar imagen. Elimina el archivo en el servidor y elimina su referencia en $scope.conjuntoDocumental.adicional.imagen
+    $scope.borrarImagen = function(){
+        if(!$scope.conjuntoDocumental.adicional.imagen)
+            return;
+        // Borrar archivo con el API:
+        File.delete('imagenes/' + $scope.conjuntoDocumental.adicional.imagen).
+        then(function(res){
+            if(res.data.success)
+                $scope.conjuntoDocumental.adicional.imagen = undefined; // Borrar el texto
+        }, function(res){
+            if(res.status === 404) // Si la imagen no existe, es porque ya fue borrada
+                $scope.conjuntoDocumental.adicional.imagen = undefined;
+            else{
+                console.error('Error al borrar imagen', res);
+                $scope.showToast('Error al borrar imagen');
+            }
+        });
+    };
+
+    // Envia la información a la base de datos para crear un nuevo conjunto documental
     $scope.enviarConjuntoDocumental = function(){
     	cleanConjuntoDocumentalData(); // crear un conjunto documental válido
     	ConjuntoDocumental.create($scope.conjuntoDocumental).

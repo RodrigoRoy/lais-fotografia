@@ -25,3 +25,11 @@
 .my-table-md-dialog tr:first-child{
 	border-top: none;
 }
+
+/*Subseccion dentro de los formularios*/
+.my-form-subsection{
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 2px;
+	padding: 0 12px;
+	margin-bottom: 2em;
+}

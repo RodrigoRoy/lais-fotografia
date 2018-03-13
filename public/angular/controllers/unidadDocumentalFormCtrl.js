@@ -102,7 +102,17 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if(res.data){
                 if(res.data.success){
                     $scope.unidadDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
-                    // console.log(res.data.message);
+                    
+                    // Preview image. Source: https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
+                    let img = document.getElementById('img-preview');
+                    img.file = element.files[0];
+                    let reader = new FileReader();
+                    reader.onload = (function(image){
+                        return function(e){
+                            image.src = e.target.result;
+                        }
+                    })(img);
+                    reader.readAsDataURL(element.files[0]);
                 }
             }
         }, function(res){
@@ -110,7 +120,26 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         })
     };
 
-    // Envia la información a la base de datos para crear una unidad documental
+    // Borrar imagen. Elimina el archivo en el servidor y elimina su referencia en $scope.unidadDocumental.adicional.imagen
+    $scope.borrarImagen = function(){
+        if(!$scope.unidadDocumental.adicional.imagen)
+            return;
+        // Borrar archivo con el API:
+        File.delete('imagenes/' + $scope.unidadDocumental.adicional.imagen).
+        then(function(res){
+            if(res.data.success)
+                $scope.unidadDocumental.adicional.imagen = undefined; // Borrar el texto
+        }, function(res){
+            if(res.status === 404) // Si la imagen no existe, es porque ya fue borrada
+                $scope.unidadDocumental.adicional.imagen = undefined;
+            else{
+                console.error('Error al borrar imagen', res);
+                $scope.showToast('Error al borrar imagen');
+            }
+        });
+    };
+
+    // Envia la información a la base de datos para crear una nueva unidad documental
     $scope.enviarUnidadDocumental = function(){
     	cleanUnidadDocumentalData(); // crear una unidad documental válida
     	// console.log("Enviar ", $scope.unidadDocumental);

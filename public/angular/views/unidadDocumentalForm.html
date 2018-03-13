@@ -68,6 +68,7 @@
 												<md-option value="Responsable">Responsable</md-option>
 												<md-option value="Levantamiento">Levantamiento</md-option>
 												<md-option value="Litógrafo">Litógrafo</md-option>
+												<md-option value="Grabador">Grabador</md-option>
 											</md-select>
 										</md-input-container>
 									</div>
@@ -94,62 +95,64 @@
 									</md-select> -->
 								</md-input-container>
 
-								Encuadre
+								<div class="my-form-subsection">
+									<h3 class="md-subhead"><strong>Encuadre</strong></h3>
+									<div layout-gt-sm="row">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Orientación</label>
+											<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.orientacion">
+												<md-option value="Horizontal">Horizontal</md-option>
+												<md-option value="Vertical">Vertical</md-option>
+											</md-select>
+										</md-input-container>
 
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Orientación</label>
-										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.orientacion">
-											<md-option value="Horizontal">Horizontal</md-option>
-											<md-option value="Vertical">Vertical</md-option>
-										</md-select>
-									</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Plano</label>
+											<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.plano">
+												<md-option value="Gran plano general">Gran plano general</md-option>
+												<md-option value="Plano general">Plano general</md-option>
+												<md-option value="Plano entero">Plano entero</md-option>
+												<md-option value="Plano americano">Plano americano</md-option>
+												<md-option value="Plano medio">Plano medio</md-option>
+												<md-option value="Primer plano">Primer plano</md-option>
+												<md-option value="Detalle">Detalle</md-option>
+											</md-select>
+										</md-input-container>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Plano</label>
-										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.plano">
-											<md-option value="Gran plano general">Gran plano general</md-option>
-											<md-option value="Plano general">Plano general</md-option>
-											<md-option value="Plano entero">Plano entero</md-option>
-											<md-option value="Plano americano">Plano americano</md-option>
-											<md-option value="Plano medio">Plano medio</md-option>
-											<md-option value="Primer plano">Primer plano</md-option>
-											<md-option value="Detalle">Detalle</md-option>
-										</md-select>
-									</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Ángulo de la cámara</label>
+											<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.anguloCamara">
+												<md-option value="Normal">Normal</md-option>
+												<md-option value="Picado">Picado</md-option>
+												<md-option value="Contrapicado">Contrapicado</md-option>
+												<md-option value="Nadir">Nadir</md-option>
+												<md-option value="Cenital">Cenital</md-option>
+											</md-select>
+										</md-input-container>
+									</div>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Ángulo de la cámara</label>
-										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.anguloCamara">
-											<md-option value="Normal">Normal</md-option>
-											<md-option value="Picado">Picado</md-option>
-											<md-option value="Contrapicado">Contrapicado</md-option>
-											<md-option value="Nadir">Nadir</md-option>
-											<md-option value="Cenital">Cenital</md-option>
-										</md-select>
-									</md-input-container>
+									<div layout-gt-sm="row">
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Nivel de la cámara</label>
+											<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.nivelCamara">
+												<md-option value="A nivel">A nivel</md-option>
+												<md-option value="Bajo">Bajo</md-option>
+												<md-option value="Alto">Alto</md-option>
+											</md-select>
+										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Tipo de cámara</label>
+											<input ng-model="unidadDocumental.estructuraContenido.encuadre.tipoCamara">
+										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Edición de la imágen</label>
+											<input ng-model="unidadDocumental.estructuraContenido.encuadre.edicionImagen">
+										</md-input-container>
+									</div>
 								</div>
 
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Nivel de la cámara</label>
-										<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.nivelCamara">
-											<md-option value="A nivel">A nivel</md-option>
-											<md-option value="Bajo">Bajo</md-option>
-											<md-option value="Alto">Alto</md-option>
-										</md-select>
-									</md-input-container>
-
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Tipo de cámara</label>
-										<input ng-model="unidadDocumental.estructuraContenido.encuadre.tipoCamara">
-									</md-input-container>
-
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Edición de la imágen</label>
-										<input ng-model="unidadDocumental.estructuraContenido.encuadre.edicionImagen">
-									</md-input-container>
-								</div>
 
 								<md-input-container class="md-block">
 									<label>Descripción</label>
@@ -183,91 +186,99 @@
 									<md-select ng-model="unidadDocumental.caracteristicasFisicas.tipo">
 										<md-option value="Positivo">Positivo</md-option>
 										<md-option value="Negativo">Negativo</md-option>
+										<md-option value="Imagen digital">Imagen digital</md-option>
 										<md-option value="Imagen de cámara">Imagen de cámara</md-option>
+										<md-option value="Pintura">Pintura</md-option>
+										<md-option value="Grabado">Grabado</md-option>
+										<md-option value="Litografía">Litografía</md-option>
+										<md-option value="Reprografía">Reprografía</md-option>
+										<md-option value="Proceso fotomecánico">Proceso fotomecánico</md-option>
 									</md-select>
 								</md-input-container>
 
-								Soporte primario
-
-								<md-input-container class="md-block">
-									<label>Materiales</label>
-									<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales">
-								</md-input-container>
-
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Dimensión (ancho)</label>
-										<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.ancho">
+								<div class="my-form-subsection">
+									<h3 class="md-subhead"><strong>Soporte primario</strong></h3>
+									<md-input-container class="md-block">
+										<label>Materiales</label>
+										<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales">
 									</md-input-container>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Dimensión (alto)</label>
-										<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.alto">
-									</md-input-container>
-
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Unidad de medida</label>
-										<md-select ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.unidad">
-											<md-option value="cm">cm</md-option>
-											<md-option value="in">in</md-option>
-										</md-select>
-									</md-input-container>
-								</div>
-
-								<!-- Inscripciones -->
-								<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones">
 									<div layout-gt-sm="row">
 										<md-input-container class="md-block" flex-gt-sm>
-											<label>Inscripciones (transcripción)</label>
-											<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionPrimario(inscripcion.transcripcion)">
+											<label>Dimensión (ancho)</label>
+											<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.ancho">
 										</md-input-container>
 
 										<md-input-container class="md-block" flex-gt-sm>
-											<label>Inscripciones (ubicación)</label>
-											<input ng-model="inscripcion.ubicacion">
+											<label>Dimensión (alto)</label>
+											<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.alto">
 										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Unidad de medida</label>
+											<md-select ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.dimension.unidad">
+												<md-option value="cm">cm</md-option>
+												<md-option value="in">in</md-option>
+											</md-select>
+										</md-input-container>
+									</div>
+
+									<!-- Inscripciones -->
+									<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones">
+										<div layout-gt-sm="row">
+											<md-input-container class="md-block" flex-gt-sm>
+												<label>Inscripciones (transcripción)</label>
+												<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionPrimario(inscripcion.transcripcion)">
+											</md-input-container>
+
+											<md-input-container class="md-block" flex-gt-sm>
+												<label>Inscripciones (ubicación)</label>
+												<input ng-model="inscripcion.ubicacion">
+											</md-input-container>
+										</div>
 									</div>
 								</div>
 
-								Soporte secundario
-
-								<md-input-container class="md-block">
-									<label>Materiales</label>
-									<input ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales">
-								</md-input-container>
-
-								<div layout-gt-sm="row">
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Dimensión (ancho)</label>
-										<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.x">
+								<div class="my-form-subsection">
+									<h3 class="md-subhead"><strong>Soporte secundario</strong></h3>
+									<md-input-container class="md-block">
+										<label>Materiales</label>
+										<input ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales">
 									</md-input-container>
 
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Dimensión (alto)</label>
-										<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.y">
-									</md-input-container>
-
-									<md-input-container class="md-block" flex-gt-sm>
-										<label>Unidad de medida</label>
-										<md-select ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.unidad">
-											<md-option value="cm">cm</md-option>
-											<md-option value="in">in</md-option>
-										</md-select>
-									</md-input-container>
-								</div>
-
-								<!-- Inscripciones -->
-								<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones">
 									<div layout-gt-sm="row">
 										<md-input-container class="md-block" flex-gt-sm>
-											<label>Inscripciones (transcripción)</label>
-											<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionSecundario(inscripcion.transcripcion)">
+											<label>Dimensión (ancho)</label>
+											<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.x">
 										</md-input-container>
 
 										<md-input-container class="md-block" flex-gt-sm>
-											<label>Inscripciones (ubicación)</label>
-											<input ng-model="inscripcion.ubicacion">
+											<label>Dimensión (alto)</label>
+											<input type="number" min="1" ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.y">
 										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm>
+											<label>Unidad de medida</label>
+											<md-select ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.dimension.unidad">
+												<md-option value="cm">cm</md-option>
+												<md-option value="in">in</md-option>
+											</md-select>
+										</md-input-container>
+									</div>
+
+									<!-- Inscripciones -->
+									<div ng-repeat="inscripcion in unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones">
+										<div layout-gt-sm="row">
+											<md-input-container class="md-block" flex-gt-sm>
+												<label>Inscripciones (transcripción)</label>
+												<input ng-model="inscripcion.transcripcion" ng-blur="agregaInscripcionSecundario(inscripcion.transcripcion)">
+											</md-input-container>
+
+											<md-input-container class="md-block" flex-gt-sm>
+												<label>Inscripciones (ubicación)</label>
+												<input ng-model="inscripcion.ubicacion">
+											</md-input-container>
+										</div>
 									</div>
 								</div>
 
@@ -374,8 +385,13 @@
 						<md-content layout-padding>
 							<div>
 								<md-input-container class="md-block">
-									<!-- <label>Imagen</label> -->
+									<label>Imagen</label>
 									<input type="file" accept="image/*" ng-model="unidadDocumental.adicional.imagen" onchange="angular.element(this).scope().uploadFile(this)">
+									<div ng-show="unidadDocumental.adicional.imagen">
+										<img id="img-preview" ng-src="{{'files/imagenes/' + unidadDocumental.adicional.imagen}}" style="max-width: 100%; height: auto;">
+										<br>
+										<md-button class="md-warn" ng-click="borrarImagen()">Borrar imagen</md-button>
+									</div>
 								</md-input-container>
 
 								<md-input-container class="md-block">
