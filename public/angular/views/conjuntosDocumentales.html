@@ -18,8 +18,8 @@
 	</div>
 </div>
 
-<!-- <br>
-<pre>{{conjuntosDocumentales | json}}</pre> -->
+<br>
+<pre>{{conjuntosDocumentales | json}}</pre>
 
 <script type="text/ng-template" id="tabDialog.tmpl.html">
 	<md-dialog aria-label="Conjunto documental">
@@ -37,7 +37,6 @@
 				<md-tabs md-dynamic-height md-border-bottom>
 					<md-tab label="Presentación" ng-if="conjunto.adicional.presentacion">
 						<md-content class="md-padding">
-							<!-- <p>{{conjunto.adicional.presentacion}}</p> -->
 							<div ng-bind-html="conjunto.adicional.presentacion"></div>
 						</md-content>
 					</md-tab>
@@ -69,10 +68,12 @@
 										<tr ng-if="conjunto.identificacion.autores && conjunto.identificacion.autores.length > 0">
 											<td>Autores</td>
 											<td>
-												<tr ng-repeat="autor in conjunto.identificacion.autores">
-													<td>{{autor.tipo}}</td>
-													<td>{{autor.nombre}}</td>
-												</tr>
+												<table class="my-table-md-dialog">
+													<tr ng-repeat="autor in conjunto.identificacion.autores">
+														<td>{{autor.tipo}}</td>
+														<td>{{autor.nombre}}</td>
+													</tr>
+												</table>
 											</td>
 										</tr>
 										<tr ng-if="conjunto.identificacion.nivelDescripcion">

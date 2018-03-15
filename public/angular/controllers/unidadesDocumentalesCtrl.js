@@ -35,7 +35,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
             parent: angular.element(document.body),
             targetEvent: event,
             clickOutsideToClose:true,
-            scope: $scope,
+            // scope: $scope, // Passing the scope create problems: click doesn't respond after closing tab dialog
             locals: {
                 unidad: id
             }

@@ -40,13 +40,13 @@ var UnidadDocumentalSchema = new Schema({
 		lugarDescrito: {type: String} // Google Maps ID 
 	},
 	caracteristicasFisicas: {
-		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen digital', 'Imagen de cámara', 'Pintura', 'Grabado', 'Litografía', 'Reprografía', 'Proceso fotomecánico', 'Transparencia']},
+		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen digital', 'Imagen de cámara', 'Pintura', 'Grabado', 'Litografía', 'Reprografía', 'Fotomecánico', 'Transparencia']},
 		soportePrimario: {
 			materiales: {type: String, trim: true},
 			dimension: {
-				x: {type: Number},
-				y: {type: Number},
-				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
+				ancho: {type: Number},
+				alto: {type: Number},
+				unidad: {type: String, enum: ['cm', 'in']}
 			},
 			inscripciones: [{
 				transcripcion: {type: String, trim: true},
@@ -59,7 +59,7 @@ var UnidadDocumentalSchema = new Schema({
 			dimension: {
 				ancho: {type: Number},
 				alto: {type: Number},
-				unidad: {type: String, enum: ['cm', 'in']} // NUEVO
+				unidad: {type: String, enum: ['cm', 'in']}
 			},
 			inscripciones: [{
 				transcripcion: {type: String, trim: true},

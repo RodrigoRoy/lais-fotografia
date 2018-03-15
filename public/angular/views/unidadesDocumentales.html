@@ -128,20 +128,62 @@
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<!-- <md-tab label="Características físicas" ng-if="">
+					<md-tab label="Características físicas" ng-if="unidad.caracteristicasFisicas.tipo || (unidad.caracteristicasFisicas.soportePrimario.materiales || unidad.caracteristicasFisicas.soportePrimario.dimension || (unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0)) || (unidad.caracteristicasFisicas.soporteSecundario.materiales || unidad.caracteristicasFisicas.soporteSecundario.dimension || (unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0)) || unidad.caracteristicasFisicas.sellos">
 						<md-content class="md-padding">
 							<md-table-container>
-								<table>
+								<table class="my-table-md-dialog">
 									<tbody>
-										<tr ng-if="unidad.caracteristicasFisicas">
-											<td></td>
-											<td>{{unidad.caracteristicasFisicas}}</td>
+										<tr ng-if="unidad.caracteristicasFisicas.tipo">
+											<td>Tipo</td>
+											<td>{{unidad.caracteristicasFisicas.tipo}}</td>
+										</tr>
+										<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.materiales || unidad.caracteristicasFisicas.soportePrimario.dimension || (unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0)">
+											<td>Soporte primario</td>
+											<td>
+												<table class="my-table-md-dialog">
+													<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.materiales">
+														<td>Materiales</td>
+														<td>{{unidad.caracteristicasFisicas.soportePrimario.materiales}}</td>
+													</tr>
+													<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.dimension">
+														<td>Dimension</td>
+														<td>{{unidad.caracteristicasFisicas.soportePrimario.dimension.ancho}} x {{unidad.caracteristicasFisicas.soportePrimario.dimension.alto}} {{unidad.caracteristicasFisicas.soportePrimario.dimension.unidad}}</td>
+													</tr>
+													<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0" ng-repeat="inscripcion in unidad.caracteristicasFisicas.soportePrimario.inscripciones">
+														<td>Inscripcion</td>
+														<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.materiales || unidad.caracteristicasFisicas.soporteSecundario.dimension || (unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0)">
+											<td>Soporte secundario</td>
+											<td>
+												<table class="my-table-md-dialog">
+													<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.materiales">
+														<td>Materiales</td>
+														<td>{{unidad.caracteristicasFisicas.soporteSecundario.materiales}}</td>
+													</tr>
+													<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.dimension">
+														<td>Dimension</td>
+														<td>{{unidad.caracteristicasFisicas.soporteSecundario.dimension.ancho}} x {{unidad.caracteristicasFisicas.soporteSecundario.dimension.alto}} {{unidad.caracteristicasFisicas.soporteSecundario.dimension.unidad}}</td>
+													</tr>
+													<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0" ng-repeat="inscripcion in unidad.caracteristicasFisicas.soporteSecundario.inscripciones">
+														<td>Inscripcion</td>
+														<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr ng-if="unidad.caracteristicasFisicas.sellos">
+											<td>Sellos</td>
+											<td>{{unidad.caracteristicasFisicas.sellos.transcripcion}} <span>({{unidad.caracteristicasFisicas.sellos.ubicacion}})</span></td>
 										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
-					</md-tab> -->
+					</md-tab>
 					<md-tab label="Documentación asociada" ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo || unidad.documentacionAsociada.fotografiaBase || unidad.documentacionAsociada.reprografia || unidad.documentacionAsociada.fotografiaMismaSecuencia || unidad.documentacionAsociada.fotografiaConsecutiva || unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara || unidad.documentacionAsociada.fotografiaEncuadreSimilar || unidad.documentacionAsociada.grabadoRelacionado">
 						<md-content class="md-padding">
 							<md-table-container>

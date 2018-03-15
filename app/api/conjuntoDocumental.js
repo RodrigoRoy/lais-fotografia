@@ -152,16 +152,25 @@ router.route('/contains')
                 regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix) : new RegExp('^' + prefijo);
                 UnidadDocumental.
                     find({'identificacion.codigoReferencia': regex, 'adicional.imagen': {$exists: true}}).
-                    select({'identificacion.codigoReferencia': 1, 'adicional.imagen': 1, 'updatedAt': 1}).
+                    select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'adicional.imagen': 1, 'updatedAt': 1}).
                     exec(function(err, unidades){
                         if(err)
                             return res.send(err);
+                        // subconjuntos.forEach(subconjunto => {
+                        //     if(!subconjunto.adicional)
+                        //         subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
+                        //     if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
+                        //         subconjunto.adicional.imagen = lastPicture(subconjunto.identificacion.codigoReferencia, unidades);
+
+                        // });
                         subconjuntos.forEach(subconjunto => {
+                            let unidadesFiltradas = filtrarUnidades(subconjunto.identificacion.codigoReferencia, unidades);
                             if(!subconjunto.adicional)
                                 subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
                             if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
-                                subconjunto.adicional.imagen = lastPicture(subconjunto.identificacion.codigoReferencia, unidades);
-
+                                subconjunto.adicional.imagen = ultimaImagen(unidadesFiltradas);
+                            if(!subconjunto.fecha)
+                                subconjunto.fecha = periodoTiempo(unidadesFiltradas);
                         });
                         res.send(subconjuntos);
                     });
@@ -187,6 +196,43 @@ var lastPicture = function(prefix, unidades){
         return '';
     return unidadesFiltradas[unidadesFiltradas.length - 1].adicional.imagen;
 };
+
+var filtrarUnidades = function(prefix, unidades){
+    let unidadesFiltradas = [];
+    let regex = new RegExp('^' + prefix);
+    unidades.forEach(unidad => {
+        if(regex.test(unidad.identificacion.codigoReferencia))
+            unidadesFiltradas.push(unidad);
+    });
+    return unidadesFiltradas;
+};
+
+var ultimaImagen = function(unidades){
+    if(unidades.length === 0)
+        return '';
+    unidades.sort(function(a, b){
+        a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
+    });
+    return unidades[unidades.length - 1].adicional.imagen;
+};
+
+var periodoTiempo = function(unidades){
+    if(unidades.length === 0)
+        return undefined;
+    let allDates = [];
+    unidades.forEach(unidad => {
+        if(unidad.identificacion.fecha)
+            allDates.push(unidad.identificacion.fecha);
+    });
+    if(allDates.length === 0)
+        return undefined;
+    allDates.sort(function(a, b){
+        a.getTime() - b.getTime(); // ordenamiento cronológico
+    });
+    if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
+        return {inicio: allDates[0], fin: allDates[allDates.length-1]};
+    return {inicio: allDates[0]};
+}
 
 // Determina si un conjunto es una "hoja" en la jerarquia de todos los conjuntos y subconjuntos.
 // Un conjunto se considera hoja o nodo terminal si no contiene más subconjuntos o si además de ser vacio, no contiene unidades documentales en él.
