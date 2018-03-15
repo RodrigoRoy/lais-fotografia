@@ -127,12 +127,14 @@ router.route('/tree')
 // Obtiene un arreglo de todos los subconjuntos contenido en un conjunto en particular.
 // Se debe incluir el parámetro "prefix" para indicar la numeración del conjunto documental
 // Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/contains?prefix=3-1
-// El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: {"_id", "codigoReferencia"}
+// El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: 
+// {"_id", "identificacion.codigoReferencia", "identificacion.titulo", "adicional.imagen"}
 router.route('/contains')
     .get(function(req, res){
         let regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix + '-(\\d+)$') : new RegExp('^' + prefijo + '-(\\d+)$');
         ConjuntoDocumental.
             find({'identificacion.codigoReferencia': regex}).
+            lean().
             select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1, 'adicional.imagen': 1}).
             exec(function(err, conjuntos){
                 if(err)
@@ -146,9 +148,45 @@ router.route('/contains')
                         second = parseInt(/(\d+)$/.exec(b.identificacion.codigoReferencia)[1]);
                     return first-second;
                 });
-                res.send(subconjuntos);
+                // Obtener las últimas 'portadas' para cada subconjunto (ya que la mayoría de conjuntos no tienen imagen propia):
+                regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix) : new RegExp('^' + prefijo);
+                UnidadDocumental.
+                    find({'identificacion.codigoReferencia': regex, 'adicional.imagen': {$exists: true}}).
+                    select({'identificacion.codigoReferencia': 1, 'adicional.imagen': 1, 'updatedAt': 1}).
+                    exec(function(err, unidades){
+                        if(err)
+                            return res.send(err);
+                        subconjuntos.forEach(subconjunto => {
+                            if(!subconjunto.adicional)
+                                subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
+                            if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
+                                subconjunto.adicional.imagen = lastPicture(subconjunto.identificacion.codigoReferencia, unidades);
+
+                        });
+                        res.send(subconjuntos);
+                    });
             });
     });
+
+// Auxiliar para obtener la referencia (string) de la última imagen actualizada de un conjunto.
+// Recibe el prefijo del conjunto del cual se desea obtner una imagen (por ejemplo, MX-IM-1-2)
+// y el subconjunto de imagenes donde se encuentra la imagen deseada
+// Devuelve el elemento 'unidadDocumental.adicional.imagen' actualizado más recientemente,
+// en caso de que el conjunto sea vacio, devuelve la cadena vacia.
+var lastPicture = function(prefix, unidades){
+    let unidadesFiltradas = [];
+    let regex = new RegExp('^' + prefix);
+    unidades.forEach(unidad => {
+        if(regex.test(unidad.identificacion.codigoReferencia))
+            unidadesFiltradas.push(unidad);
+    });
+    unidadesFiltradas.sort(function(a, b){
+        a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
+    });
+    if(unidadesFiltradas.length === 0)
+        return '';
+    return unidadesFiltradas[unidadesFiltradas.length - 1].adicional.imagen;
+};
 
 // Determina si un conjunto es una "hoja" en la jerarquia de todos los conjuntos y subconjuntos.
 // Un conjunto se considera hoja o nodo terminal si no contiene más subconjuntos o si además de ser vacio, no contiene unidades documentales en él.

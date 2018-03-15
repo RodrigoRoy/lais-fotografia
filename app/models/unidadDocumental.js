@@ -40,7 +40,7 @@ var UnidadDocumentalSchema = new Schema({
 		lugarDescrito: {type: String} // Google Maps ID 
 	},
 	caracteristicasFisicas: {
-		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen digital', 'Imagen de cámara', 'Pintura', 'Grabado', 'Litografía', 'Reprografía', 'Proceso fotomecánico']},
+		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen digital', 'Imagen de cámara', 'Pintura', 'Grabado', 'Litografía', 'Reprografía', 'Proceso fotomecánico', 'Transparencia']},
 		soportePrimario: {
 			materiales: {type: String, trim: true},
 			dimension: {
