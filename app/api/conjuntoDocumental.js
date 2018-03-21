@@ -156,47 +156,26 @@ router.route('/contains')
                     exec(function(err, unidades){
                         if(err)
                             return res.send(err);
-                        // subconjuntos.forEach(subconjunto => {
-                        //     if(!subconjunto.adicional)
-                        //         subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
-                        //     if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
-                        //         subconjunto.adicional.imagen = lastPicture(subconjunto.identificacion.codigoReferencia, unidades);
-
-                        // });
+                        // Agregar información adicional a los conjuntos:
                         subconjuntos.forEach(subconjunto => {
                             let unidadesFiltradas = filtrarUnidades(subconjunto.identificacion.codigoReferencia, unidades);
                             if(!subconjunto.adicional)
                                 subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
                             if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
                                 subconjunto.adicional.imagen = ultimaImagen(unidadesFiltradas);
-                            if(!subconjunto.fecha)
-                                subconjunto.fecha = periodoTiempo(unidadesFiltradas);
+                            if(!subconjunto.identificacion.fecha)
+                                subconjunto.identificacion.fecha = periodoTiempo(unidadesFiltradas);
                         });
                         res.send(subconjuntos);
                     });
             });
     });
 
-// Auxiliar para obtener la referencia (string) de la última imagen actualizada de un conjunto.
-// Recibe el prefijo del conjunto del cual se desea obtner una imagen (por ejemplo, MX-IM-1-2)
-// y el subconjunto de imagenes donde se encuentra la imagen deseada
-// Devuelve el elemento 'unidadDocumental.adicional.imagen' actualizado más recientemente,
-// en caso de que el conjunto sea vacio, devuelve la cadena vacia.
-var lastPicture = function(prefix, unidades){
-    let unidadesFiltradas = [];
-    let regex = new RegExp('^' + prefix);
-    unidades.forEach(unidad => {
-        if(regex.test(unidad.identificacion.codigoReferencia))
-            unidadesFiltradas.push(unidad);
-    });
-    unidadesFiltradas.sort(function(a, b){
-        a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
-    });
-    if(unidadesFiltradas.length === 0)
-        return '';
-    return unidadesFiltradas[unidadesFiltradas.length - 1].adicional.imagen;
-};
-
+// Auxiliar para filtrar y reducir la cantidad de unidades de un conjunto específico.
+// Recibe como parámetros el prefijo con el que se desea filtrar (por ejemplo, MX-IM-1-2)
+// y el conjunto (arreglo) de unidades.
+// Devuelve un subconjunto (arreglo) de unidades cuyo código de referencia es prefijo del parámetro dado.
+// Devuelve un arreglo vacio en caso de que haya unidades que cumplan con el criterio anterior.
 var filtrarUnidades = function(prefix, unidades){
     let unidadesFiltradas = [];
     let regex = new RegExp('^' + prefix);
@@ -207,15 +186,25 @@ var filtrarUnidades = function(prefix, unidades){
     return unidadesFiltradas;
 };
 
+// Auxiliar para obtener la referencia (string) de la última imagen actualizada de un conjunto de unidades.
+// Devuelve el elemento 'unidadDocumental.adicional.imagen' actualizado más recientemente,
+// en caso de que el conjunto sea vacio, devuelve la cadena vacia.
 var ultimaImagen = function(unidades){
     if(unidades.length === 0)
         return '';
     unidades.sort(function(a, b){
-        a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
+        return a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
     });
     return unidades[unidades.length - 1].adicional.imagen;
 };
 
+// Determina el periodo de tiempo de un conjunto de unidades.
+// Recibe el conjunto de unidades documentales que pueden (o no) contener la propiedad fecha.
+// Filtra solo aquellas unidades con fecha, las ordena cronólogicamente y determina la fecha inicial y final,
+// es decir, el periodo de tiempo.
+// Devuelve un objeto con las propiedades 'inicio' y 'final' (ambas del tipo Date) para describir el periodo de tiempo.
+// En caso de que la propiedad 'inicial' y 'final' sean del mismo año, se omite la propiedad 'final'.
+// En caso de que el conjunto de unidades como parámetro sea vacio o no contenga fechas, se devuelve la propiedad undefined.
 var periodoTiempo = function(unidades){
     if(unidades.length === 0)
         return undefined;
@@ -227,8 +216,12 @@ var periodoTiempo = function(unidades){
     if(allDates.length === 0)
         return undefined;
     allDates.sort(function(a, b){
-        a.getTime() - b.getTime(); // ordenamiento cronológico
+        // var dateA = new Date(a);
+        // var dateB = new Date(b);
+        // return a.getTime() - b.getTime(); // ordenamiento cronológico
+        return a.getTime() - b.getTime(); // ordenamiento cronológico
     });
+    console.log('allDates: ', allDates);
     if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
         return {inicio: allDates[0], fin: allDates[allDates.length-1]};
     return {inicio: allDates[0]};

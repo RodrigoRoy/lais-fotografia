@@ -16,10 +16,10 @@ var ConjuntoDocumentalSchema = new Schema({
 		// 	ingreso: {type: Date}, // createdAt
 		// 	manufactura: {type: Date} // INFERIDO
 		// },
-		fecha: { // fecha de manufactura // INFERIDO
-			inicio: {type: Date},
-			fin: {type: Date} // En caso de ser un periodo
-		},
+		// fecha: { // fecha de manufactura // INFERIDO
+		// 	inicio: {type: Date},
+		// 	fin: {type: Date} // En caso de ser un periodo
+		// },
 		lugar: [{type: String}], // Google Maps ID, INFERIDO
 		productor: {type: String, trim: true},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
