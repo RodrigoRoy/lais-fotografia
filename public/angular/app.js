@@ -3,7 +3,6 @@ angular.module('laisFotoApp', [
 	'ngMessages', // Manejador de validación en formularios
 	'ngSanitize', // Mostrar HTML de manera segura
 	'ngMaterial', // Angular Material (front end)
-	'md.data.table', // Material design data table
 	'angularTrix', // WYSIWYG text editor
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
@@ -38,7 +37,8 @@ angular.module('laisFotoApp', [
 .config(function($mdThemingProvider) {
 	$mdThemingProvider.alwaysWatchTheme(true); // Dynamic themes
 	$mdThemingProvider.theme('default').primaryPalette('indigo').accentPalette('pink'); // Changing the default theme
-	$mdThemingProvider.theme('dark-grey').backgroundPalette('grey').dark(); // Custom theme
+	$mdThemingProvider.theme('dark-grey').primaryPalette('teal').accentPalette('grey').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
 	$mdThemingProvider.theme('new-blue-grey').primaryPalette('blue-grey').accentPalette('grey').warnPalette('red').backgroundPalette('grey'); // Custom theme
 	$mdThemingProvider.setDefaultTheme('new-blue-grey');
+	// $mdThemingProvider.setDefaultTheme('dark-grey');
 });

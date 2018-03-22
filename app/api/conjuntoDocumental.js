@@ -221,7 +221,6 @@ var periodoTiempo = function(unidades){
         // return a.getTime() - b.getTime(); // ordenamiento cronológico
         return a.getTime() - b.getTime(); // ordenamiento cronológico
     });
-    console.log('allDates: ', allDates);
     if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
         return {inicio: allDates[0], fin: allDates[allDates.length-1]};
     return {inicio: allDates[0]};
