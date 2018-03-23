@@ -1,7 +1,7 @@
 /* Margen superior e inferior para el contenido de cada página dentro de <div ng-view>*/
 [ng-view]{
-	/*margin-top: 4.5em;*/
-	/*margin-bottom: 0;*/
+	margin-top: 3em;
+	margin-bottom: 3em;
 }
 
 /* Footer en la parte inferior*/

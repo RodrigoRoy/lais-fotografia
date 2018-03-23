@@ -37,8 +37,8 @@ angular.module('laisFotoApp', [
 .config(function($mdThemingProvider) {
 	$mdThemingProvider.alwaysWatchTheme(true); // Dynamic themes
 	$mdThemingProvider.theme('default').primaryPalette('indigo').accentPalette('pink'); // Changing the default theme
-	$mdThemingProvider.theme('dark-grey').primaryPalette('teal').accentPalette('grey').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
+	$mdThemingProvider.theme('dark-grey').primaryPalette('deep-purple').accentPalette('grey').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
 	$mdThemingProvider.theme('new-blue-grey').primaryPalette('blue-grey').accentPalette('grey').warnPalette('red').backgroundPalette('grey'); // Custom theme
-	$mdThemingProvider.setDefaultTheme('new-blue-grey');
-	// $mdThemingProvider.setDefaultTheme('dark-grey');
+	// $mdThemingProvider.setDefaultTheme('new-blue-grey');
+	$mdThemingProvider.setDefaultTheme('dark-grey');
 });

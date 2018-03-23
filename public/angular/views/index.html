@@ -35,7 +35,7 @@
 			</div>
 		</md-toolbar>
 
-		<md-content class="md-padding">
+		<!-- <md-content class="md-padding">
 			<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
 				<md-nav-item md-nav-href="/" name="inicio">
 					Inicio
@@ -44,7 +44,7 @@
 					Colección
 				</md-nav-item>
 			</md-nav-bar>
-		</md-content>
+		</md-content> -->
 		
 		<md-sidenav md-component-id="menu">
 			<md-toolbar class="md-theme-indigo">
@@ -79,7 +79,9 @@
 			</md-content>
 		</md-sidenav>
 
-		<div ng-view></div>
+		<md-content>
+			<div ng-view></div>
+		</md-content>
 
 		<!-- <footer layout="row" layout-wrap layout-align="center" class="footer">
 			<div flex="80">
