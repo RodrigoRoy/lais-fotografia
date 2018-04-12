@@ -67,24 +67,25 @@ var UnidadDocumentalSchema = new Schema({
 				_id: false
 			}]
 		},
-		sellos: {
+		sellos: [{
 			transcripcion: {type: String, trim: true},
 			ubicacion: {type: String, trim: true},
-		}
+			_id: false
+		}]
 	},
 	documentacionAsociada: {
-		fotografiaMismoNegativo: {type: String, trim: true},
-		fotografiaBase: {type: String, trim: true},
-		reprografia: {type: String, trim: true},
-		fotografiaMismaSecuencia: {type: String, trim: true},
-		fotografiaConsecutiva: {type: String, trim: true},
-		fotografiaConsecutivaOtraCamara: {type: String, trim: true},
-		fotografiaEncuadreSimilar: {type: String, trim: true},
-		grabadoRelacionado: {type: String, trim: true}
+		fotografiaMismoNegativo: [{type: String, trim: true}],
+		fotografiaBase: [{type: String, trim: true}],
+		reprografia: [{type: String, trim: true}],
+		fotografiaMismaSecuencia: [{type: String, trim: true}],
+		fotografiaConsecutiva: [{type: String, trim: true}],
+		fotografiaConsecutivaOtraCamara: [{type: String, trim: true}],
+		fotografiaEncuadreSimilar: [{type: String, trim: true}],
+		grabadoRelacionado: [{type: String, trim: true}]
 	},
 	publicaciones: {
 		publicacion: [{type: String, trim: true}],
-		exposicion: {type: String, trim: true}
+		exposicion: [{type: String, trim: true}]
 	},
 	notas: {
 		notas: {type: String, trim: true}

@@ -283,15 +283,15 @@
 									</div>
 								</div>
 
-								<div layout-gt-sm="row">
+								<div layout-gt-sm="row" ng-repeat="sello in unidadDocumental.caracteristicasFisicas.sellos">
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Sellos (transcripción)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.transcripcion">
+										<input ng-model="sello.transcripcion" ng-blur="agregarSello(sello.transcripcion)">
 									</md-input-container>
 
 									<md-input-container class="md-block" flex-gt-sm>
 										<label>Sellos (ubicación)</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.sellos.ubicacion">
+										<input ng-model="sello.ubicacion">
 									</md-input-container>
 								</div>
 							</div>
@@ -300,44 +300,44 @@
 					<md-tab label="Documentación asociada">
 						<md-content layout-padding>
 							<div>
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaMismoNegativo">
 									<label>Fotografía creada a partir del mismo negativo</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaMismoNegativo"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaMismoNegativo(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaBase">
 									<label>Fotografía base</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaBase"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaBase(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.reprografia">
 									<label>Reprografía</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.reprografia"></input>
+									<input ng-model="value.text" ng-blur="agregarReprografia(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaMismaSecuencia">
 									<label>Fotografía de la misma secuencia</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaMismaSecuencia(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaConsecutiva">
 									<label>Fotografía consecutiva</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaConsecutiva"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaConsecutiva(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaConsecutivaOtraCamara">
 									<label>Fotografía consecutiva con otra cámara</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaConsecutivaOtraCamara(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.fotografiaEncuadreSimilar">
 									<label>Fotografía con encuadre similar</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar"></input>
+									<input ng-model="value.text" ng-blur="agregarFotografiaEncuadreSimilar(value.text)"></input>
 								</md-input-container>
 
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.grabadoRelacionado">
 									<label>Grabado relacionado</label>
-									<input ng-model="unidadDocumental.documentacionAsociada.grabadoRelacionado"></input>
+									<input ng-model="value.text" ng-blur="agregarGrabadoRelacionado(value.text)"></input>
 								</md-input-container>
 							</div>
 						</md-content>
@@ -345,19 +345,14 @@
 					<md-tab label="Publicaciones">
 						<md-content layout-padding>
 							<div>
-								<md-input-container class="md-block" ng-repeat="publicacion in publicaciones">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.publicaciones">
 									<label>Publicación</label>
-									<input ng-model="publicacion.nombre" ng-blur="agregarPublicacion(publicacion.nombre)">
+									<input ng-model="value.text" ng-blur="agregarPublicacion(value.text)">
 								</md-input-container>
 
-								<!-- <md-input-container class="md-block">
-									<label>Publicación</label>
-									<input ng-model="unidadDocumental.publicaciones.publicacion"></input>
-								</md-input-container> -->
-
-								<md-input-container class="md-block">
+								<md-input-container class="md-block" ng-repeat="value in auxiliar.exposicion">
 									<label>Exposición</label>
-									<input ng-model="unidadDocumental.publicaciones.exposicion"></input>
+									<input ng-model="value.text" ng-blur="agregarExposicion(value.text)"></input>
 								</md-input-container>
 							</div>
 						</md-content>

@@ -14,18 +14,22 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     	},
 		estructuraContenido: {},
         caracteristicasFisicas: {
-            soportePrimario:{
+            soportePrimario: {
                 inscripciones: [{
                     transcripcion: '',
                     ubicacion: ''
                 }]
             },
-            soporteSecundario:{
+            soporteSecundario: {
                 inscripciones: [{
                     transcripcion: '',
                     ubicacion: ''
                 }]
             },
+            sellos: [{
+                transcripcion: '',
+                ubicacion: ''
+            }]
         },
 		documentacionAsociada: {},
 		publicaciones: {},
@@ -36,7 +40,18 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             isPublic: true,
         }
     };
-    $scope.publicaciones = [{nombre: ''}]; // Auxiliar para manejar el arreglo de publicaciones
+    $scope.auxiliar = { // Auxiliar para manejar arreglos en propiedades de unidad documental
+        publicaciones: [{text: ''}],
+        exposicion: [{text: ''}],
+        fotografiaMismoNegativo: [{text: ''}],
+        fotografiaBase: [{text: ''}],
+        reprografia: [{text: ''}],
+        fotografiaMismaSecuencia: [{text: ''}],
+        fotografiaConsecutiva: [{text: ''}],
+        fotografiaConsecutivaOtraCamara: [{text: ''}],
+        fotografiaEncuadreSimilar: [{text: ''}],
+        grabadoRelacionado: [{text: ''}]
+    };
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
 
     // Agrega un "nuevo" autor.
@@ -60,13 +75,82 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if($scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
                 $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
     };
+    $scope.agregarSello = function(transcripcion){
+        var lastValue = $scope.unidadDocumental.caracteristicasFisicas.sellos[$scope.unidadDocumental.caracteristicasFisicas.sellos.length-1];
+        if(transcripcion)
+            if($scope.unidadDocumental.caracteristicasFisicas.sellos.length == 1 || lastValue.transcripcion != '')
+                $scope.unidadDocumental.caracteristicasFisicas.sellos.push({transcripcion: '', ubicacion: ''});
+    }
     // Agrega una "nueva" publicacion de manera análoga a la función "agregaAutor" pero empleando el auxiliar $scope.publicaciones
     // $scope.publicaciones = [{nombre: ''}];
-    $scope.agregarPublicacion = function(publicacionText){
-        var lastPublicacion = $scope.publicaciones[$scope.publicaciones.length - 1];
-        if(publicacionText.trim() != '')
-            if($scope.publicaciones.length == 1 || lastPublicacion.nombre != '')
-                $scope.publicaciones.push({nombre: ''});
+    $scope.agregarPublicacion = function(newText){
+        var lastValue = $scope.auxiliar.publicaciones[$scope.auxiliar.publicaciones.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.publicaciones.length == 1 || lastValue.text != '')
+                $scope.auxiliar.publicaciones.push({text: ''});
+    };
+    $scope.agregarExposicion = function(newText){
+        var lastValue = $scope.auxiliar.exposicion[$scope.auxiliar.exposicion.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.exposicion.length == 1 || lastValue.text != '')
+                $scope.auxiliar.exposicion.push({text: ''});
+    };
+    // Agrega un "nuevo" valor en el alguno de los arreglos auxiliares de manera análoga a la función "agregarAutor" empleando $scope.auxiliar
+    // fotografiaMismoNegativo
+    $scope.agregarFotografiaMismoNegativo = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaMismoNegativo[$scope.auxiliar.fotografiaMismoNegativo.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaMismoNegativo.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaMismoNegativo.push({text: ''});
+    };
+    // fotografiaBase
+    $scope.agregarFotografiaBase = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaBase[$scope.auxiliar.fotografiaBase.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaBase.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaBase.push({text: ''});
+    };
+    // reprografia
+    $scope.agregarReprografia = function(newText){
+        var lastValue = $scope.auxiliar.reprografia[$scope.auxiliar.reprografia.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.reprografia.length == 1 || lastValue.text != '')
+                $scope.auxiliar.reprografia.push({text: ''});
+    };
+    // fotografiaMismaSecuencia
+    $scope.agregarFotografiaMismaSecuencia = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaMismaSecuencia[$scope.auxiliar.fotografiaMismaSecuencia.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaMismaSecuencia.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaMismaSecuencia.push({text: ''});
+    };
+    // fotografiaConsecutiva
+    $scope.agregarFotografiaConsecutiva = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaConsecutiva[$scope.auxiliar.fotografiaConsecutiva.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaConsecutiva.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaConsecutiva.push({text: ''});
+    };
+    // fotografiaConsecutivaOtraCamara
+    $scope.agregarFotografiaConsecutivaOtraCamara = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaConsecutivaOtraCamara[$scope.auxiliar.fotografiaConsecutivaOtraCamara.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaConsecutivaOtraCamara.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaConsecutivaOtraCamara.push({text: ''});
+    };
+    // fotografiaEncuadreSimilar
+    $scope.agregarFotografiaEncuadreSimilar = function(newText){
+        var lastValue = $scope.auxiliar.fotografiaEncuadreSimilar[$scope.auxiliar.fotografiaEncuadreSimilar.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.fotografiaEncuadreSimilar.length == 1 || lastValue.text != '')
+                $scope.auxiliar.fotografiaEncuadreSimilar.push({text: ''});
+    };
+    // grabadoRelacionado
+    $scope.agregarGrabadoRelacionado = function(newText){
+        var lastValue = $scope.auxiliar.grabadoRelacionado[$scope.auxiliar.grabadoRelacionado.length-1];
+        if(newText.trim() != '')
+            if($scope.auxiliar.grabadoRelacionado.length == 1 || lastValue.text != '')
+                $scope.auxiliar.grabadoRelacionado.push({text: ''});
     };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
@@ -84,13 +168,79 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         for(var i = $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length - 1; i >= 0; i--)
             if(!$scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones[i].transcripcion)
                 $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.splice(i, 1);
-        // Copiar $scope.publicaciones a $scope.unidadDocumental.publicaciones.publicacion
+        // Limpia sellos vacios
+        for(var i = $scope.unidadDocumental.caracteristicasFisicas.sellos.length - 1; i >= 0; i--)
+            if(!$scope.unidadDocumental.caracteristicasFisicas.sellos[i].transcripcion)
+                $scope.unidadDocumental.caracteristicasFisicas.sellos.splice(i, 1);
+        // Copiar $scope.auxiliar.publicaciones a $scope.unidadDocumental.publicaciones.publicacion
         $scope.unidadDocumental.publicaciones.publicacion = [];
-        $scope.publicaciones.forEach(publicacion => {
-            if(publicacion.nombre != '')
-                $scope.unidadDocumental.publicaciones.publicacion.push(publicacion.nombre);
+        $scope.auxiliar.publicaciones.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.publicaciones.publicacion.push(value.text);
         });
-        $scope.unidadDocumental.publicaciones.publicacion = $scope.unidadDocumental.publicaciones.publicacion.length > 0 ? $scope.unidadDocumental.publicaciones.publicacion : undefined;
+        // Copiar $scope.auxiliar.exposicion a $scope.unidadDocumental.publicaciones.exposicion
+        $scope.unidadDocumental.publicaciones.exposicion = [];
+        $scope.auxiliar.exposicion.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.publicaciones.exposicion.push(value.text);
+        });
+        $scope.unidadDocumental.publicaciones.exposicion = $scope.unidadDocumental.publicaciones.exposicion.length > 0 ? $scope.unidadDocumental.publicaciones.exposicion : undefined;
+        // fotografiaMismoNegativo
+        $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo = [];
+        $scope.auxiliar.fotografiaMismoNegativo.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo = $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo : undefined;
+        // fotografiaBase
+        $scope.unidadDocumental.documentacionAsociada.fotografiaBase = [];
+        $scope.auxiliar.fotografiaBase.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaBase.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaBase = $scope.unidadDocumental.documentacionAsociada.fotografiaBase.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaBase : undefined;
+        // reprografia
+        $scope.unidadDocumental.documentacionAsociada.reprografia = [];
+        $scope.auxiliar.reprografia.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.reprografia.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.reprografia = $scope.unidadDocumental.documentacionAsociada.reprografia.length > 0 ? $scope.unidadDocumental.documentacionAsociada.reprografia : undefined;
+        // fotografiaMismaSecuencia
+        $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia = [];
+        $scope.auxiliar.fotografiaMismaSecuencia.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia = $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia : undefined;
+        // fotografiaConsecutiva
+        $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva = [];
+        $scope.auxiliar.fotografiaConsecutiva.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva = $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva : undefined;
+        // fotografiaConsecutivaOtraCamara
+        $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara = [];
+        $scope.auxiliar.fotografiaConsecutivaOtraCamara.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara = $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara : undefined;
+        // fotografiaEncuadreSimilar
+        $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar = [];
+        $scope.auxiliar.fotografiaEncuadreSimilar.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar = $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar.length > 0 ? $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar : undefined;
+        // grabadoRelacionado
+        $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado = [];
+        $scope.auxiliar.grabadoRelacionado.forEach(value => {
+            if(value.text != '')
+                $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.push(value.text);
+        });
+        $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado = $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.length > 0 ? $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado : undefined;
     };
 
     // Sube una imagen al servidor.
@@ -207,13 +357,87 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             // Agregar un espacio adicional para seguir agregando inscripciones (en soporte primario y secundario)
             $scope.unidadDocumental.caracteristicasFisicas.soportePrimario.inscripciones.push({transcripcion: '', ubicacion: ''});
             $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
-            // Parse para $scope.unidadDocumental.publicaciones.publicacion -> $scope.publicaciones. Se agrega un espacio en blanco para seguir agregando publicaciones
+            // Agregar un espacio adicional para seguir agregando sellos
+            $scope.unidadDocumental.caracteristicasFisicas.sellos.push({transcripcion: '', ubicacion: ''});
+            // Parse para $scope.unidadDocumental.publicaciones.publicacion -> $scope.auxiliar.publicaciones. Se agrega un espacio en blanco para seguir agregando publicaciones
             if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.publicacion && $scope.unidadDocumental.publicaciones.publicacion.length > 0){
-                $scope.publicaciones = [];
-                $scope.unidadDocumental.publicaciones.publicacion.forEach(publicacion => {
-                    $scope.publicaciones.push({nombre: publicacion});
+                $scope.auxiliar.publicaciones = [];
+                $scope.unidadDocumental.publicaciones.publicacion.forEach(value => {
+                    $scope.auxiliar.publicaciones.push({text: value});
                 });
-                $scope.publicaciones.push({nombre: ''});
+                $scope.auxiliar.publicaciones.push({text: ''});
+            }
+            // Parse para $scope.unidadDocumental.publicaciones.exposicion -> $scope.auxiliar.exposicion. Se agrega un espacio en blanco para seguir agregando exposiciones
+            if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.exposicion && $scope.unidadDocumental.publicaciones.exposicion.length > 0){
+                $scope.auxiliar.exposicion = [];
+                $scope.unidadDocumental.publicaciones.exposicion.forEach(value => {
+                    $scope.auxiliar.exposicion.push({text: value});
+                });
+                $scope.auxiliar.exposicion.push({text: ''});
+            }
+            // fotografiaMismoNegativo
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo && $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo.length > 0){
+                $scope.auxiliar.fotografiaMismoNegativo = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaMismoNegativo.forEach(value => {
+                    $scope.auxiliar.fotografiaMismoNegativo.push({text: value});
+                });
+                $scope.auxiliar.fotografiaMismoNegativo.push({text: ''});
+            }
+            // fotografiaBase
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaBase && $scope.unidadDocumental.documentacionAsociada.fotografiaBase.length > 0){
+                $scope.auxiliar.fotografiaBase = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaBase.forEach(value => {
+                    $scope.auxiliar.fotografiaBase.push({text: value});
+                });
+                $scope.auxiliar.fotografiaBase.push({text: ''});
+            }
+            // reprografia
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.reprografia && $scope.unidadDocumental.documentacionAsociada.reprografia.length > 0){
+                $scope.auxiliar.reprografia = [];
+                $scope.unidadDocumental.documentacionAsociada.reprografia.forEach(value => {
+                    $scope.auxiliar.reprografia.push({text: value});
+                });
+                $scope.auxiliar.reprografia.push({text: ''});
+            }
+            // fotografiaMismaSecuencia
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia && $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia.length > 0){
+                $scope.auxiliar.fotografiaMismaSecuencia = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaMismaSecuencia.forEach(value => {
+                    $scope.auxiliar.fotografiaMismaSecuencia.push({text: value});
+                });
+                $scope.auxiliar.fotografiaMismaSecuencia.push({text: ''});
+            }
+            // fotografiaConsecutiva
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva && $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva.length > 0){
+                $scope.auxiliar.fotografiaConsecutiva = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutiva.forEach(value => {
+                    $scope.auxiliar.fotografiaConsecutiva.push({text: value});
+                });
+                $scope.auxiliar.fotografiaConsecutiva.push({text: ''});
+            }
+            // fotografiaConsecutivaOtraCamara
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara && $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara.length > 0){
+                $scope.auxiliar.fotografiaConsecutivaOtraCamara = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaConsecutivaOtraCamara.forEach(value => {
+                    $scope.auxiliar.fotografiaConsecutivaOtraCamara.push({text: value});
+                });
+                $scope.auxiliar.fotografiaConsecutivaOtraCamara.push({text: ''});
+            }
+            // fotografiaEncuadreSimilar
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar && $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar.length > 0){
+                $scope.auxiliar.fotografiaEncuadreSimilar = [];
+                $scope.unidadDocumental.documentacionAsociada.fotografiaEncuadreSimilar.forEach(value => {
+                    $scope.auxiliar.fotografiaEncuadreSimilar.push({text: value});
+                });
+                $scope.auxiliar.fotografiaEncuadreSimilar.push({text: ''});
+            }
+            // grabadoRelacionado
+            if($scope.unidadDocumental.documentacionAsociada && $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado && $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.length > 0){
+                $scope.auxiliar.grabadoRelacionado = [];
+                $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.forEach(value => {
+                    $scope.auxiliar.grabadoRelacionado.push({text: value});
+                });
+                $scope.auxiliar.grabadoRelacionado.push({text: ''});
             }
         }, function(res){
             console.error("Error de conexión para obtener información de la unidad documental", res);
