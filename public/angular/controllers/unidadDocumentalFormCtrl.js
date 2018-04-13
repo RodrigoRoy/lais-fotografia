@@ -75,14 +75,16 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if($scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.length == 1 || lastInscripcion.transcripcion != '')
                 $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
     };
+    // Agrega un "nuevo" sello de manera análoga a la función "agregaAutor"
     $scope.agregarSello = function(transcripcion){
         var lastValue = $scope.unidadDocumental.caracteristicasFisicas.sellos[$scope.unidadDocumental.caracteristicasFisicas.sellos.length-1];
         if(transcripcion)
             if($scope.unidadDocumental.caracteristicasFisicas.sellos.length == 1 || lastValue.transcripcion != '')
                 $scope.unidadDocumental.caracteristicasFisicas.sellos.push({transcripcion: '', ubicacion: ''});
     }
-    // Agrega una "nueva" publicacion de manera análoga a la función "agregaAutor" pero empleando el auxiliar $scope.publicaciones
-    // $scope.publicaciones = [{nombre: ''}];
+    // Agregar un "nuevo" valor de manera análoga a la función "agregaAutor" empleando $scope.auxiliar
+    // La misma estrategia es utilizada para aquellas propiedades que representan arreglos de texto como:
+    // publicacion, exposicion, todas las propiedades del area de documentacion Asociada.
     $scope.agregarPublicacion = function(newText){
         var lastValue = $scope.auxiliar.publicaciones[$scope.auxiliar.publicaciones.length-1];
         if(newText.trim() != '')
@@ -95,57 +97,48 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if($scope.auxiliar.exposicion.length == 1 || lastValue.text != '')
                 $scope.auxiliar.exposicion.push({text: ''});
     };
-    // Agrega un "nuevo" valor en el alguno de los arreglos auxiliares de manera análoga a la función "agregarAutor" empleando $scope.auxiliar
-    // fotografiaMismoNegativo
     $scope.agregarFotografiaMismoNegativo = function(newText){
         var lastValue = $scope.auxiliar.fotografiaMismoNegativo[$scope.auxiliar.fotografiaMismoNegativo.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaMismoNegativo.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaMismoNegativo.push({text: ''});
     };
-    // fotografiaBase
     $scope.agregarFotografiaBase = function(newText){
         var lastValue = $scope.auxiliar.fotografiaBase[$scope.auxiliar.fotografiaBase.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaBase.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaBase.push({text: ''});
     };
-    // reprografia
     $scope.agregarReprografia = function(newText){
         var lastValue = $scope.auxiliar.reprografia[$scope.auxiliar.reprografia.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.reprografia.length == 1 || lastValue.text != '')
                 $scope.auxiliar.reprografia.push({text: ''});
     };
-    // fotografiaMismaSecuencia
     $scope.agregarFotografiaMismaSecuencia = function(newText){
         var lastValue = $scope.auxiliar.fotografiaMismaSecuencia[$scope.auxiliar.fotografiaMismaSecuencia.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaMismaSecuencia.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaMismaSecuencia.push({text: ''});
     };
-    // fotografiaConsecutiva
     $scope.agregarFotografiaConsecutiva = function(newText){
         var lastValue = $scope.auxiliar.fotografiaConsecutiva[$scope.auxiliar.fotografiaConsecutiva.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaConsecutiva.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaConsecutiva.push({text: ''});
     };
-    // fotografiaConsecutivaOtraCamara
     $scope.agregarFotografiaConsecutivaOtraCamara = function(newText){
         var lastValue = $scope.auxiliar.fotografiaConsecutivaOtraCamara[$scope.auxiliar.fotografiaConsecutivaOtraCamara.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaConsecutivaOtraCamara.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaConsecutivaOtraCamara.push({text: ''});
     };
-    // fotografiaEncuadreSimilar
     $scope.agregarFotografiaEncuadreSimilar = function(newText){
         var lastValue = $scope.auxiliar.fotografiaEncuadreSimilar[$scope.auxiliar.fotografiaEncuadreSimilar.length-1];
         if(newText.trim() != '')
             if($scope.auxiliar.fotografiaEncuadreSimilar.length == 1 || lastValue.text != '')
                 $scope.auxiliar.fotografiaEncuadreSimilar.push({text: ''});
     };
-    // grabadoRelacionado
     $scope.agregarGrabadoRelacionado = function(newText){
         var lastValue = $scope.auxiliar.grabadoRelacionado[$scope.auxiliar.grabadoRelacionado.length-1];
         if(newText.trim() != '')
@@ -155,7 +148,6 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
     var cleanUnidadDocumentalData = function(){
-    // var cleanUnidadDocumentalData = function(){
         // Limpia nombres (y tipos) de autores vacios
         for(var i = $scope.unidadDocumental.identificacion.autores.length - 1; i >= 0; i--)
             if(!$scope.unidadDocumental.identificacion.autores[i].nombre || !$scope.unidadDocumental.identificacion.autores[i].tipo)
@@ -172,13 +164,16 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         for(var i = $scope.unidadDocumental.caracteristicasFisicas.sellos.length - 1; i >= 0; i--)
             if(!$scope.unidadDocumental.caracteristicasFisicas.sellos[i].transcripcion)
                 $scope.unidadDocumental.caracteristicasFisicas.sellos.splice(i, 1);
-        // Copiar $scope.auxiliar.publicaciones a $scope.unidadDocumental.publicaciones.publicacion
+        // Copiar valores en $scope.auxiliar a $scope.unidadDocumental.
+        // La misma idea se aplica análogamente para varias propiedades.
+        // publicaciones
         $scope.unidadDocumental.publicaciones.publicacion = [];
         $scope.auxiliar.publicaciones.forEach(value => {
             if(value.text != '')
                 $scope.unidadDocumental.publicaciones.publicacion.push(value.text);
         });
-        // Copiar $scope.auxiliar.exposicion a $scope.unidadDocumental.publicaciones.exposicion
+        $scope.unidadDocumental.publicaciones.publicacion = $scope.unidadDocumental.publicaciones.publicacion.length > 0 ? $scope.unidadDocumental.publicaciones.publicacion : undefined;
+        // exposicion
         $scope.unidadDocumental.publicaciones.exposicion = [];
         $scope.auxiliar.exposicion.forEach(value => {
             if(value.text != '')
@@ -359,7 +354,9 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
             // Agregar un espacio adicional para seguir agregando sellos
             $scope.unidadDocumental.caracteristicasFisicas.sellos.push({transcripcion: '', ubicacion: ''});
-            // Parse para $scope.unidadDocumental.publicaciones.publicacion -> $scope.auxiliar.publicaciones. Se agrega un espacio en blanco para seguir agregando publicaciones
+            // Parse para agregar valores de arreglos de texto en $scope.unidadDocumental a $scope.auxiliar. 
+            // Se agrega un espacio en blanco para seguir agregando publicaciones. La misma técnica se emplea para varias propiedades.
+            // publicaciones
             if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.publicacion && $scope.unidadDocumental.publicaciones.publicacion.length > 0){
                 $scope.auxiliar.publicaciones = [];
                 $scope.unidadDocumental.publicaciones.publicacion.forEach(value => {
@@ -367,7 +364,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 });
                 $scope.auxiliar.publicaciones.push({text: ''});
             }
-            // Parse para $scope.unidadDocumental.publicaciones.exposicion -> $scope.auxiliar.exposicion. Se agrega un espacio en blanco para seguir agregando exposiciones
+            // exposicion
             if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.exposicion && $scope.unidadDocumental.publicaciones.exposicion.length > 0){
                 $scope.auxiliar.exposicion = [];
                 $scope.unidadDocumental.publicaciones.exposicion.forEach(value => {
