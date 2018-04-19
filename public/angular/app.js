@@ -4,6 +4,7 @@ angular.module('laisFotoApp', [
 	'ngSanitize', // Mostrar HTML de manera segura
 	'ngMaterial', // Angular Material (front end)
 	'angularTrix', // WYSIWYG text editor
+	'ngMap', // AngularJS Google Maps
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 

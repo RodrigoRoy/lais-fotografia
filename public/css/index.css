@@ -33,3 +33,7 @@
 	padding: 0 12px;
 	margin-bottom: 2em;
 }
+
+ng-map > div{
+	height: 90% !important;
+}

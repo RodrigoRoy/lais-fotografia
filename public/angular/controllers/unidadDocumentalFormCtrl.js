@@ -1,6 +1,6 @@
 // Controlador del formulario para un Conjunto Documental
 
-angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, UnidadDocumental, ConjuntoDocumental, File){
+angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, UnidadDocumental, ConjuntoDocumental, File, NgMap, NavigatorGeolocation, GeoCoder){
 	
     // Objeto que representa toda la información de la unidad documental, como se describe en el modelo unidadDocumental.
     // Se pueden inicializar algunos valores por default.
@@ -40,7 +40,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             isPublic: true,
         }
     };
-    $scope.auxiliar = { // Auxiliar para manejar arreglos en propiedades de unidad documental
+    $scope.auxiliar = {
         publicaciones: [{text: ''}],
         exposicion: [{text: ''}],
         fotografiaMismoNegativo: [{text: ''}],
@@ -53,14 +53,15 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         grabadoRelacionado: [{text: ''}]
     };
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
+    $scope.isGoogleDefined = google ? true : false; // Determina si la variable google fue inicializada mediante llamada <script> en index
 
     // Agrega un "nuevo" autor.
     // Recibe como parámetro el nombre escrito previamente como autor, si no es vacio, agrega un autor vacio (i.e. un nuevo input en blanco).
     $scope.agregarAutor = function(nombre){
         var lastAutor = $scope.unidadDocumental.identificacion.autores[$scope.unidadDocumental.identificacion.autores.length - 1];
-    	if(nombre)
+        if(nombre)
             if($scope.unidadDocumental.identificacion.autores.length == 1 || lastAutor.nombre != '') // se agrega autor vacio cuando es el primer autor agregado o cuando el último no es vacio
-    		  $scope.unidadDocumental.identificacion.autores.push({tipo: '', nombre: ''});
+              $scope.unidadDocumental.identificacion.autores.push({tipo: '', nombre: ''});
     };
     // Agrega una "nueva" inscripción de manera análoga a la función "agregarAutor"
     $scope.agregaInscripcionPrimario = function(transcripcion){
@@ -144,6 +145,46 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         if(newText.trim() != '')
             if($scope.auxiliar.grabadoRelacionado.length == 1 || lastValue.text != '')
                 $scope.auxiliar.grabadoRelacionado.push({text: ''});
+    };
+
+    // Google Maps (NgMap)
+    // Actualiza el marcador del mapa para asignar y centrar la ubicación elegida en el input "places-auto-complete"
+    $scope.placeChanged = function(){
+        // Nota: $scope.lugarDescrito => formatted address
+        //       $scope.marker        => [lat, lng]
+        let place = this.getPlace();
+        if(place.geometry){ // Si es un lugar válido con ubicación LatLng
+            NgMap.getMap().then(function(map){
+                $scope.unidadDocumental.estructuraContenido.lugarDescrito = place.place_id;
+                $scope.auxiliar.marker = [place.geometry.location.lat(), place.geometry.location.lng()];
+                map.setCenter(place.geometry.location);
+            });
+        }
+        else{
+            if($scope.auxiliar.marker)
+                $scope.auxiliar.marker = undefined;
+            $scope.unidadDocumental.estructuraContenido.lugarDescrito = undefined;
+        }
+
+    };
+    // Actualizar marcador y referencias después de haber sido movido en el mapa
+    $scope.getPosition = function(event){
+        $scope.auxiliar.marker = [event.latLng.lat(), event.latLng.lng()];
+        NgMap.getMap().then(function(map){
+            GeoCoder.geocode({location: event.latLng}).then(function(res){
+                if(res && res.length > 0){
+                    map.setCenter(event.latLng);
+                    $scope.auxiliar.lugarDescrito = res[0].formatted_address;
+                    $scope.unidadDocumental.estructuraContenido.lugarDescrito = res[0].place_id;
+                }
+            });
+        });
+    };
+    // Elimina el marcador del mapa y las referencias asociadas. Util cuando no se puede corroborar el lugar descrito
+    $scope.borrarLugar = function(){
+        $scope.auxiliar.marker = undefined;
+        $scope.unidadDocumental.estructuraContenido.lugarDescrito = undefined;
+        $scope.auxiliar.lugarDescrito = '';
     };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
@@ -435,6 +476,19 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                     $scope.auxiliar.grabadoRelacionado.push({text: value});
                 });
                 $scope.auxiliar.grabadoRelacionado.push({text: ''});
+            }
+            // lugarDescrito
+            // Reverse Geocoding para obtener dirección a partir de PlaceID ($scope.unidadDocumental.estructuraContenido.lugarDescrito)
+            if($scope.unidadDocumental.estructuraContenido && $scope.unidadDocumental.estructuraContenido.lugarDescrito){
+                NgMap.getMap().then(function(map){
+                    GeoCoder.geocode({placeId: $scope.unidadDocumental.estructuraContenido.lugarDescrito}).then(function(res){
+                        if(res && res.length > 0){
+                            $scope.auxiliar.marker = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
+                            map.setCenter(res[0].geometry.location);
+                            $scope.auxiliar.lugarDescrito = res[0].formatted_address;
+                        }
+                    });
+                });
             }
         }, function(res){
             console.error("Error de conexión para obtener información de la unidad documental", res);

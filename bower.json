@@ -26,7 +26,8 @@
     "angular-route": "^1.6.7",
     "angular-material": "^1.1.5",
     "angular-trix": "^1.0.2",
-    "angular-sanitize": "^1.6.9"
+    "angular-sanitize": "^1.6.9",
+    "ngmap": "^1.18.4"
   },
   "resolutions": {
     "angular": "^1.6.7"
