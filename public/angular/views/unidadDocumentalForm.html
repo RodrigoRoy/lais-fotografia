@@ -173,9 +173,9 @@
 
 								<md-input-container class="md-block" ng-if="isGoogleDefined">
 									<label>Lugar descrito</label>
-									<input places-auto-complete ng-model="auxiliar.lugarDescrito" on-place-changed="placeChanged()" placeholder="">
+									<input places-auto-complete ng-model="unidadDocumental.estructuraContenido.lugarDescrito.formattedAddress" on-place-changed="placeChanged()" placeholder="">
 									<ng-map center="19.3760674,-99.1871402" zoom="15">
-										<marker position="{{auxiliar.marker}}" animation="DROP" draggable="true" on-dragend="getPosition($event)" visible="{{auxiliar.marker ? true : false}}"></marker>
+										<marker position="{{unidadDocumental.estructuraContenido.lugarDescrito.location}}" animation="DROP" draggable="true" on-dragend="getPosition($event)" visible="{{unidadDocumental.estructuraContenido.lugarDescrito.location ? true : false}}"></marker>
 									</ng-map>
 									<br>
 									<md-button class="md-warn" ng-click="borrarLugar()" ng-show="unidadDocumental.estructuraContenido.lugarDescrito">Borrar ubicación</md-button>
@@ -414,8 +414,4 @@
 </div>
 
 <!-- <br>
-<pre>Auxiliar</pre>
-<pre>{{auxiliar | json}}</pre> -->
-<!-- <br>
-<pre>Unidad documental</pre>
 <pre>{{unidadDocumental | json}}</pre> -->

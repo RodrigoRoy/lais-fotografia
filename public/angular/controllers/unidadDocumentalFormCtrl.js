@@ -150,41 +150,34 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // Google Maps (NgMap)
     // Actualiza el marcador del mapa para asignar y centrar la ubicación elegida en el input "places-auto-complete"
     $scope.placeChanged = function(){
-        // Nota: $scope.lugarDescrito => formatted address
-        //       $scope.marker        => [lat, lng]
         let place = this.getPlace();
-        if(place.geometry){ // Si es un lugar válido con ubicación LatLng
+        if(place) // Si es un lugar válido con ubicación LatLng
             NgMap.getMap().then(function(map){
-                $scope.unidadDocumental.estructuraContenido.lugarDescrito = place.place_id;
-                $scope.auxiliar.marker = [place.geometry.location.lat(), place.geometry.location.lng()];
+                $scope.unidadDocumental.estructuraContenido.lugarDescrito = {};
+                $scope.unidadDocumental.estructuraContenido.lugarDescrito.placeId = place.place_id;
+                $scope.unidadDocumental.estructuraContenido.lugarDescrito.location = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()};
+                $scope.unidadDocumental.estructuraContenido.lugarDescrito.formattedAddress = place.formatted_address;
                 map.setCenter(place.geometry.location);
             });
-        }
-        else{
-            if($scope.auxiliar.marker)
-                $scope.auxiliar.marker = undefined;
+        else
             $scope.unidadDocumental.estructuraContenido.lugarDescrito = undefined;
-        }
-
     };
-    // Actualizar marcador y referencias después de haber sido movido en el mapa
+    // Actualizar marcador y referencias después de haber sido movido el marcador dentro del mapa
     $scope.getPosition = function(event){
-        $scope.auxiliar.marker = [event.latLng.lat(), event.latLng.lng()];
+        $scope.unidadDocumental.estructuraContenido.lugarDescrito.location = {lat: event.latLng.lat(), lng: event.latLng.lng()};
         NgMap.getMap().then(function(map){
             GeoCoder.geocode({location: event.latLng}).then(function(res){
                 if(res && res.length > 0){
                     map.setCenter(event.latLng);
-                    $scope.auxiliar.lugarDescrito = res[0].formatted_address;
-                    $scope.unidadDocumental.estructuraContenido.lugarDescrito = res[0].place_id;
+                    $scope.unidadDocumental.estructuraContenido.lugarDescrito.placeId = res[0].place_id;
+                    $scope.unidadDocumental.estructuraContenido.lugarDescrito.formattedAddress = res[0].formatted_address;
                 }
             });
         });
     };
     // Elimina el marcador del mapa y las referencias asociadas. Util cuando no se puede corroborar el lugar descrito
     $scope.borrarLugar = function(){
-        $scope.auxiliar.marker = undefined;
         $scope.unidadDocumental.estructuraContenido.lugarDescrito = undefined;
-        $scope.auxiliar.lugarDescrito = '';
     };
 
     // Realiza los cambios necesarios en el objeto $scope.unidadDocumental para que sea aceptado por el modelo de la base de datos
@@ -477,19 +470,11 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 });
                 $scope.auxiliar.grabadoRelacionado.push({text: ''});
             }
-            // lugarDescrito
-            // Reverse Geocoding para obtener dirección a partir de PlaceID ($scope.unidadDocumental.estructuraContenido.lugarDescrito)
-            if($scope.unidadDocumental.estructuraContenido && $scope.unidadDocumental.estructuraContenido.lugarDescrito){
+            // lugarDescrito (centrar el mapa solamente)
+            if($scope.unidadDocumental.estructuraContenido && $scope.unidadDocumental.estructuraContenido.lugarDescrito)
                 NgMap.getMap().then(function(map){
-                    GeoCoder.geocode({placeId: $scope.unidadDocumental.estructuraContenido.lugarDescrito}).then(function(res){
-                        if(res && res.length > 0){
-                            $scope.auxiliar.marker = [res[0].geometry.location.lat(), res[0].geometry.location.lng()];
-                            map.setCenter(res[0].geometry.location);
-                            $scope.auxiliar.lugarDescrito = res[0].formatted_address;
-                        }
-                    });
+                    map.setCenter($scope.unidadDocumental.estructuraContenido.lugarDescrito.location);
                 });
-            }
         }, function(res){
             console.error("Error de conexión para obtener información de la unidad documental", res);
         });

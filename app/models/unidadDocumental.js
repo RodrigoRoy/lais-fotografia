@@ -37,7 +37,17 @@ var UnidadDocumentalSchema = new Schema({
 		descripcion: {type: String, trim: true},
 		tomadaDesde: {type: String, trim: true},
 		tomadaHacia: {type: String, trim: true},
-		lugarDescrito: {type: String} // Google Maps ID 
+		// lugarDescrito: {type: String} // Google Maps ID 
+		lugarDescrito: { // Google Maps style
+			placeId: {type: String},
+			location: {
+				lat: {type: Number},
+				lng: {type: Number},
+				_id: false
+			},
+			formattedAddress: {type: String},
+			_id: false
+		}
 	},
 	caracteristicasFisicas: {
 		tipo: {type: String, enum: ['Positivo', 'Negativo', 'Imagen digital', 'Imagen de cámara', 'Pintura', 'Grabado', 'Litografía', 'Reprografía', 'Fotomecánico', 'Transparencia']},
