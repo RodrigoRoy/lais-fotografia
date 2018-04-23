@@ -37,7 +37,6 @@ var UnidadDocumentalSchema = new Schema({
 		descripcion: {type: String, trim: true},
 		tomadaDesde: {type: String, trim: true},
 		tomadaHacia: {type: String, trim: true},
-		// lugarDescrito: {type: String} // Google Maps ID 
 		lugarDescrito: { // Google Maps style
 			placeId: {type: String},
 			location: {
@@ -101,7 +100,7 @@ var UnidadDocumentalSchema = new Schema({
 		notas: {type: String, trim: true}
 	},
 	controlDescripcion: {
-		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
+		// documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	},
 	adicional:{

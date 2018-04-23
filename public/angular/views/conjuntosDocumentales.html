@@ -203,19 +203,19 @@
 								<table class="my-table-md-dialog">
 									<tbody>
 										<tr ng-if="conjunto.documentacionAsociada.serieFotograficaIgualManufactura">
-											<td>serieFotograficaIgualManufactura</td>
+											<td>Serie fotográfica de igual manufactura</td>
 											<td>{{conjunto.documentacionAsociada.serieFotograficaIgualManufactura}}</td>
 										</tr>
 										<tr ng-if="conjunto.documentacionAsociada.registrosBase">
-											<td>registrosBase</td>
+											<td>Registros base</td>
 											<td>{{conjunto.documentacionAsociada.registrosBase}}</td>
 										</tr>
 										<tr ng-if="conjunto.documentacionAsociada.reprografias">
-											<td>reprografias</td>
+											<td>Reprografias</td>
 											<td>{{conjunto.documentacionAsociada.reprografias}}</td>
 										</tr>
 										<tr ng-if="conjunto.documentacionAsociada.grabadosRelacionados">
-											<td>grabadosRelacionados</td>
+											<td>Grabados relacionados</td>
 											<td>{{conjunto.documentacionAsociada.grabadosRelacionados}}</td>
 										</tr>
 									</tbody>
@@ -229,11 +229,11 @@
 								<table class="my-table-md-dialog">
 									<tbody>
 										<tr ng-if="conjunto.publicaciones.publicacion">
-											<td></td>
+											<td>Publicación</td>
 											<td>{{conjunto.publicaciones.publicacion}}</td>
 										</tr>
 										<tr ng-if="conjunto.publicaciones.exposicion">
-											<td></td>
+											<td>Exposición</td>
 											<td>{{conjunto.publicaciones.exposicion}}</td>
 										</tr>
 									</tbody>
@@ -279,6 +279,11 @@
 									</tbody>
 								</table>
 							</md-table-container>
+						</md-content>
+					</md-tab>
+					<md-tab label="Imagen" ng-if="conjunto.adicional.imagen">
+						<md-content class="md-padding">
+							<img ng-src="{{'files/imagenes/' + conjunto.adicional.imagen}}" layout-fill>
 						</md-content>
 					</md-tab>
 				</md-tabs>

@@ -78,7 +78,7 @@
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Estructura y contenido" ng-if="unidad.estructuraContenido.estructuraFormal || (unidad.estructuraContenido.encuadre && (unidad.estructuraContenido.encuadre.orientacion || unidad.estructuraContenido.encuadre.plano || unidad.estructuraContenido.encuadre.anguloCamara || unidad.estructuraContenido.encuadre.nivelCamara || unidad.estructuraContenido.encuadre.tipoCamara || unidad.estructuraContenido.encuadre.edicionImagen)) || unidad.estructuraContenido.descripcion || unidad.estructuraContenido.tomadaDesde || unidad.estructuraContenido.tomadaHacia">
+					<md-tab label="Estructura y contenido" ng-if="unidad.estructuraContenido.estructuraFormal || (unidad.estructuraContenido.encuadre && (unidad.estructuraContenido.encuadre.orientacion || unidad.estructuraContenido.encuadre.plano || unidad.estructuraContenido.encuadre.anguloCamara || unidad.estructuraContenido.encuadre.nivelCamara || unidad.estructuraContenido.encuadre.tipoCamara || unidad.estructuraContenido.encuadre.edicionImagen)) || unidad.estructuraContenido.descripcion || unidad.estructuraContenido.tomadaDesde || unidad.estructuraContenido.tomadaHacia || unidad.estructuraContenido.lugarDescrito">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table class="my-table-md-dialog">
@@ -123,12 +123,22 @@
 											<td>Tomada hacia</td>
 											<td>{{unidad.estructuraContenido.tomadaHacia}}</td>
 										</tr>
+										<tr ng-if="unidad.estructuraContenido.lugarDescrito">
+											<td>Lugar descrito</td>
+											<td>
+												{{unidad.estructuraContenido.lugarDescrito.formattedAddress}}
+												<br>
+												<ng-map center="{{[unidad.estructuraContenido.lugarDescrito.location.lat, unidad.estructuraContenido.lugarDescrito.location.lng]}}" zoom="15">
+													<marker position="{{[unidad.estructuraContenido.lugarDescrito.location.lat, unidad.estructuraContenido.lugarDescrito.location.lng]}}"></marker>
+												</ng-map>
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Características físicas" ng-if="unidad.caracteristicasFisicas.tipo || (unidad.caracteristicasFisicas.soportePrimario.materiales || unidad.caracteristicasFisicas.soportePrimario.dimension || (unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0)) || (unidad.caracteristicasFisicas.soporteSecundario.materiales || unidad.caracteristicasFisicas.soporteSecundario.dimension || (unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0)) || unidad.caracteristicasFisicas.sellos">
+					<md-tab label="Características físicas" ng-if="unidad.caracteristicasFisicas.tipo || (unidad.caracteristicasFisicas.soportePrimario.materiales || unidad.caracteristicasFisicas.soportePrimario.dimension || (unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0)) || (unidad.caracteristicasFisicas.soporteSecundario.materiales || unidad.caracteristicasFisicas.soporteSecundario.dimension || (unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0)) || (unidad.caracteristicasFisicas.sellos && unidad.caracteristicasFisicas.sellos.length > 0)">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table class="my-table-md-dialog">
@@ -149,9 +159,15 @@
 														<td>Dimension</td>
 														<td>{{unidad.caracteristicasFisicas.soportePrimario.dimension.ancho}} x {{unidad.caracteristicasFisicas.soportePrimario.dimension.alto}} {{unidad.caracteristicasFisicas.soportePrimario.dimension.unidad}}</td>
 													</tr>
-													<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0" ng-repeat="inscripcion in unidad.caracteristicasFisicas.soportePrimario.inscripciones">
+													<tr ng-if="unidad.caracteristicasFisicas.soportePrimario.inscripciones && unidad.caracteristicasFisicas.soportePrimario.inscripciones.length > 0">
 														<td>Inscripcion</td>
-														<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+														<td>
+															<table>
+																<tr ng-repeat="inscripcion in unidad.caracteristicasFisicas.soportePrimario.inscripciones">
+																	<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+																</tr>
+															</table>
+														</td>
 													</tr>
 												</table>
 											</td>
@@ -168,76 +184,148 @@
 														<td>Dimension</td>
 														<td>{{unidad.caracteristicasFisicas.soporteSecundario.dimension.ancho}} x {{unidad.caracteristicasFisicas.soporteSecundario.dimension.alto}} {{unidad.caracteristicasFisicas.soporteSecundario.dimension.unidad}}</td>
 													</tr>
-													<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0" ng-repeat="inscripcion in unidad.caracteristicasFisicas.soporteSecundario.inscripciones">
+													<tr ng-if="unidad.caracteristicasFisicas.soporteSecundario.inscripciones && unidad.caracteristicasFisicas.soporteSecundario.inscripciones.length > 0">
 														<td>Inscripcion</td>
-														<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+														<td>
+															<table>
+																<tr ng-repeat="inscripcion in unidad.caracteristicasFisicas.soporteSecundario.inscripciones">
+																	<td>{{inscripcion.transcripcion}}<span ng-if="inscripcion.ubicacion"> ({{inscripcion.ubicacion}})</span></td>
+																</tr>
+															</table>
+														</td>
 													</tr>
 												</table>
 											</td>
 										</tr>
-										<tr ng-if="unidad.caracteristicasFisicas.sellos">
+										<tr ng-if="unidad.caracteristicasFisicas.sellos && unidad.caracteristicasFisicas.sellos.length > 0">
 											<td>Sellos</td>
-											<td>{{unidad.caracteristicasFisicas.sellos.transcripcion}} <span>({{unidad.caracteristicasFisicas.sellos.ubicacion}})</span></td>
+											<td>
+												<table>
+													<tr ng-repeat="sellos in unidad.caracteristicasFisicas.sellos">
+														<td>{{sellos.transcripcion}} <span ng-if="sellos.ubicacion">({{sellos.ubicacion}})</span></td>
+													</tr>
+												</table>
+											</td>
 										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Documentación asociada" ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo || unidad.documentacionAsociada.fotografiaBase || unidad.documentacionAsociada.reprografia || unidad.documentacionAsociada.fotografiaMismaSecuencia || unidad.documentacionAsociada.fotografiaConsecutiva || unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara || unidad.documentacionAsociada.fotografiaEncuadreSimilar || unidad.documentacionAsociada.grabadoRelacionado">
+					<md-tab label="Documentación asociada" ng-if="(unidad.documentacionAsociada.fotografiaMismoNegativo && unidad.documentacionAsociada.fotografiaMismoNegativo.length > 0) || (unidad.documentacionAsociada.fotografiaBase && unidad.documentacionAsociada.fotografiaBase.length > 0) || (unidad.documentacionAsociada.reprografia && unidad.documentacionAsociada.reprografia.length > 0) || (unidad.documentacionAsociada.fotografiaMismaSecuencia && unidad.documentacionAsociada.fotografiaMismaSecuencia.length > 0) || (unidad.documentacionAsociada.fotografiaConsecutiva && unidad.documentacionAsociada.fotografiaConsecutiva.length > 0) || (unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara && unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara.length > 0) || (unidad.documentacionAsociada.fotografiaEncuadreSimilar && unidad.documentacionAsociada.fotografiaEncuadreSimilar.length > 0) || (unidad.documentacionAsociada.grabadoRelacionado && unidad.documentacionAsociada.grabadoRelacionado.length > 0)">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table class="my-table-md-dialog">
 									<tbody>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaMismoNegativo && unidad.documentacionAsociada.fotografiaMismoNegativo.length > 0">
 											<td>Fotografía a partir del mismo negativo</td>
-											<td>{{unidad.documentacionAsociada.fotografiaMismoNegativo}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaMismoNegativo">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaBase">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaBase && unidad.documentacionAsociada.fotografiaBase.length > 0">
 											<td>Fotografía base</td>
-											<td>{{unidad.documentacionAsociada.fotografiaBase}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaBase">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.reprografia">
+										<tr ng-if="unidad.documentacionAsociada.reprografia && unidad.documentacionAsociada.reprografia.length > 0">
 											<td>Reprografía</td>
-											<td>{{unidad.documentacionAsociada.reprografia}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.reprografia">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaMismaSecuencia">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaMismaSecuencia && unidad.documentacionAsociada.fotografiaMismaSecuencia.length > 0">
 											<td>Fotografía de la misma secuencia</td>
-											<td>{{unidad.documentacionAsociada.fotografiaMismaSecuencia}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaMismaSecuencia">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutiva">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutiva && unidad.documentacionAsociada.fotografiaConsecutiva.length > 0">
 											<td>Fotografía consecutiva</td>
-											<td>{{unidad.documentacionAsociada.fotografiaConsecutiva}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaConsecutiva">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara && unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara.length > 0">
 											<td>Fotografía consecutiva con otra cámara</td>
-											<td>{{unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaConsecutivaOtraCamara">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.fotografiaEncuadreSimilar">
+										<tr ng-if="unidad.documentacionAsociada.fotografiaEncuadreSimilar && unidad.documentacionAsociada.fotografiaEncuadreSimilar.length > 0">
 											<td>Fotografía con encuadre similar</td>
-											<td>{{unidad.documentacionAsociada.fotografiaEncuadreSimilar}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.fotografiaEncuadreSimilar">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.documentacionAsociada.grabadoRelacionado">
+										<tr ng-if="unidad.documentacionAsociada.grabadoRelacionado && unidad.documentacionAsociada.grabadoRelacionado.length > 0">
 											<td>Grabado relacionado</td>
-											<td>{{unidad.documentacionAsociada.grabadoRelacionado}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="fotografia in unidad.documentacionAsociada.grabadoRelacionado">
+														<td>{{fotografia}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
 						</md-content>
 					</md-tab>
-					<md-tab label="Publicaciones" ng-if="(unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0) || unidad.publicaciones.exposicion">
+					<md-tab label="Publicaciones" ng-if="(unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0) || (unidad.publicaciones.exposicion && unidad.publicaciones.exposicion.length > 0)">
 						<md-content class="md-padding">
 							<md-table-container>
 								<table class="my-table-md-dialog">
 									<tbody>
-										<tr ng-if="unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0" ng-repeat="publicacion in unidad.publicaciones.publicacion">
+										<tr ng-if="unidad.publicaciones.publicacion && unidad.publicaciones.publicacion.length > 0">
 											<td>Publicación</td>
-											<td>{{publicacion}}</td>
+											<td>
+												<table>
+													<tr ng-repeat="publicacion in unidad.publicaciones.publicacion">
+														<td>{{publicacion}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
-										<tr ng-if="unidad.publicaciones.exposicion">
-											<td></td>
-											<td>{{unidad.publicaciones.exposicion}}</td>
+										<tr ng-if="unidad.publicaciones.exposicion && unidad.publicaciones.exposicion.length > 0">
+											<td>Exposición</td>
+											<td>
+												<table>
+													<tr ng-repeat="exposicion in unidad.publicaciones.exposicion">
+														<td>{{exposicion}}</td>
+													</tr>
+												</table>
+											</td>
 										</tr>
 									</tbody>
 								</table>

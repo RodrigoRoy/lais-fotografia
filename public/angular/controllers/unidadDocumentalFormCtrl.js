@@ -321,11 +321,9 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // Envia la información a la base de datos para crear una nueva unidad documental
     $scope.enviarUnidadDocumental = function(){
     	cleanUnidadDocumentalData(); // crear una unidad documental válida
-    	// console.log("Enviar ", $scope.unidadDocumental);
     	UnidadDocumental.create($scope.unidadDocumental).
     	then(function(res){
     		if(res.data.success){
-                // console.log(res.data.message, res.data.data._id);
                 $scope.showToast(res.data.message);
                 $location.url('/unidad?c=' + $routeParams.c);
             }
@@ -358,21 +356,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         });
     };
 
-    // Inicializaciones
-
-    // Código de referencia
-    UnidadDocumental.next($routeParams.c).
-    then(function(res){
-        $scope.unidadDocumental.identificacion.codigoReferencia = res.data.str;
-        ConjuntoDocumental.prefix().
-        then(function(res){
-            $scope.unidadDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
-        }, function(res){
-            //fail
-        });
-    }, function(res){
-        //fail
-    });
+    // Inicializaciones:
 
     // EDICION
     // Si se desea editar una unidad documental obtenemos la información almacenada en la base de datos
@@ -479,4 +463,18 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             console.error("Error de conexión para obtener información de la unidad documental", res);
         });
     } // FIN EDICION
+    else{ // NO-EDICION. Crear nuevo registro.
+        UnidadDocumental.next($routeParams.c). // Código de referencia con numeración automática (siguiente número disponible)
+        then(function(res){
+            $scope.unidadDocumental.identificacion.codigoReferencia = res.data.str;
+            ConjuntoDocumental.prefix().
+            then(function(res){
+                $scope.unidadDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
+            }, function(res){
+                //fail
+            });
+        }, function(res){
+            //fail
+        });
+    }
 });

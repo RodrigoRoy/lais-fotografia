@@ -12,15 +12,11 @@ var ConjuntoDocumentalSchema = new Schema({
 		codigoReferencia: {type: String, required: true, index: {unique: true}},
 		institucion: {type: String, trim: true},
 		titulo: {type: String, trim: true, required: true},
-		// fecha: {
-		// 	ingreso: {type: Date}, // createdAt
-		// 	manufactura: {type: Date} // INFERIDO
-		// },
 		// fecha: { // fecha de manufactura // INFERIDO
 		// 	inicio: {type: Date},
 		// 	fin: {type: Date} // En caso de ser un periodo
 		// },
-		lugar: [{type: String}], // Google Maps ID, INFERIDO
+		// lugar: [{type: String}], // Google Maps ID, INFERIDO
 		productor: {type: String, trim: true},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
 			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Taller de imprenta', 'Dibujante', 'Dirección', 'Responsable', 'Levantamiento', 'Litógrafo']},
@@ -28,8 +24,8 @@ var ConjuntoDocumentalSchema = new Schema({
 			_id: false
 		}],
 		nivelDescripcion: {type: String, enum: ['Fondo', 'Subfondo', 'Colección', 'Serie', 'Subserie', 'Unidad documental compuesta', 'Expediente', 'Grupo']},
-		cantidad: {type: Number, min: 0}, // INFERIDO
-		soporte: {type: String}, // INFERIDO
+		// cantidad: {type: Number, min: 0}, // INFERIDO
+		// soporte: {type: String}, // INFERIDO
 		conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'}
 	},
 	contexto: {
@@ -63,7 +59,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		notas: {type: String, trim: true}
 	},
 	controlDescripcion: {
-		documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
+		// documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		reglasNormas: {type: String, trim: true, default: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	},
