@@ -172,7 +172,7 @@ router.route('/contains')
     });
 
 // Auxiliar para filtrar y reducir la cantidad de unidades de un conjunto específico.
-// Recibe como parámetros el prefijo con el que se desea filtrar (por ejemplo, MX-IM-1-2)
+// Recibe como parámetros el prefijo con el que se desea filtrar (por ejemplo, MXIM-1-2)
 // y el conjunto (arreglo) de unidades.
 // Devuelve un subconjunto (arreglo) de unidades cuyo código de referencia es prefijo del parámetro dado.
 // Devuelve un arreglo vacio en caso de que haya unidades que cumplan con el criterio anterior.
@@ -204,7 +204,7 @@ var ultimaImagen = function(unidades){
 // es decir, el periodo de tiempo.
 // Devuelve un objeto con las propiedades 'inicio' y 'final' (ambas del tipo Date) para describir el periodo de tiempo.
 // En caso de que la propiedad 'inicial' y 'final' sean del mismo año, se omite la propiedad 'final'.
-// En caso de que el conjunto de unidades como parámetro sea vacio o no contenga fechas, se devuelve la propiedad undefined.
+// En caso de que el conjunto de unidades como parámetro sea vacio o no contenga fechas, se devuelve el valor undefined.
 var periodoTiempo = function(unidades){
     if(unidades.length === 0)
         return undefined;
@@ -216,14 +216,33 @@ var periodoTiempo = function(unidades){
     if(allDates.length === 0)
         return undefined;
     allDates.sort(function(a, b){
-        // var dateA = new Date(a);
-        // var dateB = new Date(b);
-        // return a.getTime() - b.getTime(); // ordenamiento cronológico
         return a.getTime() - b.getTime(); // ordenamiento cronológico
     });
     if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
         return {inicio: allDates[0], fin: allDates[allDates.length-1]};
     return {inicio: allDates[0]};
+}
+
+// Devuelve la lista de lugares de un conjunto de unidades.
+// Recibe un conjunto (arreglo) de unidades documentales
+// Devuelve la lista sin repetición de lugares cuya estructura es la misma que unidadesDocumentales.estructuraContenido.lugarDescrito
+// En caso de que la lista dada como parámetro o el resultado final sea vacia, se devuelve el valor undefined
+var listaLugares = function(unidades){
+    if(unidades.length === 0)
+        return undefined;
+    let allPlaces = [];
+    unidades.forEach(unidad => {
+        if(unidad.estructuraContenido.lugarDescrito){
+            let repeticion = allPlaces.some(place => {
+                return place.placeId == unidad.estructuraContenido.lugarDescrito.placeId
+            });
+            if(!repeticion)
+                allPlaces.push(unidad.estructuraContenido.lugarDescrito);
+        }
+    });
+    if(allPlaces.length === 0)
+        return undefined;
+    return allPlaces;
 }
 
 // Determina si un conjunto es una "hoja" en la jerarquia de todos los conjuntos y subconjuntos.
@@ -288,11 +307,25 @@ router.route('/next')
 router.route('/:conjunto_id')
 	// Obtener un conjunto documental particular (mediante el ID)
     .get(function(req, res){
-        ConjuntoDocumental.findById(req.params.conjunto_id)
-        .exec(function(err, conjunto){
+        ConjuntoDocumental.findById(req.params.conjunto_id).
+        lean().
+        exec(function(err, conjunto){
             if(err)
                 return res.send(err);
-            res.json(conjunto);
+            // res.json(conjunto);
+            var regex = new RegExp('^' + conjunto.identificacion.codigoReferencia);
+            UnidadDocumental.
+                find({'identificacion.codigoReferencia': regex}).
+                select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'estructuraContenido.lugarDescrito': 1}).
+                exec(function(err, unidades){
+                    if(err)
+                        return res.send(err);
+                    // Agregar información adicional al conjunto:
+                    conjunto.identificacion.fecha = periodoTiempo(unidades);
+                    conjunto.identificacion.cantidad = unidades.length;
+                    conjunto.identificacion.lugar = listaLugares(unidades);
+                    res.send(conjunto);
+                });
         })
     })
 

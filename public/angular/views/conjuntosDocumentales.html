@@ -61,10 +61,10 @@
 											<td>Título</td>
 											<td>{{conjunto.identificacion.titulo}}</td>
 										</tr>
-										<!-- <tr ng-if="conjunto.identificacion.fecha && conjunto.identificacion.fecha.inicio">
+										<tr ng-if="conjunto.identificacion.fecha && conjunto.identificacion.fecha.inicio">
 											<td>Periodo</td>
-											<td>{{conjunto.identificacion.inicio | date:'yyyy'}} <span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fin | date:'yyyy'}}</span></td>
-										</tr> -->
+											<td>{{conjunto.identificacion.fecha.inicio | date:'yyyy'}} <span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span></td>
+										</tr>
 										<tr ng-if="conjunto.identificacion.productor">
 											<td>Productor</td>
 											<td>{{conjunto.identificacion.productor}}</td>
@@ -84,14 +84,22 @@
 											<td>Nivel de descripción</td>
 											<td>{{conjunto.identificacion.nivelDescripcion}}</td>
 										</tr>
-										<!-- <tr ng-if="conjunto.identificacion.cantidad">
+										<tr ng-if="conjunto.identificacion.cantidad">
 											<td>Cantidad</td>
-											<td>{{conjunto.identificacion.cantidad}}</td>
-										</tr> -->
+											<td>{{conjunto.identificacion.cantidad}} unidades documentales</td>
+										</tr>
 										<!-- <tr ng-if="conjunto.identificacion.soporte">
 											<td>Soporte</td>
 											<td>{{conjunto.identificacion.soporte}}</td>
 										</tr> -->
+										<tr ng-if="conjunto.identificacion.lugar">
+											<td>Lugar</td>
+											<td>
+												<ng-map center="19.3760674,-99.1871402" zoom="15" zoom-to-include-markers="true">
+													<marker ng-repeat="place in conjunto.identificacion.lugar" position="{{[place.location.lat, place.location.lng]}}"></marker> 
+												</ng-map>
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</md-table-container>
