@@ -16,7 +16,16 @@ var ConjuntoDocumentalSchema = new Schema({
 		// 	inicio: {type: Date},
 		// 	fin: {type: Date} // En caso de ser un periodo
 		// },
-		// lugar: [{type: String}], // Google Maps ID, INFERIDO
+		// lugarDescrito: [{ // INFERIDO (Google Maps style)
+		// 	placeId: {type: String},
+		// 	location: {
+		// 		lat: {type: Number},
+		// 		lng: {type: Number},
+		// 		_id: false
+		// 	},
+		// 	formattedAddress: {type: String},
+		// 	_id: false
+		// }],
 		productor: {type: String, trim: true},
 		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
 			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Taller de imprenta', 'Dibujante', 'Dirección', 'Responsable', 'Levantamiento', 'Litógrafo']},

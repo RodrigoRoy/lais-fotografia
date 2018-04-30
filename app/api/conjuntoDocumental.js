@@ -199,7 +199,7 @@ var ultimaImagen = function(unidades){
 };
 
 // Determina el periodo de tiempo de un conjunto de unidades.
-// Recibe el conjunto de unidades documentales que pueden (o no) contener la propiedad fecha.
+// Recibe como parámetro un conjunto de unidades documentales que pueden (o no) contener la propiedad fecha.
 // Filtra solo aquellas unidades con fecha, las ordena cronólogicamente y determina la fecha inicial y final,
 // es decir, el periodo de tiempo.
 // Devuelve un objeto con las propiedades 'inicio' y 'final' (ambas del tipo Date) para describir el periodo de tiempo.
@@ -221,10 +221,10 @@ var periodoTiempo = function(unidades){
     if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
         return {inicio: allDates[0], fin: allDates[allDates.length-1]};
     return {inicio: allDates[0]};
-}
+};
 
 // Devuelve la lista de lugares de un conjunto de unidades.
-// Recibe un conjunto (arreglo) de unidades documentales
+// Recibe como parámetro un conjunto (arreglo) de unidades documentales
 // Devuelve la lista sin repetición de lugares cuya estructura es la misma que unidadesDocumentales.estructuraContenido.lugarDescrito
 // En caso de que la lista dada como parámetro o el resultado final sea vacia, se devuelve el valor undefined
 var listaLugares = function(unidades){
@@ -234,7 +234,7 @@ var listaLugares = function(unidades){
     unidades.forEach(unidad => {
         if(unidad.estructuraContenido.lugarDescrito){
             let repeticion = allPlaces.some(place => {
-                return place.placeId == unidad.estructuraContenido.lugarDescrito.placeId
+                return place.placeId == unidad.estructuraContenido.lugarDescrito.placeId;
             });
             if(!repeticion)
                 allPlaces.push(unidad.estructuraContenido.lugarDescrito);
@@ -243,7 +243,29 @@ var listaLugares = function(unidades){
     if(allPlaces.length === 0)
         return undefined;
     return allPlaces;
-}
+};
+
+// Devuelve la representación en cadena de texto de los diferentes tipo (soportes) que tiene un conjunto de unidades.
+// Recibe como parámetro un conjunto (arreglo) de unidades documentales
+// Devuelve un string con los diferentes tipos (soportes) que tiene el conjunto, sin repeticiones.
+// En caso de que el conjunto dado como parámetro sea vacio o no tengan la propiedad caracteristicasFisicas.tipo, se devuelve el valor undefined
+var soportes = function(unidades){
+    if(unidades.length === 0)
+        return undefined;
+    let allTypes = [];
+    unidades.forEach(unidad => {
+        if(unidad.caracteristicasFisicas.tipo){
+            let repeticion = allTypes.some(type => {
+                return type == unidad.caracteristicasFisicas.tipo;
+            });
+            if(!repeticion)
+                allTypes.push(unidad.caracteristicasFisicas.tipo);
+        }
+    });
+    if(allTypes.length === 0)
+        return undefined;
+    return allTypes.join(', ');
+};
 
 // Determina si un conjunto es una "hoja" en la jerarquia de todos los conjuntos y subconjuntos.
 // Un conjunto se considera hoja o nodo terminal si no contiene más subconjuntos o si además de ser vacio, no contiene unidades documentales en él.
@@ -316,14 +338,15 @@ router.route('/:conjunto_id')
             var regex = new RegExp('^' + conjunto.identificacion.codigoReferencia);
             UnidadDocumental.
                 find({'identificacion.codigoReferencia': regex}).
-                select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'estructuraContenido.lugarDescrito': 1}).
+                select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'estructuraContenido.lugarDescrito': 1, 'caracteristicasFisicas.tipo': 1}).
                 exec(function(err, unidades){
                     if(err)
                         return res.send(err);
-                    // Agregar información adicional al conjunto:
+                    // Agregar información adicional (inferida a partir de las unidades) al conjunto:
                     conjunto.identificacion.fecha = periodoTiempo(unidades);
                     conjunto.identificacion.cantidad = unidades.length;
                     conjunto.identificacion.lugar = listaLugares(unidades);
+                    conjunto.identificacion.soporte = soportes(unidades);
                     res.send(conjunto);
                 });
         })
