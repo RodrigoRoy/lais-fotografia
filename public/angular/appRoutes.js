@@ -38,6 +38,21 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'UnidadDocumentalFormController'
 		})
 
+		.when('/user/list', {
+			templateUrl: 'angular/views/userList.html',
+			controller: 'UserListController'
+		})
+
+		.when('/user/new', {
+			templateUrl: 'angular/views/userCreate.html',
+			controller: 'UserCreateController'
+		})
+
+		.when('/user/:id', {
+			templateUrl: 'angular/views/userProfile.html',
+			controller: 'UserProfileController'
+		})
+
 		// RUTAS INVÁLIDAS (no descritas previamente)
 		.otherwise({
 			redirectTo: '/'

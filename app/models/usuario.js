@@ -8,18 +8,27 @@ var Schema = mongoose.Schema; // "Modelo" de la colección
 var bcrypt = require('bcrypt-nodejs')
 
 // Definición del esquema "Usuario":
-// nombre de usuario, permisos y contraseña.
 var UsuarioSchema = new Schema({
     username: {type: String, minlength: 3, trim: true, required: true, index: {unique: true}},
     password: {type: String, required: true, select: false},
     email: {type: String, required: true},
     admin: {type: Boolean, default: false},
-    permisos: {type: Number, min: 0, max: 15, default: 8},
+    permisos: {
+    	create: {type: Boolean, default: true},
+    	// read: {type: Boolean, default: true},
+    	update: {type: Boolean, default: true},
+    	delete: {type: Boolean, default: false},
+    	_id: false
+    }
+    // permisos: {type: Number, min: 0, max: 15, default: 8},
     // Los permisos se asignan de acuerdo al valor en binario de las operaciones CRUD (CREATE, READ, UPDATE, DELETE):
     // Ejemplo con usuario con permisos con agregar (CREATE) y editar (UPDATE):
     //   1 0 1 0 (binario) = 10 (decimal)
     //   C R U D
     // Por lo tanto, sus permisos se asignan al número 10
+}, { // Opciones:
+	collection: 'usuarios',
+	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}
 });
 
 

@@ -17,11 +17,11 @@ var router = express.Router(); // para modularizar las rutas
 var Usuario = require('../models/usuario'); // Modelo de la colección "Usuarios"
 var verifyToken = require('./token'); // Función de verificación de token
 
-//Función a realizar siempre que se utilize esta API
-router.use(function(req, res, next){
-    // Antes de usar el API de usuario se verifica que haya token y sea válido
-    verifyToken(req, res, next);
-});
+// //Función a realizar siempre que se utilize esta API
+// router.use(function(req, res, next){
+//     // Antes de usar el API de usuario se verifica que haya token y sea válido
+//     verifyToken(req, res, next);
+// });
 
 // obtener la información del usuario autentificado
 router.get('/me', function(req, res){
@@ -119,19 +119,19 @@ router.route('/:usuario_id')
     })
 
 // Devuelve un objeto donde cada propiedad describe los permisos del usuario
-var getPermissions = function(decimalPermissions){
-    var codifiedPermissions = {create: false, read: false, update: false, delete: false};
-    if(!decimalPermissions)
-        return codifiedPermissions;
+// var getPermissions = function(decimalPermissions){
+//     var codifiedPermissions = {create: false, read: false, update: false, delete: false};
+//     if(!decimalPermissions)
+//         return codifiedPermissions;
 
-    var binaryPermission = decimalPermissions.toString(2); // Conversión decimal a binario
-    while(binaryPermission.length < 4) // Forzar la notación a 4 dígitos
-        binaryPermission = '0' + binaryPermission; // Ceros a la izquierda
-    codifiedPermissions.create = binaryPermission.charAt(0) === '1';
-    codifiedPermissions.read   = binaryPermission.charAt(1) === '1';
-    codifiedPermissions.update = binaryPermission.charAt(2) === '1';
-    codifiedPermissions.delete = binaryPermission.charAt(3) === '1';
-    return codifiedPermissions;
-};
+//     var binaryPermission = decimalPermissions.toString(2); // Conversión decimal a binario
+//     while(binaryPermission.length < 4) // Forzar la notación a 4 dígitos
+//         binaryPermission = '0' + binaryPermission; // Ceros a la izquierda
+//     codifiedPermissions.create = binaryPermission.charAt(0) === '1';
+//     codifiedPermissions.read   = binaryPermission.charAt(1) === '1';
+//     codifiedPermissions.update = binaryPermission.charAt(2) === '1';
+//     codifiedPermissions.delete = binaryPermission.charAt(3) === '1';
+//     return codifiedPermissions;
+// };
 
 module.exports = router; // Exportar el API para ser utilizado en server.js

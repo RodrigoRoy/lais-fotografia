@@ -11,13 +11,17 @@ angular.module('laisFotoApp', [
 	'ConjuntoDocumentalService',
 	'UnidadDocumentalService',
 	'FileService',
+	'UsuarioService',
 
 	'IndexCtrl',
 	'InicioCtrl',
 	'ConjuntosDocumentalesCtrl',
 	'UnidadesDocumentalesCtrl',
 	'ConjuntoDocumentalFormCtrl',
-	'UnidadDocumentalFormCtrl'
+	'UnidadDocumentalFormCtrl',
+	'UserListCtrl',
+	'UserCreateCtrl',
+	'UserProfileCtrl'
 ])
 
 // configuración de aplicación para integrar token en peticiones
