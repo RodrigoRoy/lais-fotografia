@@ -33,13 +33,10 @@ router.route('/')
 	// Obtener todos los usuarios
 	.get(function(req, res){
         Usuario.find()
-        .lean() // Convierte los resultados a JSON (en vez de MongooseDocuments donde no se pueden incluir propiedades)
+        // .lean() // Convierte los resultados a JSON (en vez de MongooseDocuments donde no se pueden incluir propiedades)
         .exec(function(err, usuarios){
             if(err)
                 res.send(err);
-            // Integrar propiedad con los permisos codificados
-            for(var i in usuarios)
-                usuarios[i].permissions = getPermissions(usuarios[i].permisos);
             res.json(usuarios);
         });
     })
@@ -117,21 +114,5 @@ router.route('/:usuario_id')
             res.json({success: true, message: 'Usuario borrado exitosamente'});
         });
     })
-
-// Devuelve un objeto donde cada propiedad describe los permisos del usuario
-// var getPermissions = function(decimalPermissions){
-//     var codifiedPermissions = {create: false, read: false, update: false, delete: false};
-//     if(!decimalPermissions)
-//         return codifiedPermissions;
-
-//     var binaryPermission = decimalPermissions.toString(2); // Conversión decimal a binario
-//     while(binaryPermission.length < 4) // Forzar la notación a 4 dígitos
-//         binaryPermission = '0' + binaryPermission; // Ceros a la izquierda
-//     codifiedPermissions.create = binaryPermission.charAt(0) === '1';
-//     codifiedPermissions.read   = binaryPermission.charAt(1) === '1';
-//     codifiedPermissions.update = binaryPermission.charAt(2) === '1';
-//     codifiedPermissions.delete = binaryPermission.charAt(3) === '1';
-//     return codifiedPermissions;
-// };
 
 module.exports = router; // Exportar el API para ser utilizado en server.js

@@ -1,8 +1,73 @@
 <div layout="row" layout-align="center">
-	<div flex="80">
-		<h1 class="md-display-3">Create User</h1>
-		<p class="md-body-2">
-			{{foo}}
-		</p>
+	<div flex-xs="90" flex-sm="70" flex="60">
+		<h2 class="md-display-2">Nuevo usuario</h2>
+		<!-- <md-card>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Agregar nuevo usuario</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content> -->
+				<form name="userForm" novalidate>
+					<div>
+						<md-input-container class="md-block">
+							<label>Nombre de usuario</label>
+							<input required md-maxlength="30" name="username" ng-model="usuario.username">
+							<div ng-messages="userForm.username.$error">
+								<div ng-message="required">Este campo es obligatorio.</div>
+								<div ng-message="md-maxlength">El nombre es demasiado largo</div>
+							</div>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>Correo electrónico</label>
+							<input type="email" ng-pattern="/^.+@.+\..+$/" name="email" ng-model="usuario.email">
+							<div ng-messages="userForm.email.$error">
+								<div ng-message-exp="['pattern']">Correo electrónico inválido.</div>
+							</div>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>Contraseña</label>
+							<input required type="password" name="password" ng-model="usuario.password">
+							<div ng-messages="userForm.password.$error">
+								<div ng-message="required">Esta información es necesaria.</div>
+							</div>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>Repetir contraseña</label>
+							<input required type="password" name="passwordAgain" ng-model="usuario.passwordAgain" password-verify="{{usuario.password}}">
+							<div ng-messages="userForm.passwordAgain.$error">
+								<div ng-message="required">Esta información es necesaria.</div>
+							</div>
+						</md-input-container>
+
+						<h3 class="md-subhead">Tipos de permisos en los conjuntos y unidades documentales:</h3>
+
+						<md-input-container class="md-block">
+							<md-checkbox name="create" ng-model="usuario.permisos.create">Creación</md-checkbox>
+						</md-input-container>
+						
+						<md-input-container class="md-block">
+							<md-checkbox name="update" ng-model="usuario.permisos.update">Modificación</md-checkbox>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<md-checkbox name="delete" ng-model="usuario.permisos.delete">Borrado</md-checkbox>
+						</md-input-container>
+
+						<h3 class="md-subhead">Usuario con permisos elevados para modificar permisos de otros usuarios:</h3>
+
+						<md-input-container class="md-block">
+							<md-checkbox name="admin" ng-model="usuario.admin">Administrador</md-checkbox>
+						</md-input-container>
+
+						<md-button class="md-raised" ng-disabled="userForm.$invalid" ng-click="crearUsuario()" ng-show="!creatingUser">Crear usuario</md-button>
+						<md-progress-circular md-mode="indeterminate" ng-show="creatingUser"></md-progress-circular>
+					</div>
+				</form>
+			<!-- </md-card-content>
+		</md-card> -->
 	</div>
 </div>

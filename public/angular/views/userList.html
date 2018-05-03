@@ -1,8 +1,62 @@
 <div layout="row" layout-align="center">
 	<div flex="80">
-		<h1 class="md-display-3">User List</h1>
-		<p class="md-body-2">
-			{{foo}}
-		</p>
+		<h3 class="md-display-2">Lista de usuarios</h3>
+
+		<md-list>
+			<md-list-item class="md-2-line" ng-repeat="usuario in usuarios">
+				<div class="md-list-item-text" layout="column">
+					<h3>{{usuario.username}} <small ng-if="usuario.email">({{usuario.email}})</small></h3>
+					<p>Permisos: {{usuario.permisos}}</p>
+					<md-menu class="md-secondary">
+						<md-button class="md-icon-button">
+							<i class="material-icons">account_box</i>
+						</md-button>
+						<md-menu-content width="4">
+							<md-menu-item>
+								<md-button>
+									Crear
+								</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button>
+									Modificar
+								</md-button>
+							</md-menu-item>
+							<md-menu-item>
+								<md-button>
+									Borrar
+								</md-button>
+							</md-menu-item>
+							<md-menu-divider></md-menu-divider>
+							<md-menu-item>
+								<md-button>
+									Administrador
+								</md-button>
+							</md-menu-item>
+							
+							<!-- <md-menu-item>
+								<md-checkbox ng-model="usuario.permisos.create">Creación</md-checkbox>
+							</md-menu-item>
+							<md-menu-item>
+								<md-checkbox ng-model="usuario.permisos.update">Modificación</md-checkbox>
+							</md-menu-item>
+							<md-menu-item>
+								<md-checkbox ng-model="usuario.permisos.delete">Borrado</md-checkbox>
+							</md-menu-item>
+							<md-menu-divider></md-menu-divider>
+							<md-menu-item>
+								<md-checkbox ng-model="usuario.admin">Administrador</md-checkbox>
+							</md-menu-item> -->
+						</md-menu-content>
+					</md-menu>
+					<!-- <md-button class="md-secondary">
+						<i class="material-icons">delete</i>
+					</md-button> -->
+				</div>
+			</md-list-item>
+		</md-list>
 	</div>
 </div>
+
+<!-- <br>
+<pre>{{usuarios | json}}</pre> -->
