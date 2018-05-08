@@ -3,58 +3,41 @@
 		<h3 class="md-display-2">Lista de usuarios</h3>
 
 		<md-list>
-			<md-list-item class="md-2-line" ng-repeat="usuario in usuarios">
+			<md-list-item class="md-2-line secondary-button-padding" ng-repeat="usuario in usuarios">
 				<div class="md-list-item-text" layout="column">
 					<h3>{{usuario.username}} <small ng-if="usuario.email">({{usuario.email}})</small></h3>
-					<p>Permisos: {{usuario.permisos}}</p>
-					<md-menu class="md-secondary">
+					<p>Permisos: {{usuario.permisosFormatted}}</p>
+					<md-button class="md-secondary" ng-click="editUser(usuario)">
+						<i class="material-icons" style="vertical-align: middle;">edit</i>
+					</md-button>
+					<md-button class="md-secondary" ng-click="showDialogDelete(usuario, $event)">
+						<i class="material-icons" style="vertical-align: middle;">delete</i>
+					</md-button>
+					<!-- <md-menu class="md-secondary">
 						<md-button class="md-icon-button">
-							<i class="material-icons">account_box</i>
+							<i class="material-icons">edit</i>
 						</md-button>
 						<md-menu-content width="4">
 							<md-menu-item>
-								<md-button>
-									Crear
+								<md-button ng-click="editUser(usuario, $event)">
+									Editar
 								</md-button>
 							</md-menu-item>
+							<md-menu-divider></md-menu-divider>
 							<md-menu-item>
-								<md-button>
-									Modificar
-								</md-button>
-							</md-menu-item>
-							<md-menu-item>
-								<md-button>
+								<md-button ng-click="showDialogDelete(usuario, $event)">
 									Borrar
 								</md-button>
 							</md-menu-item>
-							<md-menu-divider></md-menu-divider>
-							<md-menu-item>
-								<md-button>
-									Administrador
-								</md-button>
-							</md-menu-item>
-							
-							<!-- <md-menu-item>
-								<md-checkbox ng-model="usuario.permisos.create">Creación</md-checkbox>
-							</md-menu-item>
-							<md-menu-item>
-								<md-checkbox ng-model="usuario.permisos.update">Modificación</md-checkbox>
-							</md-menu-item>
-							<md-menu-item>
-								<md-checkbox ng-model="usuario.permisos.delete">Borrado</md-checkbox>
-							</md-menu-item>
-							<md-menu-divider></md-menu-divider>
-							<md-menu-item>
-								<md-checkbox ng-model="usuario.admin">Administrador</md-checkbox>
-							</md-menu-item> -->
 						</md-menu-content>
-					</md-menu>
-					<!-- <md-button class="md-secondary">
-						<i class="material-icons">delete</i>
-					</md-button> -->
+					</md-menu> -->
 				</div>
 			</md-list-item>
 		</md-list>
+
+		<md-button class="md-fab md-primary md-fab-bottom-right md-button" aria-label="Crear usuario" ng-click="createUser()">
+			<i class="material-icons" style="font-size: 36px; vertical-align: middle;">add</i>
+        </md-button>
 	</div>
 </div>
 

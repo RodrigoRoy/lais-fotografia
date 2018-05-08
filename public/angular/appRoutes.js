@@ -44,8 +44,13 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 		})
 
 		.when('/user/new', {
-			templateUrl: 'angular/views/userCreate.html',
-			controller: 'UserCreateController'
+			templateUrl: 'angular/views/userForm.html',
+			controller: 'UserFormController'
+		})
+
+		.when('/user/:id/edit', {
+			templateUrl: 'angular/views/userForm.html',
+			controller: 'UserFormController'
 		})
 
 		.when('/user/:id', {

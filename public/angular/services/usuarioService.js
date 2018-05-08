@@ -12,6 +12,10 @@ angular.module('UsuarioService', []).factory('Usuario', ['$http', function($http
 			return $http.get('/api/usuarios');
 		},
 
+		get: function(usuarioId){
+			return $http.get('api/usuarios/' + usuarioId);
+		},
+
 		create: function(userInfo){
 			return $http.post('api/usuarios', userInfo);
 		},
