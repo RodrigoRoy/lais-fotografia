@@ -12,6 +12,7 @@ angular.module('laisFotoApp', [
 	'UnidadDocumentalService',
 	'FileService',
 	'UsuarioService',
+	'AuthService',
 
 	'IndexCtrl',
 	'InicioCtrl',
@@ -21,21 +22,13 @@ angular.module('laisFotoApp', [
 	'UnidadDocumentalFormCtrl',
 	'UserListCtrl',
 	'UserFormCtrl',
-	'UserProfileCtrl'
+	'UserProfileCtrl',
+	'LoginCtrl'
 ])
 
 // configuración de aplicación para integrar token en peticiones
 // .config(function($httpProvider){
 // 	$httpProvider.interceptors.push('AuthInterceptor');
-// })
-
-// configuración para AngularJS Material chips
-// .config(['$mdIconProvider', function($mdIconProvider{
-// 	$mdIconProvider.icon('md-close', 'img/ic_close_24ox.svg', 24);
-// })])
-
-// .config(function($mdIconProvider){
-// 	$mdIconProvider.fontSet('md', 'material-icons');
 // })
 
 // Configuración de temas: elección de colores y creación de temas propios para AngularJS Material

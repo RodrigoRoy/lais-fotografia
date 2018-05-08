@@ -1,0 +1,27 @@
+<div layout="row" layout-align="center">
+	<div flex-xs="90" flex-sm="70" flex="60">
+		<h2 class="md-display-2">Iniciar sesión</h2>
+		<form name="loginForm" novalidate>
+			<div>
+				<md-input-container class="md-block">
+					<label>Usuario ó correo</label>
+					<input required name="username" ng-model="usuario.name">
+					<div ng-messages="loginForm.username.$error">
+						<div ng-message="required">Este campo es obligatorio.</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block">
+					<label>Contraseña</label>
+					<input required type="password" name="password" ng-model="usuario.password">
+					<div ng-messages="loginForm.password.$error">
+						<div ng-message="required">Esta información es necesaria.</div>
+					</div>
+				</md-input-container>
+
+				<md-button class="md-raised" ng-disabled="loginForm.$invalid" ng-click="iniciarSesion()" ng-show="!processingUser">Iniciar sesión</md-button>
+				<md-progress-circular md-mode="indeterminate" ng-show="processingUser"></md-progress-circular>
+			</div>
+		</form>
+	</div>
+</div>

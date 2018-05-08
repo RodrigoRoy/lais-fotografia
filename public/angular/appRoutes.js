@@ -58,6 +58,11 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'UserProfileController'
 		})
 
+		.when('/login', {
+			templateUrl: 'angular/views/login.html',
+			controller: 'LoginController'
+		})
+
 		// RUTAS INVÁLIDAS (no descritas previamente)
 		.otherwise({
 			redirectTo: '/'

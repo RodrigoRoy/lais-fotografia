@@ -10,7 +10,7 @@ var secret = require('../../config').jwt;
 router.post('/authenticate', function(req, res){
     Usuario.findOne({
         $or: [{email: req.body.name}, {username: req.body.name}]
-    }).select('username password permisos admin').exec(function(err, usuario){
+    }).select('username email password permisos admin').exec(function(err, usuario){
         if(err)
             throw err;
 
@@ -36,6 +36,7 @@ router.post('/authenticate', function(req, res){
                 // crear token
                 var token = jwt.sign({
                     username: usuario.username,
+                    email: usuario.email,
                     admin: usuario.admin,
                     permisos: usuario.permisos,
                     id: usuario._id
