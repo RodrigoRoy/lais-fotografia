@@ -1,8 +1,33 @@
 // Controlador principal que tiene alcanze en todo la página (incluyendo navbar y footer)
 
-angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $mdSidenav, $mdToast, ConjuntoDocumental){
+angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
+	$scope.user = {}; // Información del usuario (si inicia sesión)
+
+	// verificar si un usuario está con sesión iniciada en cada petición o cambio de ruta/página
+	$rootScope.$on('$routeChangeStart', function(){
+		Auth.getUser() // obtener la información del usuario
+			.then(function(res){
+				$scope.user = res.data;
+				console.log('res: ', res);
+				console.log('user: ', $scope.user);
+			}, function(res){
+				$scope.user = {};
+				console.log('user: ', $scope.user);
+				Auth.logout(); // Borra token en localStorage (evita errores al tener un token expirado)
+			});
+	});
+
+	$scope.iniciarSesion = function(){
+		$location.url('/login');
+	};
+	// Cierra sesión al eliminar el token del Local Storage del navegador
+	$scope.cerrarSesion = function (){
+		Auth.logout();
+		$scope.user = {}; // reset toda la información del usuario
+		$location.path('/');
+	}
 
 	// Muestra/oculta el menu con la lista de conjuntos/subconjuntos
 	$scope.toggleMenu = function(){

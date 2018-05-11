@@ -4,9 +4,9 @@ angular.module('UsuarioService', []).factory('Usuario', ['$http', function($http
 			return $http.get('/api/usuarios/me');
 		},
 
-		// sign: function (usuarioData){
-		// 	return $http.post('/api/authenticate', usuarioData);
-		// },
+		sign: function (usuarioData){
+			return $http.post('/api/authenticate', usuarioData);
+		},
 
 		all: function(){
 			return $http.get('/api/usuarios');

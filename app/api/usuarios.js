@@ -17,11 +17,11 @@ var router = express.Router(); // para modularizar las rutas
 var Usuario = require('../models/usuario'); // Modelo de la colección "Usuarios"
 var verifyToken = require('./token'); // Función de verificación de token
 
-// //Función a realizar siempre que se utilize esta API
-// router.use(function(req, res, next){
-//     // Antes de usar el API de usuario se verifica que haya token y sea válido
-//     verifyToken(req, res, next);
-// });
+//Función a realizar siempre que se utilize esta API
+router.use(function(req, res, next){
+    // Antes de usar el API de usuario se verifica que haya token y sea válido
+    verifyToken(req, res, next);
+});
 
 // obtener la información del usuario autentificado
 router.get('/me', function(req, res){
