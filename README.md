@@ -34,8 +34,6 @@ module.exports = {
 }
 ```
 
-Crear el directorio *files* dentro de la ubicación *public/*.
-
 Ubicarse en el directorio del proyecto (lais-fotografia) e instalar las dependencias del servidor (back-end):
 ```
 npm install
@@ -48,13 +46,6 @@ bower install
 
 Ejecutar el proyecto con node:
 ```
-node server.js
-```
-
-Estando ubicado en la carpeta del proyecto, ejecutar en terminal:
-```
-npm install
-bower install
 node server.js
 ```
 

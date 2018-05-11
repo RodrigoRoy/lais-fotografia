@@ -34,8 +34,9 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
             templateUrl: 'tabDialog.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
-            clickOutsideToClose:true,
-            // scope: $scope, // Passing the scope create problems: click doesn't respond after closing tab dialog
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
             locals: {
                 unidad: id
             }
@@ -50,7 +51,7 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
     // Controlador interno para la creación de un mdDialog
     // Incluye servicios como $scope y $mdDialog.
     // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidad')
-    function DialogController($scope, $mdDialog, $location, unidad, UnidadDocumental){
+    function DialogController($scope, $mdDialog, $location, $mdToast, unidad, UnidadDocumental){
         $scope.unidad = {};
 
         // Obtiene la información de la unidad documental mediante el id dado como parámetro en los services del controlador (unidad)
@@ -119,6 +120,16 @@ angular.module('UnidadesDocumentalesCtrl',[]).controller('UnidadesDocumentalesCo
         // Esconde el dialogo existente y rechaza el promise devuelto desde $mdDialog.show()
         $scope.cancel = function(res){
             $mdDialog.cancel(res);
+        };
+
+        // Muestra un mensaje simple en pantalla. Su intención es dar aviso de ciertas alertas
+        $scope.showToast = function(textMessage){
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(textMessage)
+                    .position('bottom left')
+                    .hideDelay(5000)
+            );
         };
 
         // INICIALIZACIÓN

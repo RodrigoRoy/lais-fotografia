@@ -296,6 +296,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             }
         }, function(res){
             console.error('Error de conexión con el servidor', res);
+            $scope.showToast('Error de conexión con el servidor');
         })
     };
 
