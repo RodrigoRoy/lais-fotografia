@@ -7,47 +7,32 @@ Este proyecto nace como alternativa a software similar para catalogación fotogr
 
 ## Requisitos de instalación
 
-- Sistema operativo Windows, Mac o Linux
 - Instalar el ambiente [NodeJS](https://nodejs.org) (version LTS)
 - Instalar la base de datos [MongoDB](https://www.mongodb.org/) (Community Server)
-- Instalar [Git](https://git-scm.com/)
-- Instalar Bower usando el manejador de paquetes de Node.js (NPM):
-`npm install -g bower`
 
 
 ## Intrucciones de instalación
 
-**NOTA**: El proyecto aún se encuentra en desarrollo, se recomienda instalarlo como ambiente de prueba desde una computadora personal o laptop y evitar usarlo en ambiente de producción por las actualizaciones constantes.
+**NOTA**: El proyecto aún se encuentra en desarrollo, se recomienda instalarlo como ambiente de prueba desde una computadora personal o laptop y evitar usarlo en ambiente de producción (servidor).
 
 Abrir una terminal y descargar el proyecto usando git:
 ```
 git clone https://github.com/RodrigoRoy/lais-fotografia
 ```
+O descargar el proyecto en [ZIP](https://github.com/RodrigoRoy/lais-fotografia/archive/master.zip) y descomprimir
 
-Dentro de la carpeta del proyecto nombrada *lais-fotografia*, crear el archivo de configuración **config.js**:
-```javascript
-module.exports = {
-	port: 8080, // Puerto del servidor
-	db: 'mongodb://localhost:27017/database-name', // Dirección de la base de datos
-	prefix: 'MXIM', // Prefijo para el código de referencia
-	name: 'Fototecas Digitales' // Nombre de la fototeca
-}
-```
+Dependiendo del sistema operativo ejecutar el script correspondiente:
+* Linux: `install/linux/install.sh`
+* macOS: `install/mac/install.command`
+* Windows: `install\windows\install.bat`
 
-Ubicarse en el directorio del proyecto (lais-fotografia) e instalar las dependencias del servidor (back-end):
-```
-npm install
-```
 
-Instalar las dependencias del navegador web (front-end):
-```
-bower install
-```
+## Instrucciones de uso
 
-Ejecutar el proyecto con node:
-```
-node server.js
-```
+Dependiendo del sistema operativo ejecutar el script de inicio:
+* Linux: `install/linux/start.sh`
+* macOS: `install/mac/start.command`
+* Windows: `install\windows\start.bat`
 
 Abrir el navegador web (Firefox o Chrome, por ejemplo) y escribir la siguiente dirección:
 ```
