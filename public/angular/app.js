@@ -27,9 +27,9 @@ angular.module('laisFotoApp', [
 ])
 
 // configuración de aplicación para integrar token en peticiones
-// .config(function($httpProvider){
-// 	$httpProvider.interceptors.push('AuthInterceptor');
-// })
+.config(function($httpProvider){
+	$httpProvider.interceptors.push('AuthInterceptor');
+})
 
 // Configuración de temas: elección de colores y creación de temas propios para AngularJS Material
 .config(function($mdThemingProvider) {

@@ -16,14 +16,14 @@ var path = require('path'); // Useful to work with files and directories
 var verifyToken = require('./token'); // Función de verificación de token
 
 // Función a realizar siempre que se utilize esta API
-// router.use(function(req, res, next){
-//     // console.log('Usando el API Images.');
-//     // Rutas que son excluidas de verificación de token:
-//     if(req.method === 'GET')
-//         return next();
-//     // Antes de usar el API de usuario se verifica que haya token y sea válido
-//     verifyToken(req, res, next);
-// });
+router.use(function(req, res, next){
+    // console.log('Usando el API Images.');
+    // Rutas que son excluidas de verificación de token:
+    if(req.method === 'GET')
+        return next();
+    // Antes de usar el API de usuario se verifica que haya token y sea válido
+    verifyToken(req, res, next);
+});
 
 // En peticiones a la raiz del API
 router.route('/')

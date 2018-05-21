@@ -3,17 +3,16 @@
 angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
-	$scope.user = {}; // Información del usuario (si inicia sesión)
+	$scope.user = undefined; // Información del usuario (si inicia sesión)
 
 	// verificar si un usuario está con sesión iniciada en cada petición o cambio de ruta/página
 	$rootScope.$on('$routeChangeStart', function(){
 		Auth.getUser() // obtener la información del usuario
 			.then(function(res){
 				$scope.user = res.data;
-				console.log('res: ', res);
 				console.log('user: ', $scope.user);
 			}, function(res){
-				$scope.user = {};
+				$scope.user = undefined;
 				console.log('user: ', $scope.user);
 				Auth.logout(); // Borra token en localStorage (evita errores al tener un token expirado)
 			});

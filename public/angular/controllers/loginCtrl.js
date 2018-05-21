@@ -1,5 +1,5 @@
 angular.module('LoginCtrl',[]).controller('LoginController', function ($scope, $location, Auth){
-    $scope.usuario = {};
+    $scope.usuario = {}; // Información del usuario en formulario Login
     $scope.processingLogin = false; // bandera para mostrar carga mientras se envia info a la base de datos
 
     $scope.iniciarSesion = function(){

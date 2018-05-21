@@ -22,14 +22,14 @@ var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de l
 var UnidadDocumental = require('../models/unidadDocumental') // Modelo de la colleción "UnidadDocumental"
 var verifyToken = require('./token'); // Función de verificación de token
 
-// // Función a realizar siempre que se utilize esta API
-// router.use(function(req, res, next){
-//     // Rutas que son excluidas de verificación de token:
-//     if(req.method === 'GET')
-//         return next();
-//     // Antes de usar el API de usuario se verifica que haya token y sea válido
-//     verifyToken(req, res, next);
-// });
+// Función a realizar siempre que se utilize esta API
+router.use(function(req, res, next){
+    // Rutas que son excluidas de verificación de token:
+    if(req.method === 'GET')
+        return next();
+    // Antes de usar el API de usuario se verifica que haya token y sea válido
+    verifyToken(req, res, next);
+});
 
 // En peticiones a la raiz del API
 router.route('/')
