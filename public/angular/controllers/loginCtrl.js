@@ -22,4 +22,8 @@ angular.module('LoginCtrl',[]).controller('LoginController', function ($scope, $
             $scope.showToast('Error de conexión con la base de datos');
         });
     };
+
+    // INICIALIZACION
+    if($scope.user) // Si ya tienes sesión iniciada redirigir a otra página
+        $location.url('/');
 });

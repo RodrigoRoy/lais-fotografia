@@ -1,6 +1,6 @@
 // Controlador principal que tiene alcanze en todo la página (incluyendo navbar y footer)
 
-angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
+angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 	$scope.user = undefined; // Información del usuario (si inicia sesión)
@@ -25,7 +25,8 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 	$scope.cerrarSesion = function (){
 		Auth.logout();
 		$scope.user = {}; // reset toda la información del usuario
-		$location.path('/');
+		$location.url('/');
+		$route.reload(); // recargar index ('/') resetea $scope.user adecuadamente
 	}
 
 	// Muestra/oculta el menu con la lista de conjuntos/subconjuntos

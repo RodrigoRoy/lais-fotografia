@@ -36,8 +36,8 @@ router.route('/')
         // .lean() // Convierte los resultados a JSON (en vez de MongooseDocuments donde no se pueden incluir propiedades)
         .exec(function(err, usuarios){
             if(err)
-                res.send(err);
-            res.json(usuarios);
+                return res.send(err);
+            return res.json(usuarios);
         });
     })
 
@@ -63,7 +63,7 @@ router.route('/')
                     return res.status(400).send({success: false, message: 'Error en la base de datos.', error: err});
             }
 
-            res.json({success: true, message: 'Usuario creado'});
+            return res.json({success: true, message: 'Usuario creado'});
         });
     });
 
@@ -73,8 +73,8 @@ router.route('/:usuario_id')
     .get(function(req, res){
         Usuario.findById(req.params.usuario_id, function(err, usuario){
             if(err)
-                res.send(err);
-            res.json(usuario);
+                return res.send(err);
+            return res.json(usuario);
         })
     })
 
@@ -82,7 +82,7 @@ router.route('/:usuario_id')
     .put(function(req, res){
         Usuario.findById(req.params.usuario_id, function(err, usuario){
             if(err)
-                res.send(err);
+                return res.send(err);
             
             // Actualizar todos los campos no-vacios
             if(req.body.username != usuario.username)
@@ -98,8 +98,8 @@ router.route('/:usuario_id')
 
             usuario.save(function(err){
                 if(err)
-                    res.send(err);
-                res.json({success: true, message: 'Usuario actualizado'});
+                    return res.send(err);
+                return res.json({success: true, message: 'Usuario actualizado'});
             });
         });
     })
@@ -110,8 +110,8 @@ router.route('/:usuario_id')
             _id: req.params.usuario_id
         }, function(err, usuario){
             if(err)
-                res.send(err);
-            res.json({success: true, message: 'Usuario borrado exitosamente'});
+                return res.send(err);
+            return res.json({success: true, message: 'Usuario borrado exitosamente'});
         });
     })
 

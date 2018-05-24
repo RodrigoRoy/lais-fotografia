@@ -1,16 +1,10 @@
 <div layout="row" layout-align="center">
 	<div flex-xs="90" flex-sm="70" flex="60">
 		<h2 class="md-display-2" ng-if="!edit">Nuevo usuario</h2>
-		<h2 class="md-display-2" ng-if="edit">Editar usuario</h2>
-		<!-- <md-card>
-			<md-card-title>
-				<md-card-title-text>
-					<span class="md-headline">Agregar nuevo usuario</span>
-				</md-card-title-text>
-			</md-card-title>
-			<md-card-content> -->
-				<form name="userForm" novalidate>
-					<div>
+		<h2 class="md-display-2" ng-if="edit">Editar usuario <em>{{usuario.username}}</em></h2>
+			<form name="userForm" novalidate>
+				<div>
+					<div ng-show="!edit || editMyself">
 						<md-input-container class="md-block">
 							<label>Nombre de usuario</label>
 							<input required md-maxlength="30" name="username" ng-model="usuario.username" ng-disabled="edit">
@@ -43,7 +37,9 @@
 								<div ng-message="required">Esta información es necesaria.</div>
 							</div>
 						</md-input-container>
+					</div>
 
+					<div ng-show="!edit || !editMyself">
 						<h3 class="md-subhead">Tipos de permisos en los conjuntos y unidades documentales:</h3>
 
 						<md-input-container class="md-block">
@@ -63,13 +59,12 @@
 						<md-input-container class="md-block">
 							<md-checkbox name="admin" ng-model="usuario.admin">Administrador</md-checkbox>
 						</md-input-container>
-
-						<md-button class="md-raised" ng-disabled="userForm.$invalid" ng-click="crearUsuario()" ng-show="!processingUser && !edit">Crear usuario</md-button>
-						<md-button class="md-raised" ng-disabled="userForm.$invalid" ng-click="editarUsuario()" ng-show="!processingUser && edit">Editar usuario</md-button>
-						<md-progress-circular md-mode="indeterminate" ng-show="processingUser"></md-progress-circular>
 					</div>
-				</form>
-			<!-- </md-card-content>
-		</md-card> -->
+
+					<md-button class="md-raised" ng-disabled="userForm.$invalid" ng-click="crearUsuario()" ng-show="!processingUser && !edit">Crear usuario</md-button>
+					<md-button class="md-raised" ng-disabled="userForm.$invalid" ng-click="editarUsuario()" ng-show="!processingUser && edit">Editar usuario</md-button>
+					<md-progress-circular md-mode="indeterminate" ng-show="processingUser"></md-progress-circular>
+				</div>
+			</form>
 	</div>
 </div>

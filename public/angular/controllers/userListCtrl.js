@@ -108,5 +108,10 @@ angular.module('UserListCtrl',[]).controller('UserListController', function ($sc
     };
 
     // INICIALIZACIÓN
-    $scope.getUsuarios();
+    if(!$scope.user || !$scope.user.admin){
+        $scope.showToast('Acceso denegado. Necesitas ser administrador');
+        $location.url('/');
+    }
+    else
+        $scope.getUsuarios();
 });
