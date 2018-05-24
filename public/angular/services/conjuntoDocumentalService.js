@@ -32,15 +32,22 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 			return $http.get('/api/conjuntoDocumental/prefix');
 		},
 
+		// Obtiene el sufijo (código de referencia sin prefijo) del conjunto. Recibe como parámetro el Id del conjunto
+		suffix: function(conjuntoDocumentalId){
+			return $http.get('/api/conjuntoDocumental/' + conjuntoDocumentalId + '/suffix');
+		},
+
 		// Obtiene una lista anidada con los conjuntos y sus repectivos subconjuntos
 		tree: function(){
 			return $http.get('/api/conjuntoDocumental/tree');
 		},
 
+		// Obtiene un arreglo de subconjuntos. Recibe como parámetro la cadena que representa el prefijo a buscar
 		contains: function(conjuntoDocumentalPrefijo){
 			return $http.get('/api/conjuntoDocumental/contains?prefix=' + conjuntoDocumentalPrefijo);
 		},
 
+		// Determina si un conjunto ya no contiene más subconjuntos. Recibe como parámetro el prefijo del conjunto
 		isLeaf: function(conjuntoDocumentalPrefijo){
 			return $http.get('/api/conjuntoDocumental/isLeaf?prefix=' + conjuntoDocumentalPrefijo);
 		},

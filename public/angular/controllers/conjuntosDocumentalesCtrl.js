@@ -36,6 +36,10 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
             });
     };
 
+    // $scope.visitarConjunto = function(conjuntoId){
+    //     $location.url('/conjunto?c=')
+    // };
+
     // Redirige a la página para crear un conjunto e integra el parámetro que indica el conjunto de procedencia
     $scope.crearConjunto = function(){
         $location.url('/conjunto/nuevo?c=' + ($routeParams.c || ''));
@@ -88,13 +92,19 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
 
         $scope.verConjunto = function(codigoReferencia){
             $mdDialog.hide();
-            let prefijo = /(\d+-?)*$/.exec(codigoReferencia)[0];
-            ConjuntoDocumental.isLeaf(prefijo).
+            ConjuntoDocumental.suffix($scope.conjunto._id).
             then(function(res){
-                if(res.data)
-                    $location.url('/unidad?c=' + prefijo);
-                else
-                    $location.url('/conjunto?c=' + prefijo);
+                let prefijo = res.data.sufijo;
+                // let prefijo = /(\d+-?)*$/.exec(codigoReferencia)[0];
+                ConjuntoDocumental.isLeaf(prefijo).
+                then(function(res){
+                    if(res.data)
+                        $location.url('/unidad?c=' + prefijo);
+                    else
+                        $location.url('/conjunto?c=' + prefijo);
+                }, function(res){
+                    console.error('Error de conexión con la base de datos', res);
+                });
             }, function(res){
                 console.error('Error de conexión con la base de datos', res);
             });

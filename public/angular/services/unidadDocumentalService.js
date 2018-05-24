@@ -33,6 +33,16 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 			return $http.delete('/api/unidadDocumental/' + unidadDocumentalId);
 		},
 
+		// Obtiene el prefijo común de las unidades documentales
+		prefix: function(){
+			return $http.get('/api/unidadDocumental/prefix');
+		},
+
+		// Obtiene el sufijo (código de referencia sin prefijo) de la unidad documental. Recibe como parámetro el Id de la unidad documental
+		suffix: function(unidadDocumentalId){
+			return $http.get('/api/unidadDocumental/' + unidadDocumentalId + '/suffix');
+		},
+
 		// Obtiene la información sobre el próximo elemento en la numeración de las unidades documentales.
 		// El parámetro no puede ser vacío y hace referencia al conjunto documental de pertenencia, por ejemplo: 3-1, 2-4-1, 1, etc.
 		next: function(conjuntoDocumentalPrefijo){

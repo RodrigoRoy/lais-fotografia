@@ -83,6 +83,12 @@ router.route('/')
         })
     });
 
+// Obtener el prefijo común a todas los unidades (por ejemplo: MXIM)
+router.route('/prefix')
+    .get(function(req, res){
+        return res.send({prefijo: prefijo});
+    });
+
 // Obtiene la información sobre qué numeración continua al desear crear una nueva unidad documental
 // Se debe incluir el parámetro "from" para indicar el conjunto documental de pertenencia
 // Por ejemplo: GET http://localhost:8080/api/unidadDocumental/next?from=3-1
@@ -164,6 +170,21 @@ router.route('/:unidad_id')
             if(err)
                 return res.send(err);
             res.json({success: true, message: 'Se ha borrado la información de la unidad documental'});
+        });
+    });
+
+// En peticiones especiales para obtener sufijo
+router.route('/:unidad_id/suffix')
+    // Obtener una unidad documental particular (mediante el ID)
+    .get(function(req, res){
+        UnidadDocumental.findById(req.params.unidad_id)
+        .select({'identificacion.codigoReferencia': 1})
+        .exec(function(err, unidad){
+            if(err)
+                return res.send(err);
+            let regex = new RegExp('^' + prefijo + '-(.*)$');
+            let result = regex.exec(unidad.identificacion.codigoReferencia);
+            return res.send({sufijo: result[1]});
         });
     });
 

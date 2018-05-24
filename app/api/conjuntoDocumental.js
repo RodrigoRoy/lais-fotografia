@@ -42,7 +42,7 @@ router.route('/')
         exec(function(err, conjuntos){
             if(err)
                 return res.send(err);
-            res.send(conjuntos);
+            return res.send(conjuntos);
         });
 
     })
@@ -58,7 +58,7 @@ router.route('/')
         conjunto.save(function(err){
             if(err)
                 return res.send(err);
-            res.json({
+            return res.json({
                 success: true, 
                 message: 'Se ha creado correctamente el conjunto documental "' + conjunto.identificacion.titulo + '"', 
                 data: conjunto
@@ -66,12 +66,12 @@ router.route('/')
         })
     });
 
-// En peticiones específicas
+// En peticiones específicas:
 
 // Obtener el prefijo común a todos los conjuntos (por ejemplo: MXIM)
 router.route('/prefix')
     .get(function(req, res){
-        res.send({prefijo: prefijo});
+        return res.send({prefijo: prefijo});
     });
 
 // Auxiliar para filtrar una lista de conjuntos y devolver solamente sus subconjuntos.
@@ -120,7 +120,7 @@ router.route('/tree')
             for(let i in conjuntosSuffix)
                 conjuntosSuffix[i].sufijo = regex.exec(conjuntosSuffix[i].identificacion.codigoReferencia)[1];
             tree = recursiveTree(conjuntos, prefijo);
-            res.send(tree);
+            return res.send(tree);
         });        
     });
 
@@ -166,7 +166,7 @@ router.route('/contains')
                             if(!subconjunto.identificacion.fecha)
                                 subconjunto.identificacion.fecha = periodoTiempo(unidadesFiltradas);
                         });
-                        res.send(subconjuntos);
+                        return res.send(subconjuntos);
                     });
             });
     });
@@ -347,7 +347,7 @@ router.route('/:conjunto_id')
                     conjunto.identificacion.cantidad = unidades.length;
                     conjunto.identificacion.lugar = listaLugares(unidades);
                     conjunto.identificacion.soporte = soportes(unidades);
-                    res.send(conjunto);
+                    return res.send(conjunto);
                 });
         })
     })
@@ -381,7 +381,7 @@ router.route('/:conjunto_id')
             conjunto.save(function(err){
                 if(err)
                     return res.send(err);
-                res.json({success: true, message: 'Se ha modificado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
+                return res.json({success: true, message: 'Se ha modificado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
             });
         });
     })
@@ -393,7 +393,22 @@ router.route('/:conjunto_id')
         }, function(err, conjunto){
             if(err)
                 return res.send(err);
-            res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
+            return res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
+        });
+    });
+
+// En peticiones especiales para obtener sufijo
+router.route('/:conjunto_id/suffix')
+    // Obtener un conjunto documental particular (mediante el ID)
+    .get(function(req, res){
+        ConjuntoDocumental.findById(req.params.conjunto_id).
+        select({'identificacion.codigoReferencia': 1}).
+        exec(function(err, conjunto){
+            if(err)
+                return res.send(err);
+            let regex = new RegExp('^' + prefijo + '-(.*)$');
+            let result = regex.exec(conjunto.identificacion.codigoReferencia);
+            return res.send({sufijo: result[1]});
         });
     });
 
