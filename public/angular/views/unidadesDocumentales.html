@@ -351,10 +351,12 @@
 							<md-table-container>
 								<table class="my-table-md-dialog">
 									<tbody>
-										<!-- <tr ng-if="unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0">
+										<tr ng-if="unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0">
 											<td>Documentalistas</td>
-											<td>{{unidad.controlDescripcion.documentalistas.join(', ')}}</td>
-										</tr> -->
+											<td>
+												<span ng-repeat="documentalista in unidad.controlDescripcion.documentalistas">{{documentalista.username}}<span ng-show="!$last">, </span></span>
+											</td>
+										</tr>
 										<tr ng-if="unidad.createdAt">
 											<td>Fecha de creación</td>
 											<td>{{unidad.createdAt | date:'dd/MM/y HH:mm'}}</td>

@@ -100,7 +100,7 @@ var UnidadDocumentalSchema = new Schema({
 		notas: {type: String, trim: true}
 	},
 	controlDescripcion: {
-		// documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
+		documentalistas: [{type: Schema.Types.ObjectId, ref: 'Usuario'}] //[{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
 	},
 	adicional:{

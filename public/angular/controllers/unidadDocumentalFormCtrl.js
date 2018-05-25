@@ -6,7 +6,6 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // Se pueden inicializar algunos valores por default.
     $scope.unidadDocumental = {
     	identificacion: {
-    		//conjuntoPertenencia: "Conjunto 'padre'", // Referencia al conjunto padre
     		autores: [{
     			tipo: '',
     			nombre: ''
@@ -34,7 +33,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
 		documentacionAsociada: {},
 		publicaciones: {},
 		controlDescripcion: {
-			//documentalistas: [],
+			documentalistas: [],
 		},
         adicional: {
             isPublic: true,
@@ -270,6 +269,10 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.push(value.text);
         });
         $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado = $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.length > 0 ? $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado : undefined;
+        // Agregar documentalista (persona que hace el registro)
+        if($scope.user)
+            if($scope.unidadDocumental.controlDescripcion.documentalistas.indexOf($scope.user.id) === -1)
+                $scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
     };
 
     // Sube una imagen al servidor.
@@ -357,11 +360,16 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         });
     };
 
-    // Inicializaciones:
+    // INICIALIZACIONES:
 
     // EDICION
     // Si se desea editar una unidad documental obtenemos la información almacenada en la base de datos
     if(/edit$/.test($location.path())){ // Prueba con expresión regular para saber si la URL termina con "edit"
+        if(!$scope.user || !$scope.user.permisos.update){
+            $scope.showToast('Acceso denegado. No tienes permisos para editar');
+            $location.url('/');
+        }
+
         $scope.edit = true;
         UnidadDocumental.get($routeParams.id)
         .then(function(res){
@@ -465,6 +473,11 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         });
     } // FIN EDICION
     else{ // NO-EDICION. Crear nuevo registro.
+        if(!$scope.user || !$scope.user.permisos.create){
+            $scope.showToast('Acceso denegado. No tienes permisos para crear');
+            $location.url('/');
+        }
+
         UnidadDocumental.next($routeParams.c). // Código de referencia con numeración automática (siguiente número disponible)
         then(function(res){
             $scope.unidadDocumental.identificacion.codigoReferencia = res.data.str;

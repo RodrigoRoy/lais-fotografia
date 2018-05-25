@@ -126,6 +126,7 @@ router.route('/:unidad_id')
 	// Obtener una unidad documental particular (mediante el ID)
     .get(function(req, res){
         UnidadDocumental.findById(req.params.unidad_id)
+        .populate('controlDescripcion.documentalistas')
         .exec(function(err, unidad){
             if(err)
                 return res.send(err);

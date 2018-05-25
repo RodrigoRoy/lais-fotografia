@@ -128,26 +128,16 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
         });
     };
 
-    // Inicializaciones
-
-    // Código de referencia
-    ConjuntoDocumental.next($routeParams.c).
-    then(function(res){
-        $scope.conjuntoDocumental.identificacion.codigoReferencia = res.data.str;
-        ConjuntoDocumental.prefix().
-        then(function(res){
-            $scope.conjuntoDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
-        }, function(res){
-            //fail
-        });
-    }, function(res){
-        //fail
-    });
-
+    // INICIALIZACIONES
 
     // EDICION
     // Si se desea editar un conjunto documental obtenemos la información almacenada en la base de datos
     if(/edit$/.test($location.path())){ // Prueba con expresión regular para saber si la URL termina con "edit"
+        if(!$scope.user || !$scope.user.permisos.update){
+            $scope.showToast('Acceso denegado. No tienes permisos para editar');
+            $location.url('/');
+        }
+        
         $scope.edit = true;
         ConjuntoDocumental.get($routeParams.id)
         .then(function(res){
@@ -158,4 +148,24 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             console.error("Error de conexión para obtener información del conjunto documental", res);
         });
     } // FIN EDICION
+    else{
+        if(!$scope.user || !$scope.user.permisos.create){
+            $scope.showToast('Acceso denegado. No tienes permisos para crear');
+            $location.url('/');
+        }
+
+        // Código de referencia
+        ConjuntoDocumental.next($routeParams.c).
+        then(function(res){
+            $scope.conjuntoDocumental.identificacion.codigoReferencia = res.data.str;
+            ConjuntoDocumental.prefix().
+            then(function(res){
+                $scope.conjuntoDocumental.identificacion.conjuntoPertenencia = res.data.prefijo + '-' + $routeParams.c;
+            }, function(res){
+                //fail
+            });
+        }, function(res){
+            //fail
+        });
+    }
 });
