@@ -36,10 +36,6 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
             });
     };
 
-    // $scope.visitarConjunto = function(conjuntoId){
-    //     $location.url('/conjunto?c=')
-    // };
-
     // Redirige a la página para crear un conjunto e integra el parámetro que indica el conjunto de procedencia
     $scope.crearConjunto = function(){
         $location.url('/conjunto/nuevo?c=' + ($routeParams.c || ''));
@@ -56,7 +52,9 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
             templateUrl: 'tabDialog.tmpl.html',
             parent: angular.element(document.body),
             targetEvent: event,
-            clickOutsideToClose:true,
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
             locals: {
                 conjunto: id
             }

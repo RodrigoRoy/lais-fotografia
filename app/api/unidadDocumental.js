@@ -7,9 +7,12 @@ Las rutas aqui definidas son un router que le antecede una ruta general de uso (
 Por ejemplo:
 GET    http://localhost:8080/api/unidadDocumental
 POST   http://localhost:8080/api/unidadDocumental
+GET    http://localhost:8080/api/unidadDocumental/prefix
+GET    http://localhost:8080/api/unidadDocumental/next
 GET    http://localhost:8080/api/unidadDocumental/1234567890
 PUT    http://localhost:8080/api/unidadDocumental/1234567890
 DELETE http://localhost:8080/api/unidadDocumental/1234567890
+GET    http://localhost:8080/api/unidadDocumental/1234567890/suffix
 */
 
 // Dependencias

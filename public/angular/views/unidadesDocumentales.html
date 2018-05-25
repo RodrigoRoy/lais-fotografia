@@ -11,7 +11,7 @@
 			</md-grid-tile>
 		</md-grid-list>
 		<section layout="row" layout-align="end center" layout-wrap>
-			<md-button class="md-raised md-primary" ng-click="crearUnidad()">Agregar unidad</md-button>
+			<md-button class="md-raised md-primary" ng-show="user && user.permisos.create" ng-click="crearUnidad()">Agregar unidad</md-button>
 		</section>
 	</div>
 </div>
@@ -377,10 +377,10 @@
 			</md-dialog-content>
 
 			<md-dialog-actions layout="row">
-				<md-button class="md-icon-button" aria-label="Editar" ng-click="editarUnidad()">
+				<md-button class="md-icon-button" aria-label="Editar" ng-show="user && user.permisos.update" ng-click="editarUnidad()">
 					<i class="material-icons">edit</i>
 				</md-button>
-				<md-button class="md-icon-button md-warn" aria-label="Borrar" ng-click="borrarUnidad()">
+				<md-button class="md-icon-button md-warn" aria-label="Borrar" ng-show="user && user.permisos.delete" ng-click="borrarUnidad()">
 					<i class="material-icons">delete</i>
 				</md-button>
 				<span flex></span>

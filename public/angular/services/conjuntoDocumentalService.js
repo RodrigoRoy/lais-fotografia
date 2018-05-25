@@ -12,6 +12,10 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 			return $http.get('/api/conjuntoDocumental/' + conjuntoDocumentalId);
 		},
 
+		getByCode: function(codigoReferencia){
+			return $http.get('/api/conjuntoDocumental?code=' + codigoReferencia);
+		},
+
 		// Crear un nuevo conjunto documental. Recibe como parámetro todos los datos del conjunto
 		create: function(conjuntoDocumentalData){
 			return $http.post('/api/conjuntoDocumental', conjuntoDocumentalData);

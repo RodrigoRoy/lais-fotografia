@@ -1,7 +1,7 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
-			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)" style="background: #b7b7b7; cursor: pointer;"> <!-- ng-click="showTabDialog($event, conjunto._id)" -->
+			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)" style="background: #b7b7b7; cursor: pointer;">
 				<img ng-if="conjunto.adicional.imagen" ng-src="{{'files/imagenes/' + conjunto.adicional.imagen}}" layout-fill>
 				<md-grid-tile-footer style="background: rgba(0,0,0,0.5); height: 64px;">
 					<div style="position: absolute; left: 0; right: 1em; top: 1em; bottom: 0; overflow: auto;">
@@ -16,8 +16,8 @@
 		</md-grid-list>
 
 		<section layout="row" layout-align="end center" layout-wrap>
-			<md-button class="md-raised md-primary" ng-if="!isLeaf" ng-click="crearConjunto()">Agregar conjunto</md-button>
-			<md-button class="md-raised md-primary" ng-if="isLeaf || !isEmpty" ng-click="crearUnidad()">Agregar unidad</md-button>
+			<md-button class="md-raised md-primary" ng-if="!isLeaf" ng-show="user && user.permisos.create" ng-click="crearConjunto()">Agregar conjunto</md-button>
+			<md-button class="md-raised md-primary" ng-if="isLeaf || !isEmpty" ng-show="user && user.permisos.create" ng-click="crearUnidad()">Agregar unidad</md-button>
 		</section>
 	</div>
 </div>
@@ -298,10 +298,10 @@
 			</md-dialog-content>
 
 			<md-dialog-actions layout="row">
-				<md-button class="md-icon-button" aria-label="Editar" ng-click="editarConjunto()">
+				<md-button class="md-icon-button" aria-label="Editar" ng-show="user && user.permisos.update" ng-click="editarConjunto()">
 					<i class="material-icons">edit</i>
 				</md-button>
-				<md-button class="md-icon-button md-warn" ng-disabled="true" aria-label="Borrar">
+				<md-button class="md-icon-button md-warn" ng-disabled="true" aria-label="Borrar" ng-show="user && user.permisos.delete">
 					<i class="material-icons">delete</i>
 				</md-button>
 				<span flex></span>

@@ -6,10 +6,17 @@ Permite obtener datos en formato JSON mediante HTTP (GET, POST, PUT, DELETE)
 Las rutas aqui definidas son un router que le antecede una ruta general de uso (ver server.js)
 Por ejemplo:
 GET    http://localhost:8080/api/conjuntoDocumental
+GET    http://localhost:8080/api/conjuntoDocumental?code=1-2-3
 POST   http://localhost:8080/api/conjuntoDocumental
+GET    http://localhost:8080/api/conjuntoDocumental/prefix
+GET    http://localhost:8080/api/conjuntoDocumental/tree
+GET    http://localhost:8080/api/conjuntoDocumental/contains
+GET    http://localhost:8080/api/conjuntoDocumental/isLeaf
+GET    http://localhost:8080/api/conjuntoDocumental/next
 GET    http://localhost:8080/api/conjuntoDocumental/1234567890
 PUT    http://localhost:8080/api/conjuntoDocumental/1234567890
 DELETE http://localhost:8080/api/conjuntoDocumental/1234567890
+GET    http://localhost:8080/api/conjuntoDocumental/1234567890/suffix
 */
 
 // Dependencias
@@ -34,17 +41,44 @@ router.use(function(req, res, next){
 // En peticiones a la raiz del API
 router.route('/')
 	// Obtener el _id y codigo de referencia de todos los conjuntos documentales
+    // Si incluye el parámetro ?code, busca y selecciona un conjunto por código de referencia (sin incluir el prefijo de la colección)
 	.get(function(req, res){
-
-        ConjuntoDocumental.find().
-        select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
-        sort({'identificacion.codigoReferencia': 'asc'}).
-        exec(function(err, conjuntos){
-            if(err)
-                return res.send(err);
-            return res.send(conjuntos);
-        });
-
+        console.log('Object.keys(req.query)', Object.keys(req.query));
+        if(Object.keys(req.query).length === 0){ // Si no parámetros del tipo ?param en URL
+            ConjuntoDocumental.find().
+            select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
+            sort({'identificacion.codigoReferencia': 'asc'}).
+            exec(function(err, conjuntos){
+                if(err)
+                    return res.send(err);
+                return res.send(conjuntos);
+            });
+        }else{
+            let codigo = req.query.code ? req.query.code : '';
+            let regex = new RegExp('^' + prefijo + '-?' + codigo + '$');
+            ConjuntoDocumental.findOne({'identificacion.codigoReferencia': regex}).
+                lean().
+                exec(function(err, conjunto){
+                    if(err)
+                        return res.send(err);
+                    if(!conjunto)
+                        return res.send({});
+                    regex = new RegExp('^' + conjunto.identificacion.codigoReferencia);
+                    UnidadDocumental.
+                        find({'identificacion.codigoReferencia': regex}).
+                        select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'estructuraContenido.lugarDescrito': 1, 'caracteristicasFisicas.tipo': 1}).
+                        exec(function(err, unidades){
+                            if(err)
+                                return res.send(err);
+                            // Agregar información adicional (inferida a partir de las unidades) al conjunto:
+                            conjunto.identificacion.fecha = periodoTiempo(unidades);
+                            conjunto.identificacion.cantidad = unidades.length;
+                            conjunto.identificacion.lugar = listaLugares(unidades);
+                            conjunto.identificacion.soporte = soportes(unidades);
+                            return res.send(conjunto);
+                        });
+                });
+        }
     })
 
     // Agregar un nuevo conjunto documental
