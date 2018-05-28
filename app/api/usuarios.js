@@ -46,6 +46,8 @@ router.route('/')
         var usuario = new Usuario();
         if(req.body.username)
             usuario.username = req.body.username;
+        if(req.body.fullname)
+            usuario.fullname = req.body.fullname;
         if(req.body.password)
             usuario.password = req.body.password;
         if(req.body.email)
@@ -54,6 +56,8 @@ router.route('/')
             usuario.permisos = req.body.permisos;
         if(req.body.admin)
             usuario.admin = req.body.admin;
+        // if(req.body.active)
+        //     usuario.active = req.body.active;
 
         usuario.save(function(err){
             if(err){
@@ -87,6 +91,8 @@ router.route('/:usuario_id')
             // Actualizar todos los campos no-vacios
             if(req.body.username != usuario.username)
                 usuario.username = req.body.username;
+            if(req.body.fullname != usuario.fullname)
+                usuario.fullname = req.body.fullname;
             if(req.body.password != usuario.password)
                 usuario.password = req.body.password;
             if(req.body.email != usuario.email)
@@ -95,6 +101,8 @@ router.route('/:usuario_id')
                 usuario.permisos = req.body.permisos;
             if(req.body.admin != usuario.admin)
                 usuario.admin = req.body.admin;
+            // if(req.body.active != usuario.active)
+            //     usuario.active = req.body.active;
 
             usuario.save(function(err){
                 if(err)

@@ -9,9 +9,10 @@ var bcrypt = require('bcrypt-nodejs')
 
 // Definición del esquema "Usuario":
 var UsuarioSchema = new Schema({
-    username: {type: String, minlength: 3, trim: true, required: true, index: {unique: true}},
+    username: {type: String, minlength: 3, maxlength: 30, trim: true, required: true, index: {unique: true}},
+    fullname: {type: String, minlength: 3, maxlength: 50, trim: true, required: true},
     password: {type: String, required: true, select: false},
-    email: {type: String, required: true},
+    email: {type: String, required: true, index: {unique: true}},
     admin: {type: Boolean, default: false},
     permisos: {
     	create: {type: Boolean, default: true},
@@ -20,6 +21,7 @@ var UsuarioSchema = new Schema({
     	delete: {type: Boolean, default: false},
     	_id: false
     }
+    // active: {type: Boolean, default: true, select: false}
 }, { // Opciones:
 	collection: 'usuarios',
 	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}

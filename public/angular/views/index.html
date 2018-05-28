@@ -55,6 +55,11 @@
 						<md-menu-item ng-show="user">
 							<strong>{{user.username}}</strong>
 						</md-menu-item>
+						<md-menu-item ng-show="user">
+							<md-button ng-click="paginaPersonal()">
+								Área personal
+							</md-button>
+						</md-menu-item>
 						<md-menu-item ng-show="!user">
 							<md-button ng-click="iniciarSesion()">
 								Iniciar sesión

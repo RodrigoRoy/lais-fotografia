@@ -7,25 +7,38 @@
 					<div ng-show="!edit || editMyself">
 						<md-input-container class="md-block">
 							<label>Nombre de usuario</label>
-							<input required md-maxlength="30" name="username" ng-model="usuario.username" ng-disabled="edit">
+							<input required minlength="3" md-maxlength="30" name="username" ng-model="usuario.username">
 							<div ng-messages="userForm.username.$error">
 								<div ng-message="required">Este campo es obligatorio.</div>
+								<div ng-message="minlength">El nombre es muy corto</div>
+								<div ng-message="md-maxlength">El nombre es demasiado largo</div>
+							</div>
+						</md-input-container>
+
+						<md-input-container class="md-block">
+							<label>Nombre real</label>
+							<input required minlength="3" md-maxlength="50" name="fullname" ng-model="usuario.fullname">
+							<div ng-messages="userForm.fullname.$error">
+								<div ng-message="required">Este campo es obligatorio.</div>
+								<div ng-message="minlength">El nombre es muy corto</div>
 								<div ng-message="md-maxlength">El nombre es demasiado largo</div>
 							</div>
 						</md-input-container>
 
 						<md-input-container class="md-block">
 							<label>Correo electrónico</label>
-							<input type="email" ng-pattern="/^.+@.+\..+$/" name="email" ng-model="usuario.email" ng-disabled="edit">
+							<input required type="email" ng-pattern="/^.+@.+\..+$/" name="email" ng-model="usuario.email">
 							<div ng-messages="userForm.email.$error">
+								<div ng-message="required">Este campo es obligatorio.</div>
 								<div ng-message-exp="['pattern']">Correo electrónico inválido.</div>
 							</div>
 						</md-input-container>
 
 						<md-input-container class="md-block" ng-if="!edit">
 							<label>Contraseña</label>
-							<input required type="password" name="password" ng-model="usuario.password">
+							<input required minlength="5" type="password" name="password" ng-model="usuario.password"> <!-- ng-required="!edit" --> <!-- Genera problemas con directiva passwordVerify -->
 							<div ng-messages="userForm.password.$error">
+								<div ng-message="minlength">La contraseña es muy corta</div>
 								<div ng-message="required">Esta información es necesaria.</div>
 							</div>
 						</md-input-container>

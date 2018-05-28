@@ -32,7 +32,8 @@ angular.module('UserFormCtrl',[])
             create: true,
             update: true,
             delete: false
-        }
+        },
+        active: true
     };
     $scope.edit = false; // si se desea editar un usuario existente
     $scope.editMyself = false; // si quien edita es el propio usuario logeado en el sistema

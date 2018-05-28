@@ -1,7 +1,13 @@
 <div layout="row" layout-align="center">
 	<div flex="80">
 		<h2 class="md-display-2">Área personal</h2>
-		<h3 class="md-headline">{{user.username}}</h3>
-		<h4 class="md-subhead" nf-if="user.email">{{user.email}} <small><a href="">Cambiar email</a></small></h4>
+		<h3 class="md-headline" ng-if="user.fullname">{{user.fullname}} <small>({{user.username}})</small></h3>
+		<h4 class="md-subhead" nf-if="user.email">{{user.email}}</h4>
+		<md-button class="md-raised" ng-click="editarInformacion()">Editar</md-button>
+
+		<div ng-if="user.admin">
+			<h3 class="md-headline">Administrador</h3>
+			<md-button class="md-raised" ng-click="listaUsuarios()">Lista de usuarios</md-button>			
+		</div>
 	</div>
 </div>

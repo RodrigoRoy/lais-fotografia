@@ -18,6 +18,11 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 			});
 	});
 
+	$scope.paginaPersonal = function(){
+		if($scope.user)
+			$location.url('/user/' + $scope.user.id);
+	}
+
 	$scope.iniciarSesion = function(){
 		$location.url('/login');
 	};
