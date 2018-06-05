@@ -68,45 +68,45 @@ router.route('/')
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
 												.quality(20)
 												.resize(200)
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_thumb' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_thumb.jpg', function(err){});
 											else
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_thumb' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_thumb.jpg', function(err){});
 											if(size.width > 480)
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
 												.quality(20)
 												.resize(480)
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_xs' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_xs.jpg', function(err){});
 											else
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_xs' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_xs.jpg', function(err){});
 											if(size.width > 960)
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
 												.quality(40)
 												.resize(960)
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_sm' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_sm.jpg', function(err){});
 											else
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_sm' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_sm.jpg', function(err){});
 											if(size.width > 1280)
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
 												.quality(60)
 												.resize(1280)
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_md' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_md.jpg', function(err){});
 											else
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_md' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_md.jpg', function(err){});
 											if(size.width > 1920)
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
 												.quality(80)
 												.resize(1920)
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_lg' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_lg.jpg', function(err){});
 											else
 												gm(absFilePath + fields.codigoReferencia + path.extname(files.file.name))
-												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_lg' + path.extname(files.file.name), function(err){});
+												.write(path.dirname(require.main.filename) + '/public/files/imagenes/resize/' + fields.codigoReferencia + '_lg.jpg', function(err){});
 										});
 									});
-								return res.send({success: true, message: 'Archivo original correctamente', imagen: fields.codigoReferencia + path.extname(files.file.name)});
+								return res.send({success: true, message: 'Archivo original correctamente subido', imagen: fields.codigoReferencia + path.extname(files.file.name)});
 							});
 						else
 							return res.send({success: false, message: 'El archivo enviado es vacio. Posiblemente se canceló la selección del archivo'});

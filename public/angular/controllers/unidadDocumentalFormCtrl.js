@@ -269,10 +269,11 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
                 $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.push(value.text);
         });
         $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado = $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.length > 0 ? $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado : undefined;
-        // Agregar documentalista (persona que hace el registro)
+        // Agregar documentalista (persona que hace el registro, excepto si ya está incluido)
         if($scope.user)
-            if($scope.unidadDocumental.controlDescripcion.documentalistas.indexOf($scope.user.id) === -1)
-                $scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
+            if($scope.unidadDocumental.controlDescripcion.documentalistas.length > 0)
+                if($scope.unidadDocumental.controlDescripcion.documentalistas.filter(documentalista => documentalista._id === $scope.user.id).length === 0)
+                    $scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
     };
 
     // Sube una imagen al servidor.

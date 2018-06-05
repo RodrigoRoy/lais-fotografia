@@ -2,6 +2,13 @@
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
 			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)" style="background: #b7b7b7">
+				<!-- <picture>
+					<source media="(min-width: 1920px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_lg.jpg'}}">
+					<source media="(min-width: 1280px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_md.jpg'}}">
+					<source media="(min-width: 960px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_sm.jpg'}}">
+					<img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_xs.jpg'}}" layout-fill>
+				</picture> -->
+				<!-- <img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_xs.jpg'}}" layout-fill> -->
 				<img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/' + unidad.adicional.imagen}}" layout-fill>
 				<md-grid-tile-footer style="background: rgba(0,0,0,0.5);">
 					<div style="position: absolute; left: 0; right: 1em; top: 1em; bottom: 0; overflow: auto;">
@@ -354,7 +361,7 @@
 										<tr ng-if="unidad.controlDescripcion.documentalistas && unidad.controlDescripcion.documentalistas.length > 0">
 											<td>Documentalistas</td>
 											<td>
-												<span ng-repeat="documentalista in unidad.controlDescripcion.documentalistas">{{documentalista.username}}<span ng-show="!$last">, </span></span>
+												<span ng-repeat="documentalista in unidad.controlDescripcion.documentalistas">{{documentalista.fullname}}<span ng-show="!$last">, </span></span>
 											</td>
 										</tr>
 										<tr ng-if="unidad.createdAt">
