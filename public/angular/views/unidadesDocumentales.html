@@ -2,14 +2,10 @@
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
 			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)" style="background: #b7b7b7">
-				<!-- <picture>
-					<source media="(min-width: 1920px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_lg.jpg'}}">
-					<source media="(min-width: 1280px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_md.jpg'}}">
-					<source media="(min-width: 960px)" srcset="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_sm.jpg'}}">
-					<img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_xs.jpg'}}" layout-fill>
-				</picture> -->
-				<!-- <img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/resize/' + unidad.identificacion.codigoReferencia + '_xs.jpg'}}" layout-fill> -->
-				<img ng-if="unidad.adicional.imagen" ng-src="{{'files/imagenes/' + unidad.adicional.imagen}}" layout-fill>
+				<picture style="height: 100%"> <!-- Para que "layout-fill" en "img" funcione, requiere que sus contenedores tengan definido "height" -->
+					<source media="(min-width: 1280px)" ng-srcset="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_sm.jpg">
+					<img ng-if="unidad.adicional.imagen" ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_xs.jpg" layout-fill>
+				</picture>
 				<md-grid-tile-footer style="background: rgba(0,0,0,0.5);">
 					<div style="position: absolute; left: 0; right: 1em; top: 1em; bottom: 0; overflow: auto;">
 						<h3 md-truncate>{{unidad.identificacion.codigoReferencia}}</h3>
@@ -379,7 +375,12 @@
 					</md-tab>
 					<md-tab label="Imagen" ng-if="unidad.adicional.imagen">
 						<md-content class="md-padding">
-							<img ng-src="{{'files/imagenes/' + unidad.adicional.imagen}}" layout-fill>
+							<picture style="height: 100%">
+								<source media="(min-width: 1920px)" ng-srcset="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_lg.jpg">
+								<source media="(min-width: 1280px)" ng-srcset="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_md.jpg">
+								<source media="(min-width: 960px)" ng-srcset="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_sm.jpg">
+								<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_xs.jpg" layout-fill>
+							</picture>
 						</md-content>
 					</md-tab>
 				</md-tabs>
