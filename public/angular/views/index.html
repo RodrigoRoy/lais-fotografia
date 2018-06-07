@@ -19,8 +19,8 @@
 		<link rel="stylesheet" href="css/index.css">
 	</head>
 
-	<body ng-app="laisFotoApp" ng-controller="IndexController">
-
+	<body ng-app="laisFotoApp" ng-controller="IndexController" md-theme="{{dynamicTheme}}" md-theme-watch>
+		
 		<md-toolbar>
 			<div class="md-toolbar-tools">
 				<md-button class="md-icon-button" aria-label="Menu" ng-click="toggleMenu()">
@@ -29,6 +29,9 @@
 
 				<h2 flex md-truncate>Fotografía e investigación</h2>
 
+				<md-button class="md-icon-button" aria-label="Cambiar color" ng-click="toggleTheme()">
+					<i class="material-icons">invert_colors</i>
+				</md-button>
 				<!-- <md-input-container md-no-float class="md-block">
 					<label>Buscar</label>
 					<input ng-model="query" type="text">
@@ -75,19 +78,12 @@
 			</div>
 		</md-toolbar>
 
-		<!-- <md-content class="md-padding">
-			<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-				<md-nav-item md-nav-href="/" name="inicio">
-					Inicio
-				</md-nav-item>
-				<md-nav-item md-nav-href="/conjunto" name="coleccion">
-					Colección
-				</md-nav-item>
-			</md-nav-bar>
-		</md-content> -->
+		<md-content flex>
+			<div ng-view></div>
+		</md-content>
 		
 		<md-sidenav md-component-id="menu">
-			<md-toolbar class="md-theme-indigo">
+			<md-toolbar>
 				<h1 class="md-toolbar-tools"><a href="/conjunto?c=">Colección</a></h1>
 			</md-toolbar>
 			<md-content layout-padding>
@@ -118,10 +114,6 @@
 				<md-button ng-click="toggleMenu()">Cerrar</md-button>
 			</md-content>
 		</md-sidenav>
-
-		<md-content>
-			<div ng-view></div>
-		</md-content>
 
 		<!-- <footer layout="row" layout-wrap layout-align="center" class="footer">
 			<div flex="80">

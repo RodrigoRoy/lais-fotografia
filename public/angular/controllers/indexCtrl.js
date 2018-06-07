@@ -2,6 +2,7 @@
 
 angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
+	$scope.dynamicTheme = 'dark-grey'; // tema de color (definido en app.js)
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 	$scope.user = undefined; // Información del usuario (si inicia sesión)
 
@@ -18,11 +19,26 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 			});
 	});
 
+	// Muestra/oculta el menu con la lista de conjuntos/subconjuntos
+	$scope.toggleMenu = function(){
+		$mdSidenav('menu').toggle();
+	};
+
+	// Cambia el nombre del tema para modificar la combinación de colores de todo el sitio
+	$scope.toggleTheme = function(){
+		if($scope.dynamicTheme === 'dark-grey')
+			$scope.dynamicTheme = 'original';
+		else
+			$scope.dynamicTheme = 'dark-grey';
+	};
+
+	// Envia al usuario a su página personal
 	$scope.paginaPersonal = function(){
 		if($scope.user)
 			$location.url('/user/' + $scope.user.id);
 	}
 
+	// Envia al usuario a la página para logearse
 	$scope.iniciarSesion = function(){
 		$location.url('/login');
 	};
@@ -33,11 +49,6 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 		$location.url('/');
 		$route.reload(); // recargar index ('/') resetea $scope.user adecuadamente
 	}
-
-	// Muestra/oculta el menu con la lista de conjuntos/subconjuntos
-	$scope.toggleMenu = function(){
-		$mdSidenav('menu').toggle();
-	};
 
 	// Reenvia a la página del conjunto documental con el prefijo dado (que es en realidad el sufijo de la colección)
 	$scope.verConjunto = function(suffix){
