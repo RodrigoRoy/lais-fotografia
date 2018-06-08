@@ -38,6 +38,11 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 			return $http.get('/api/unidadDocumental/prefix');
 		},
 
+		// Obtiene el nombre principal de todas las unidades documentales
+		name: function(){
+			return $http.get('/api/unidadDocumental/name');
+		},
+
 		// Obtiene el sufijo (código de referencia sin prefijo) de la unidad documental. Recibe como parámetro el Id de la unidad documental
 		suffix: function(unidadDocumentalId){
 			return $http.get('/api/unidadDocumental/' + unidadDocumentalId + '/suffix');

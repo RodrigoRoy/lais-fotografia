@@ -2,6 +2,7 @@
 
 angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
 	$scope.currentNavItem = 'inicio';
+	$scope.nombreColeccion; // Nombre de la colección
 	$scope.dynamicTheme = 'dark-grey'; // tema de color (definido en app.js)
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 	$scope.user = undefined; // Información del usuario (si inicia sesión)
@@ -85,4 +86,10 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 
 	// INICIALIZACION
 	$scope.getConjuntosDocumentales();
+	ConjuntoDocumental.name().
+	then(function(res){
+		$scope.nombreColeccion = res.data.name;
+	}, function(res){
+		$scope.nombreColeccion = 'Fotografía e investigación';
+	});
 });

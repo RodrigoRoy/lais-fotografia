@@ -3,6 +3,8 @@
 	<head>
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
+		<meta name="description" content="Catalogación fotográfica para la investigación social">
+		<meta name="author" content="Laboratorio Audiovisual de Investigación Social">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<!-- Establece la base ruta de la aplicación(elimina # como base predeterminada) -->
@@ -27,11 +29,8 @@
 					<i class="material-icons">menu</i>
 				</md-button>
 
-				<h2 flex md-truncate>Fotografía e investigación</h2>
+				<h2 flex md-truncate><a ng-href="/">{{nombreColeccion}}</a></h2>
 
-				<md-button class="md-icon-button" aria-label="Cambiar color" ng-click="toggleTheme()">
-					<i class="material-icons">invert_colors</i>
-				</md-button>
 				<!-- <md-input-container md-no-float class="md-block">
 					<label>Buscar</label>
 					<input ng-model="query" type="text">
@@ -44,7 +43,7 @@
 						<i class="material-icons">more_vert</i>
 					</md-button>
 					<md-menu-content width="4">
-						<md-menu-item>
+						<!-- <md-menu-item>
 							<md-button>
 								Acerca del sitio
 							</md-button>
@@ -53,23 +52,29 @@
 							<md-button>
 								Publicaciones y vínculos
 							</md-button>
+						</md-menu-item> -->
+						<md-menu-item>
+							<md-button ng-click="toggleTheme()">
+								<i class="material-icons" md-menu-align-target style="vertical-align: middle;">invert_colors</i>
+								Cambiar colores
+							</md-button>
 						</md-menu-item>
 						<md-menu-divider></md-menu-divider>
 						<md-menu-item ng-show="user">
-							<strong>{{user.username}}</strong>
-						</md-menu-item>
-						<md-menu-item ng-show="user">
 							<md-button ng-click="paginaPersonal()">
-								Área personal
+								<i class="material-icons" md-menu-align-target style="vertical-align: middle;">account_circle</i>
+								{{user.username}}
 							</md-button>
 						</md-menu-item>
 						<md-menu-item ng-show="!user">
 							<md-button ng-click="iniciarSesion()">
+								<i class="material-icons" md-menu-align-target style="vertical-align: middle;">exit_to_app</i>
 								Iniciar sesión
 							</md-button>
 						</md-menu-item>
 						<md-menu-item ng-show="user">
 							<md-button ng-click="cerrarSesion()">
+								<i class="material-icons" md-menu-align-target style="vertical-align: middle;">power_settings_new</i>
 								Cerrar sesión
 							</md-button>
 						</md-menu-item>

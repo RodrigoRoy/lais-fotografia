@@ -20,6 +20,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var config = require('../../config');
 var prefijo = config.prefix;
+var nombre = config.name;
 var router = express.Router(); // para modularizar las rutas
 var UnidadDocumental = require('../models/unidadDocumental'); // Modelo de la colección "UnidadDocumental"
 var ConjuntoDocumental = require('../models/conjuntoDocumental'); // Modelo de la colección "ConjuntoDocumental"
@@ -90,6 +91,12 @@ router.route('/')
 router.route('/prefix')
     .get(function(req, res){
         return res.send({prefijo: prefijo});
+    });
+
+// Obtener el nombre principal de todas las unidades docuemntales
+router.route('/name')
+    .get(function(req, res){
+        return res.send({name: nombre});
     });
 
 // Obtiene la información sobre qué numeración continua al desear crear una nueva unidad documental

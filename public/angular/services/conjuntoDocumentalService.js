@@ -36,6 +36,11 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 			return $http.get('/api/conjuntoDocumental/prefix');
 		},
 
+		// Obtiene el nombre principal de todos conjuntos documentales
+		name: function(){
+			return $http.get('/api/conjuntoDocumental/name');
+		},
+
 		// Obtiene el sufijo (código de referencia sin prefijo) del conjunto. Recibe como parámetro el Id del conjunto
 		suffix: function(conjuntoDocumentalId){
 			return $http.get('/api/conjuntoDocumental/' + conjuntoDocumentalId + '/suffix');
