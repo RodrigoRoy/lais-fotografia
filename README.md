@@ -7,32 +7,22 @@ Este proyecto nace como alternativa a software similar para catalogación fotogr
 
 ## Requisitos de instalación
 
-- Instalar el ambiente [NodeJS](https://nodejs.org) (version LTS)
-- Instalar la base de datos [MongoDB](https://www.mongodb.org/) (Community Server)
-
+- [NodeJS](https://nodejs.org) (version LTS preferentemente)
+- [MongoDB](https://www.mongodb.org/) (Community Server)
+- [GraphicsMagick](http://www.graphicsmagick.org/)
+- [Git](https://git-scm.com/)
 
 ## Intrucciones de instalación
 
-**NOTA**: El proyecto aún se encuentra en desarrollo, se recomienda instalarlo como ambiente de prueba desde una computadora personal o laptop y evitar usarlo en ambiente de producción (servidor).
-
-Abrir una terminal y descargar el proyecto usando git:
+Desde terminal ejecutar:
 ```
-git clone https://github.com/RodrigoRoy/lais-fotografia
+git clone https://github.com/RodrigoRoy/lais-fotografia.git
+cd lais-fotografia
+npm install
+npm start
 ```
-O descargar el proyecto en [ZIP](https://github.com/RodrigoRoy/lais-fotografia/archive/master.zip) y descomprimir
-
-Dependiendo del sistema operativo ejecutar el script correspondiente:
-* Linux: `install/linux/install.sh`
-* macOS: `install/mac/install.command`
-* Windows: `install\windows\install.bat`
-
 
 ## Instrucciones de uso
-
-Dependiendo del sistema operativo ejecutar el script de inicio:
-* Linux: `install/linux/start.sh`
-* macOS: `install/mac/start.command`
-* Windows: `install\windows\start.bat`
 
 Abrir el navegador web (Firefox o Chrome, por ejemplo) y escribir la siguiente dirección:
 ```
