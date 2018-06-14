@@ -19,8 +19,18 @@ var verifyToken = require('./token'); // Función de verificación de token
 
 //Función a realizar siempre que se utilize esta API
 router.use(function(req, res, next){
-    // Antes de usar el API de usuario se verifica que haya token y sea válido
-    verifyToken(req, res, next);
+    // La única ruta excluida de verificación de token representa el primer ingreso de un admin
+    Usuario.count({}, function(err, count){
+        if(err)
+            return res.send(err);
+        
+        if(count === 0 && (req.method === 'POST' || req.method === 'GET')){
+            return next();
+        }
+        else
+            // Mientras no sea el caso del primer registro de usuario administrador entonces se verifica que haya token y sea válido
+            verifyToken(req, res, next);
+    });
 });
 
 // obtener la información del usuario autentificado

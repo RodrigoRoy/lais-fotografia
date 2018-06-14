@@ -1,6 +1,6 @@
 <div layout="row" layout-align="center">
 	<div flex-xs="90" flex-sm="70" flex="60">
-		<h2 class="md-display-2" ng-if="!edit">Nuevo usuario</h2>
+		<h2 class="md-display-2" ng-if="!edit">Nuevo <span ng-if="!firstTime">usuario</span> <span ng-if="firstTime">administrador</span></h2>
 		<h2 class="md-display-2" ng-if="edit">Editar usuario <em>{{usuario.username}}</em></h2>
 			<form name="userForm" novalidate>
 				<div>
@@ -56,21 +56,21 @@
 						<h3 class="md-subhead">Tipos de permisos en los conjuntos y unidades documentales:</h3>
 
 						<md-input-container class="md-block">
-							<md-checkbox name="create" ng-model="usuario.permisos.create">Creación</md-checkbox>
+							<md-checkbox name="create" ng-model="usuario.permisos.create" ng-disabled="firstTime">Creación</md-checkbox>
 						</md-input-container>
 						
 						<md-input-container class="md-block">
-							<md-checkbox name="update" ng-model="usuario.permisos.update">Modificación</md-checkbox>
+							<md-checkbox name="update" ng-model="usuario.permisos.update" ng-disabled="firstTime">Modificación</md-checkbox>
 						</md-input-container>
 
 						<md-input-container class="md-block">
-							<md-checkbox name="delete" ng-model="usuario.permisos.delete">Borrado</md-checkbox>
+							<md-checkbox name="delete" ng-model="usuario.permisos.delete" ng-disabled="firstTime">Borrado</md-checkbox>
 						</md-input-container>
 
 						<h3 class="md-subhead">Usuario con permisos elevados para modificar permisos de otros usuarios:</h3>
 
 						<md-input-container class="md-block">
-							<md-checkbox name="admin" ng-model="usuario.admin">Administrador</md-checkbox>
+							<md-checkbox name="admin" ng-model="usuario.admin" ng-disabled="firstTime">Administrador</md-checkbox>
 						</md-input-container>
 					</div>
 

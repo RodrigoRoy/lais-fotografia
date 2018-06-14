@@ -20,7 +20,11 @@
 			</ul>
 		</p>
 
-		<md-button class="md-raised md-primary" ng-click="crearConjunto()" ng-show="user">Crear conjunto documental</md-button>
-		<md-button class="md-raised" ng-href="/conjunto?c=" ng-show="!user">Explorar conjuntos documentales</md-button>
+		<div ng-if="!firstTime">
+			<md-button class="md-raised md-primary" ng-href="/conjunto/nuevo?c=" ng-show="user">Crear conjunto documental</md-button>
+			<md-button class="md-raised" ng-href="/conjunto?c=" ng-show="!user">Explorar conjuntos documentales</md-button>
+		</div>
+		
+		<md-button class="md-raised" ng-href="/user/new" ng-show="firstTime">Crear administrador</md-button>
 	</div>
 </div>
