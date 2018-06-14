@@ -13,6 +13,7 @@ angular.module('laisFotoApp', [
 	'FileService',
 	'UsuarioService',
 	'AuthService',
+	'LocalStorageService',
 
 	'IndexCtrl',
 	'InicioCtrl',
@@ -35,12 +36,32 @@ angular.module('laisFotoApp', [
 .config(function($mdThemingProvider) {
 	$mdThemingProvider.alwaysWatchTheme(true); // Dynamic themes
 	// $mdThemingProvider.theme('default').primaryPalette('indigo').accentPalette('pink'); // Changing the default theme
-	$mdThemingProvider.theme('original').primaryPalette('teal').accentPalette('teal', {
-		'hue-1': '900',
-		'hue-2': '600',
-		'hue-3': '600'
-	}).warnPalette('red').backgroundPalette('blue-grey'); // Custom theme
-	$mdThemingProvider.theme('dark-grey').primaryPalette('deep-purple').accentPalette('deep-purple').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
+
+	$mdThemingProvider.theme('light').primaryPalette('pink', {
+		'default': '800',
+		'hue-1': '100',
+		'hue-2': 'A700',
+		'hue-3': '900'
+	}).accentPalette('pink', {
+		'default': '900',
+		'hue-1': '200',
+		'hue-2': 'A700',
+		'hue-3': '800'
+	}).warnPalette('red').backgroundPalette('grey'); // Custom theme
+	
+	$mdThemingProvider.theme('dark').primaryPalette('pink', {
+		'default': '800',
+		'hue-1': '100',
+		'hue-2': 'A700',
+		'hue-3': '900'
+	}).accentPalette('pink', {
+		'default': '900',
+		'hue-1': '200',
+		'hue-2': 'A700',
+		'hue-3': '800'
+	}).warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
+
+	// $mdThemingProvider.theme('dark').primaryPalette('deep-purple').accentPalette('indigo').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
 	$mdThemingProvider.theme('delete-dialog-theme').primaryPalette('red').accentPalette('grey').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
-	$mdThemingProvider.setDefaultTheme('dark-grey');
+	$mdThemingProvider.setDefaultTheme('dark');
 });

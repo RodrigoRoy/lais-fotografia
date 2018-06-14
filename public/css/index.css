@@ -34,6 +34,12 @@
 	margin-bottom: 2em;
 }
 
+/*Evita que los botones queden transparentes cuando el color de fondo es oscuro*/
+.trix-button-group{
+	background-color: white;
+}
+
+/*Disminuir ligeramente el tamaño del mapa para evitar recortarlo*/
 ng-map > div{
 	height: 90% !important;
 }

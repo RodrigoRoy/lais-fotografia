@@ -1,9 +1,9 @@
 // Controlador principal que tiene alcanze en todo la página (incluyendo navbar y footer)
 
-angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental){
+angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental, LocalStorage){
 	$scope.currentNavItem = 'inicio';
 	$scope.nombreColeccion; // Nombre de la colección
-	$scope.dynamicTheme = 'dark-grey'; // tema de color (definido en app.js)
+	$scope.dynamicTheme = LocalStorage.get('theme') || 'dark'; // tema de color (definido en app.js)
 	$scope.subconjuntos = []; // lista anhidada de todos los conjuntos y subconjuntos documentales
 	$scope.user = undefined; // Información del usuario (si inicia sesión)
 
@@ -27,10 +27,14 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 
 	// Cambia el nombre del tema para modificar la combinación de colores de todo el sitio
 	$scope.toggleTheme = function(){
-		if($scope.dynamicTheme === 'dark-grey')
-			$scope.dynamicTheme = 'original';
-		else
-			$scope.dynamicTheme = 'dark-grey';
+		if($scope.dynamicTheme === 'dark'){
+			$scope.dynamicTheme = 'light';
+			LocalStorage.set('theme', 'light');
+		}
+		else{
+			$scope.dynamicTheme = 'dark';
+			LocalStorage.set('theme', 'dark');
+		}
 	};
 
 	// Envia al usuario a su página personal
