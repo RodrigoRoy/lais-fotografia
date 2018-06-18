@@ -406,7 +406,8 @@
 					</md-tab>
 				</md-tabs>
 
-				<md-button type="submit" class="md-raised md-primary" ng-if="!edit" ng-click="enviarUnidadDocumental()">Crear unidad documental</md-button>
+				<md-button type="submit" class="md-raised md-primary" ng-if="!edit" ng-click="enviarUnidadDocumental()">Guardar unidad documental</md-button>
+				<md-button type="submit" class="md-raised" ng-if="!edit" ng-click="enviarUnidadDocumental(true)">Guardar y crear nuevo</md-button>
 				<md-button type="submit" class="md-raised md-primary" ng-if="edit" ng-click="editarUnidadDocumental()">Editar unidad documental</md-button>
 			</form>
 		</md-content>

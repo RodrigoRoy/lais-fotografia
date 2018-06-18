@@ -324,13 +324,17 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     };
 
     // Envia la información a la base de datos para crear una nueva unidad documental
-    $scope.enviarUnidadDocumental = function(){
+    // Recibe como parámetro opcional un booleano para indicar que se desea agregar otra unidad inmediatamente después
+    $scope.enviarUnidadDocumental = function(next){
     	cleanUnidadDocumentalData(); // crear una unidad documental válida
     	UnidadDocumental.create($scope.unidadDocumental).
     	then(function(res){
     		if(res.data.success){
                 $scope.showToast(res.data.message);
-                $location.url('/unidad?c=' + $routeParams.c);
+                if((typeof next !== 'undefined') && next) // Verificar que exista el parámetro y sea verdadero
+                    $route.reload();
+                else
+                    $location.url('/unidad?c=' + $routeParams.c);
             }
             else{
                 console.error('Error al agregar unidad documental', res);
@@ -343,7 +347,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     };
 
     // Envia la información a la base de datos para actualizar una unidad documental
-    $scope.editarUnidadDocumental = function(){
+    $scope.editarUnidadDocumental = function(next){
         cleanUnidadDocumentalData(); // crear una unidad documental válida
         UnidadDocumental.update($routeParams.id, $scope.unidadDocumental).
         then(function(res){
