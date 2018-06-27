@@ -171,7 +171,7 @@
 									</md-input-container>
 								</div>
 
-								<md-input-container class="md-block" ng-if="isGoogleDefined">
+								<!-- <md-input-container class="md-block" ng-if="isGoogleDefined">
 									<label>Lugar descrito</label>
 									<input places-auto-complete ng-model="unidadDocumental.estructuraContenido.lugarDescrito.formattedAddress" on-place-changed="placeChanged()" placeholder="">
 									<ng-map center="19.3760674,-99.1871402" zoom="15">
@@ -179,7 +179,38 @@
 									</ng-map>
 									<br>
 									<md-button class="md-warn" ng-click="borrarLugar()" ng-show="unidadDocumental.estructuraContenido.lugarDescrito">Borrar ubicación</md-button>
-								</md-input-container>
+								</md-input-container> -->
+
+
+								<div class="my-form-subsection">
+									<h3 class="md-subhead"><strong>Lugar</strong></h3>
+
+									<div layout="row" layout-wrap>
+										<md-input-container class="md-block" flex-gt-sm="100" flex="100" style="margin-bottom: 0">
+											<label>Lugar descrito</label>
+											<input places-auto-complete ng-model="unidadDocumental.estructuraContenido.lugarDescrito.formattedAddress" on-place-changed="placeChanged()" placeholder="">
+										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm="50" flex="100" style="margin-bottom: 0" ng-show="unidadDocumental.estructuraContenido.lugarDescrito.location.lat">
+											<label>Latitud</label>
+											<input type="number" ng-model="unidadDocumental.estructuraContenido.lugarDescrito.location.lat" disabled>
+										</md-input-container>
+
+										<md-input-container class="md-block" flex-gt-sm="50" flex="100" style="margin-bottom: 0" ng-show="unidadDocumental.estructuraContenido.lugarDescrito.location.lat">
+											<label>Longitud</label>
+											<input type="number" ng-model="unidadDocumental.estructuraContenido.lugarDescrito.location.lng" disabled>
+										</md-input-container>
+									</div>
+
+									<md-input-container class="md-block" ng-if="isGoogleDefined">
+										<ng-map center="19.3760674,-99.1871402" zoom="15">
+											<marker position="{{unidadDocumental.estructuraContenido.lugarDescrito.location}}" animation="DROP" draggable="true" on-dragend="getPosition($event)" visible="{{unidadDocumental.estructuraContenido.lugarDescrito.location ? true : false}}"></marker>
+										</ng-map>
+										<br>
+										<md-button class="md-warn" ng-click="borrarLugar()" ng-show="unidadDocumental.estructuraContenido.lugarDescrito">Borrar ubicación</md-button>
+									</md-input-container>
+								</div>
+
 							</div>
 						</md-content>
 					</md-tab>
