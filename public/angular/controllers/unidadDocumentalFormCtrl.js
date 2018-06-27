@@ -54,6 +54,18 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
     $scope.isGoogleDefined = google ? true : false; // Determina si la variable google fue inicializada mediante llamada <script> en index
 
+    // Busca coincidencias de texto en alguna propiedad concreta de las unidades documentales
+    // Recibe como parámetros la cadena de texto a buscar y la propiedad donde se desea buscar
+    // Devuelve un objeto Promise, principalmente para ser ocupado en la directiva md-autocomplete
+    $scope.query = function(query, property){
+        return UnidadDocumental.search(query, property).
+        then(function(res){
+            return res.data;
+        }, function(res){
+            console.error('Error de conexión con la base de datos', res);
+        });
+    };
+
     // Agrega un "nuevo" autor.
     // Recibe como parámetro el nombre escrito previamente como autor, si no es vacio, agrega un autor vacio (i.e. un nuevo input en blanco).
     $scope.agregarAutor = function(nombre){

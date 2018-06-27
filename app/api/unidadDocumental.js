@@ -128,6 +128,26 @@ router.route('/next')
             });
     });
 
+// Busqueda mediante expresión regular en el campo que se indique
+// Recibe los parámetros de búsqueda y el campo donde se debe buscar
+// Por ejemplo: ?q=query&from=area.subarea
+// Devuelve los primeros
+router.route('/search')
+    .get(function(req, res){
+        if(!(req.query.q && req.query.from))
+            return res.status(400).send({success: false, message: 'No hay parametro de búsqueda (?q=) ni ubicación (&from=)'});
+        var regex = new RegExp('.*' + req.query.q + '.*', 'i');
+        UnidadDocumental.
+            find({[req.query.from]: regex}).
+            select({[req.query.from]: 1, _id: 0}).
+            limit(5).
+            exec(function(err, results){
+                if(err)
+                    return res.send(err);
+                return res.send(results);
+            });
+    });
+
 // En peticiones con un ID
 router.route('/:unidad_id')
 	// Obtener una unidad documental particular (mediante el ID)

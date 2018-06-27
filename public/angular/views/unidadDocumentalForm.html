@@ -23,6 +23,16 @@
 								<md-input-container class="md-block">
 									<label>Referencia de procedencia</label>
 									<input ng-model="unidadDocumental.identificacion.referenciaProcedencia">
+									<!-- <md-autocomplete flex
+											md-items="unidad in query(searchText, 'identificacion.referenciaProcedencia')" 
+											md-search-text="searchText" 
+											md-item-text="unidad.identificacion.referenciaProcedencia" 
+											md-floating-label="Referencia de procedencia" 
+											md-selected-item="unidadDocumental.identificacion.referenciaProcedencia">
+										<md-item-template>
+											<span md-highlight-text="searchText">{{unidad.identificacion.referenciaProcedencia}}</span>
+										</md-item-template>
+									</md-autocomplete> -->
 								</md-input-container>
 
 								<div layout-gt-sm="row">
@@ -445,5 +455,5 @@
 	</div>
 </div>
 
-<!-- <br>
-<pre>{{unidadDocumental | json}}</pre> -->
+<br>
+<pre>{{unidadDocumental | json}}</pre>

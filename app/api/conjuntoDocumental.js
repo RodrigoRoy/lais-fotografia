@@ -44,8 +44,7 @@ router.route('/')
 	// Obtener el _id y codigo de referencia de todos los conjuntos documentales
     // Si incluye el parámetro ?code, busca y selecciona un conjunto por código de referencia (sin incluir el prefijo de la colección)
 	.get(function(req, res){
-        console.log('Object.keys(req.query)', Object.keys(req.query));
-        if(Object.keys(req.query).length === 0){ // Si no parámetros del tipo ?param en URL
+        if(Object.keys(req.query).length === 0){ // Si no hay parámetros del tipo ?param en URL
             ConjuntoDocumental.find().
             select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
             sort({'identificacion.codigoReferencia': 'asc'}).
