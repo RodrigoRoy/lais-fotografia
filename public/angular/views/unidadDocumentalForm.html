@@ -20,20 +20,19 @@
 									</div>
 								</md-input-container>
 
-								<md-input-container class="md-block">
-									<label>Referencia de procedencia</label>
-									<input ng-model="unidadDocumental.identificacion.referenciaProcedencia">
-									<!-- <md-autocomplete flex
-											md-items="unidad in query(searchText, 'identificacion.referenciaProcedencia')" 
-											md-search-text="searchText" 
-											md-item-text="unidad.identificacion.referenciaProcedencia" 
-											md-floating-label="Referencia de procedencia" 
-											md-selected-item="unidadDocumental.identificacion.referenciaProcedencia">
-										<md-item-template>
-											<span md-highlight-text="searchText">{{unidad.identificacion.referenciaProcedencia}}</span>
-										</md-item-template>
-									</md-autocomplete> -->
-								</md-input-container>
+								<md-autocomplete flex
+										md-items="queryValue in autocomplete(searchTextReferenciaProcedencia, 'identificacion.referenciaProcedencia')" 
+										md-search-text="searchTextReferenciaProcedencia" 
+										md-selected-item="unidadDocumental.identificacion.referenciaProcedencia"
+										md-item-text="queryValue" 
+										md-require-match="false"
+										ng-model-options="{allowInvalid: true}" 
+										md-floating-label="Referencia de procedencia" 
+										md-dropdown-items="3">
+									<md-item-template>
+										<span md-highlight-text="searchTextReferenciaProcedencia">{{queryValue}}</span>
+									</md-item-template>
+								</md-autocomplete>
 
 								<div layout-gt-sm="row">
 									<md-input-container class="md-block" flex-gt-sm>
@@ -89,21 +88,19 @@
 					<md-tab label="Estructura y contenido">
 						<md-content layout-padding>
 							<div>
-								<md-input-container class="md-block">
-									<label>Estructura formal</label>
-									<input ng-model="unidadDocumental.estructuraContenido.estructuraFormal">
-									<!-- <md-select ng-model="unidadDocumental.estructuraContenido.estructuraFormal">
-										<md-option value="Paisaje">Paisaje</md-option>
-										<md-option value="Paisaje rural">Paisaje rural</md-option>
-										<md-option value="Paisaje urbano">Paisaje urbano</md-option>
-										<md-option value="Paisaje industrial">Paisaje industrial</md-option>
-										<md-option value="Roster">Roster</md-option>
-										<md-option value="Escena">Escena</md-option>
-										<md-option value="Retrato">Retrato</md-option>
-										<md-option value="Monumento arqueológico">Monumento arqueológico</md-option>
-										<md-option value="Arquitectura">Arquitectura</md-option>
-									</md-select> -->
-								</md-input-container>
+								<md-autocomplete flex
+										md-items="queryValue in autocomplete(searchTextEstructuraFormal, 'estructuraContenido.estructuraFormal')" 
+										md-search-text="searchTextEstructuraFormal" 
+										md-selected-item="unidadDocumental.estructuraContenido.estructuraFormal"
+										md-item-text="queryValue" 
+										md-require-match="false" 
+										md-floating-label="Estructura formal" 
+										md-match-case-insensitive="true" 
+										md-dropdown-items="3">
+									<md-item-template>
+										<span md-highlight-text="searchTextEstructuraFormal">{{queryValue}}</span>
+									</md-item-template>
+								</md-autocomplete>
 
 								<div class="my-form-subsection">
 									<h3 class="md-subhead"><strong>Encuadre</strong></h3>
@@ -151,10 +148,19 @@
 											</md-select>
 										</md-input-container>
 
-										<md-input-container class="md-block" flex-gt-sm>
-											<label>Tipo de cámara</label>
-											<input ng-model="unidadDocumental.estructuraContenido.encuadre.tipoCamara">
-										</md-input-container>
+										<md-autocomplete flex
+												md-items="queryValue in autocomplete(searchTextTipoCamara, 'estructuraContenido.encuadre.tipoCamara')" 
+												md-search-text="searchTextTipoCamara" 
+												md-selected-item="unidadDocumental.estructuraContenido.encuadre.tipoCamara"
+												md-item-text="queryValue" 
+												md-no-cache="true"
+												md-floating-label="Tipo de cámara" 
+												md-match-case-insensitive="true"
+												md-dropdown-items="3">
+											<md-item-template>
+												<span md-highlight-text="searchTextTipoCamara">{{queryValue}}</span>
+											</md-item-template>
+										</md-autocomplete>
 
 										<md-input-container class="md-block" flex-gt-sm>
 											<label>Edición de la imágen</label>
@@ -245,10 +251,19 @@
 
 								<div class="my-form-subsection">
 									<h3 class="md-subhead"><strong>Soporte primario</strong></h3>
-									<md-input-container class="md-block">
-										<label>Materiales</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales">
-									</md-input-container>
+									<md-autocomplete flex
+											md-items="queryValue in autocomplete(searchTextMaterialPrimario, 'caracteristicasFisicas.soportePrimario.materiales')" 
+											md-search-text="searchTextMaterialPrimario" 
+											md-selected-item="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales"
+											md-item-text="queryValue" 
+											md-no-cache="true"
+											md-floating-label="Materiales" 
+											md-match-case-insensitive="true"
+											md-dropdown-items="3">
+										<md-item-template>
+											<span md-highlight-text="searchTextMaterialPrimario">{{queryValue}}</span>
+										</md-item-template>
+									</md-autocomplete>
 
 									<div layout-gt-sm="row">
 										<md-input-container class="md-block" flex-gt-sm>
@@ -288,10 +303,19 @@
 
 								<div class="my-form-subsection">
 									<h3 class="md-subhead"><strong>Soporte secundario</strong></h3>
-									<md-input-container class="md-block">
-										<label>Materiales</label>
-										<input ng-model="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales">
-									</md-input-container>
+									<md-autocomplete flex
+											md-items="queryValue in autocomplete(searchTextMaterialSecundario, 'caracteristicasFisicas.soporteSecundario.materiales')" 
+											md-search-text="searchTextMaterialSecundario" 
+											md-selected-item="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales"
+											md-item-text="queryValue" 
+											md-no-cache="true"
+											md-floating-label="Materiales" 
+											md-match-case-insensitive="true"
+											md-dropdown-items="3">
+										<md-item-template>
+											<span md-highlight-text="searchTextMaterialSecundario">{{queryValue}}</span>
+										</md-item-template>
+									</md-autocomplete>
 
 									<div layout-gt-sm="row">
 										<md-input-container class="md-block" flex-gt-sm>

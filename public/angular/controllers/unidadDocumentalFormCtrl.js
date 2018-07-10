@@ -56,9 +56,9 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
 
     // Busca coincidencias de texto en alguna propiedad concreta de las unidades documentales
     // Recibe como parámetros la cadena de texto a buscar y la propiedad donde se desea buscar
-    // Devuelve un objeto Promise, principalmente para ser ocupado en la directiva md-autocomplete
-    $scope.query = function(query, property){
-        return UnidadDocumental.search(query, property).
+    // Devuelve un objeto Promise, principalmente para ser ocupado en la directiva md-autocomplete. Éste eventualmente es una lista con los resultados deseados.
+    $scope.autocomplete = function(text, property){
+        return UnidadDocumental.query(text, property).
         then(function(res){
             return res.data;
         }, function(res){

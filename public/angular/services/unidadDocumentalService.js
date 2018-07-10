@@ -57,8 +57,8 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 		// Busca coincidencias de texto ya existentes en la base de datos
 		// Recibe la cadena de texto a buscar como primer parámetro, por ejemplo: 'archivo'
 		// Y como segundo parámetro el nombre completo de la propiedad donde se desea buscar, por ejemplo: 'identificacion.referenciaProcedencia'
-		search: function(query, propiedad){
-			return $http.get('/api/unidadDocumental/search?q=' + query + '&from=' + propiedad);
+		query: function(query, propiedad){
+			return $http.get('/api/unidadDocumental/query?q=' + query + '&from=' + propiedad);
 		}
 	}
 }]);
