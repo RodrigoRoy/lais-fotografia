@@ -26,9 +26,9 @@
 										md-selected-item="unidadDocumental.identificacion.referenciaProcedencia"
 										md-item-text="queryValue" 
 										md-require-match="false"
-										ng-model-options="{allowInvalid: true}" 
 										md-floating-label="Referencia de procedencia" 
-										md-dropdown-items="3">
+										md-dropdown-items="3"
+										ng-blur="unidadDocumental.identificacion.referenciaProcedencia = searchTextReferenciaProcedencia">
 									<md-item-template>
 										<span md-highlight-text="searchTextReferenciaProcedencia">{{queryValue}}</span>
 									</md-item-template>
@@ -93,10 +93,10 @@
 										md-search-text="searchTextEstructuraFormal" 
 										md-selected-item="unidadDocumental.estructuraContenido.estructuraFormal"
 										md-item-text="queryValue" 
-										md-require-match="false" 
+										md-require-match="false"
 										md-floating-label="Estructura formal" 
-										md-match-case-insensitive="true" 
-										md-dropdown-items="3">
+										md-dropdown-items="3"
+										ng-blur="unidadDocumental.estructuraContenido.estructuraFormal = searchTextEstructuraFormal">
 									<md-item-template>
 										<span md-highlight-text="searchTextEstructuraFormal">{{queryValue}}</span>
 									</md-item-template>
@@ -153,10 +153,10 @@
 												md-search-text="searchTextTipoCamara" 
 												md-selected-item="unidadDocumental.estructuraContenido.encuadre.tipoCamara"
 												md-item-text="queryValue" 
-												md-no-cache="true"
+												md-require-match="false"
 												md-floating-label="Tipo de cámara" 
-												md-match-case-insensitive="true"
-												md-dropdown-items="3">
+												md-dropdown-items="3"
+												ng-blur="unidadDocumental.estructuraContenido.encuadre.tipoCamara = searchTextTipoCamara">
 											<md-item-template>
 												<span md-highlight-text="searchTextTipoCamara">{{queryValue}}</span>
 											</md-item-template>
@@ -256,10 +256,10 @@
 											md-search-text="searchTextMaterialPrimario" 
 											md-selected-item="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales"
 											md-item-text="queryValue" 
-											md-no-cache="true"
+											md-require-match="false"
 											md-floating-label="Materiales" 
-											md-match-case-insensitive="true"
-											md-dropdown-items="3">
+											md-dropdown-items="3"
+											ng-blur="unidadDocumental.caracteristicasFisicas.soportePrimario.materiales = searchTextMaterialPrimario">
 										<md-item-template>
 											<span md-highlight-text="searchTextMaterialPrimario">{{queryValue}}</span>
 										</md-item-template>
@@ -308,10 +308,10 @@
 											md-search-text="searchTextMaterialSecundario" 
 											md-selected-item="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales"
 											md-item-text="queryValue" 
-											md-no-cache="true"
+											md-require-match="false"
 											md-floating-label="Materiales" 
-											md-match-case-insensitive="true"
-											md-dropdown-items="3">
+											md-dropdown-items="3"
+											ng-blur="unidadDocumental.caracteristicasFisicas.soporteSecundario.materiales = searchTextMaterialSecundario">
 										<md-item-template>
 											<span md-highlight-text="searchTextMaterialSecundario">{{queryValue}}</span>
 										</md-item-template>
