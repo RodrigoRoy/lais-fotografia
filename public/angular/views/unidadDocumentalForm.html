@@ -58,10 +58,23 @@
 
 								<div ng-repeat="autor in unidadDocumental.identificacion.autores">
 									<div layout-gt-sm="row">
-										<md-input-container class="md-block" flex-gt-sm>
+										<!-- <md-input-container class="md-block" flex-gt-sm>
 											<label>Autor</label>
 											<input ng-model="autor.nombre" ng-blur="agregarAutor(autor.nombre)">
-										</md-input-container>
+										</md-input-container> -->
+										<md-autocomplete flex
+												md-items="queryValue in autocomplete(searchTextAutor, 'identificacion.autores.nombre')" 
+												md-search-text="searchTextAutor" 
+												md-selected-item="autor.nombre"
+												md-item-text="queryValue" 
+												md-require-match="false"
+												md-floating-label="Autor" 
+												md-dropdown-items="3"
+												ng-blur="autor.nombre = searchTextAutor; agregarAutor(autor.nombre)">
+											<md-item-template>
+												<span md-highlight-text="searchTextAutor">{{queryValue}}</span>
+											</md-item-template>
+										</md-autocomplete>
 
 										<md-input-container class="md-block" flex-gt-sm>
 											<label>Tipo de autor</label>
@@ -110,6 +123,7 @@
 											<md-select ng-model="unidadDocumental.estructuraContenido.encuadre.orientacion">
 												<md-option value="Horizontal">Horizontal</md-option>
 												<md-option value="Vertical">Vertical</md-option>
+												<md-option md-option-empty ng-value="undefined"></md-option>
 											</md-select>
 										</md-input-container>
 
@@ -162,10 +176,19 @@
 											</md-item-template>
 										</md-autocomplete>
 
-										<md-input-container class="md-block" flex-gt-sm>
-											<label>Edición de la imágen</label>
-											<input ng-model="unidadDocumental.estructuraContenido.encuadre.edicionImagen">
-										</md-input-container>
+										<md-autocomplete flex
+												md-items="queryValue in autocomplete(searchTextEdicionImagen, 'estructuraContenido.encuadre.edicionImagen')" 
+												md-search-text="searchTextEdicionImagen" 
+												md-selected-item="unidadDocumental.estructuraContenido.encuadre.edicionImagen"
+												md-item-text="queryValue" 
+												md-require-match="false"
+												md-floating-label="Edición de la imagen" 
+												md-dropdown-items="3"
+												ng-blur="unidadDocumental.estructuraContenido.encuadre.edicionImagen = searchTextEdicionImagen">
+											<md-item-template>
+												<span md-highlight-text="searchTextEdicionImagen">{{queryValue}}</span>
+											</md-item-template>
+										</md-autocomplete>
 									</div>
 								</div>
 
@@ -419,6 +442,19 @@
 									<label>Publicación</label>
 									<input ng-model="value.text" ng-blur="agregarPublicacion(value.text)">
 								</md-input-container>
+								<!-- <md-autocomplete flex ng-repeat="value in auxiliar.publicaciones"
+										md-items="queryValue in autocomplete(searchTextPublicaciones, 'publicaciones.publicacion')" 
+										md-search-text="searchTextPublicaciones" 
+										md-selected-item="value.text"
+										md-item-text="queryValue" 
+										md-require-match="false"
+										md-floating-label="Publicación" 
+										md-dropdown-items="3"
+										ng-blur="value.text = searchTextPublicaciones; agregarPublicacion(value.text)">
+									<md-item-template>
+										<span md-highlight-text="searchTextPublicaciones">{{queryValue}}</span>
+									</md-item-template>
+								</md-autocomplete> -->
 
 								<md-input-container class="md-block" ng-repeat="value in auxiliar.exposicion">
 									<label>Exposición</label>
