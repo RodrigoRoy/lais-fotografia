@@ -7,6 +7,7 @@ console.log('Inicializando servidor...');
 // MÓDULOS =================================================
 var express        = require('express'); // llamar a express
 var app            = express(); // definir la aplicación usando express
+var proxy		   = require('http-proxy-middleware'); // en caso de ser necesario un proxy
 var mongoose       = require('mongoose'); // para trabajar con la base de datos
 var bodyParser     = require('body-parser'); // obtener body-parser
 var methodOverride = require('method-override');
@@ -40,6 +41,9 @@ app.use(function(req, res, next){
 	next();
 });
 
+// configuración y ejemplo de uso para emplear un proxy en las llamadas a la BD
+// app.use('/api', proxy({target: 'http://www.example.org', changeOrigin: true}));
+// http://localhost:8080/api/foo/bar -> http://www.example.org/api/foo/bar
 // RUTAS ===================================================
 var autentificacion = require('./app/api/authentication'); // API para autentificación
 app.use('/api/', autentificacion); // usar el API desde la ruta "/api/authenticate"
