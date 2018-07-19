@@ -1,31 +1,31 @@
 angular.module('UsuarioService', []).factory('Usuario', ['$http', function($http){
 	return {
 		me: function (){
-			return $http.get('/api/usuarios/me');
+			return $http.get('/apifoto/usuarios/me');
 		},
 
 		sign: function (usuarioData){
-			return $http.post('/api/authenticate', usuarioData);
+			return $http.post('/apifoto/authenticate', usuarioData);
 		},
 
 		all: function(){
-			return $http.get('/api/usuarios');
+			return $http.get('/apifoto/usuarios');
 		},
 
 		get: function(usuarioId){
-			return $http.get('api/usuarios/' + usuarioId);
+			return $http.get('/apifoto/usuarios/' + usuarioId);
 		},
 
 		create: function(userInfo){
-			return $http.post('api/usuarios', userInfo);
+			return $http.post('/apifoto/usuarios', userInfo);
 		},
 
 		update: function(userId, userData){
-			return $http.put('api/usuarios/' + userId, userData);
+			return $http.put('/apifoto/usuarios/' + userId, userData);
 		},
 
 		delete: function(userId){
-			return $http.delete('api/usuarios/' + userId);
+			return $http.delete('/apifoto/usuarios/' + userId);
 		}
 	}
 }]);

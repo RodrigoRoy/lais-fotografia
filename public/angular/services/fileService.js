@@ -9,7 +9,7 @@ angular.module('FileService', []).factory('File', ['$http', function($http){
 			formData.append('path', filePath);
 			formData.append('codigoReferencia', codigoReferencia);
 
-			return $http.post('/api/file', formData, {
+			return $http.post('/apifoto/file', formData, {
 				// establece Content-Type a multipart/form-data por default:
 				headers: {'Content-Type': undefined},
 				transformRequest: angular.identity
@@ -18,7 +18,7 @@ angular.module('FileService', []).factory('File', ['$http', function($http){
 
 		// Elimina el archivo (incluyendo ruta) dado como parámetro y que está contenido en la carpeta '/public/files'. Ejemplo: delete(/imagenes/MX-1-2-1.jpg)
 		delete: function(fileLocation){
-			return $http.delete('/api/file' + (fileLocation.charAt(0) === '/' ? fileLocation : '/' + fileLocation)); // Asegurar que fileLocation empieze con '/'
+			return $http.delete('/apifoto/file' + (fileLocation.charAt(0) === '/' ? fileLocation : '/' + fileLocation)); // Asegurar que fileLocation empieze con '/'
 		}
 	}
 }]);

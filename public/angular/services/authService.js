@@ -17,7 +17,7 @@ angular.module('AuthService', [])
 	// iniciar sesión para un usuario
 	authFactory.login = function(user){
 		// devolver objeto promise y los datos
-		return $http.post('/api/authenticate', {
+		return $http.post('/apifoto/authenticate', {
 			name: user.name,
 			password: user.password
 		})
@@ -37,13 +37,13 @@ angular.module('AuthService', [])
 		// eliminar cache (evita mal inicio de sesión al hacer logout/login como otro usuario y sin recargar la página)
 		// source; http://stackoverflow.com/questions/17059569/how-to-refresh-invalidate-resource-cache-in-angularjs
 		var $httpDefaultCache = $cacheFactory.get('$http');
-		$httpDefaultCache.remove('/api/usuarios/me');
+		$httpDefaultCache.remove('/apifoto/usuarios/me');
 	};
 
 	// obtener al usuario que está con sesión iniciada
 	authFactory.getUser = function(){
 		if(AuthToken.getToken())
-			return $http.get('/api/usuarios/me', {cache: true}); // cache evita peticiones adicionales al servidor
+			return $http.get('/apifoto/usuarios/me', {cache: true}); // cache evita peticiones adicionales al servidor
 		else
 			return $q.reject({message: 'El usuario no tiene token'});
 	};
