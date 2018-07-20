@@ -46,15 +46,15 @@ app.use(function(req, res, next){
 // http://localhost:8080/api/foo/bar -> http://www.example.org/api/foo/bar
 // RUTAS ===================================================
 var autentificacion = require('./app/api/authentication'); // API para autentificación
-app.use('/apifoto/', autentificacion); // usar el API desde la ruta "/api/authenticate"
+app.use('/api/', autentificacion); // usar el API desde la ruta "/api/authenticate"
 var usuarios = require('./app/api/usuarios'); // API para Usuarios de la base de datos
-app.use('/apifoto/usuarios', usuarios); // usar el API desde la ruta "/api/usuarios"
+app.use('/api/usuarios', usuarios); // usar el API desde la ruta "/api/usuarios"
 var conjuntoDocumental = require('./app/api/conjuntoDocumental');
-app.use('/apifoto/conjuntoDocumental', conjuntoDocumental);
+app.use('/api/conjuntoDocumental', conjuntoDocumental);
 var unidadDocumental = require('./app/api/unidadDocumental');
-app.use('/apifoto/unidadDocumental', unidadDocumental);
+app.use('/api/unidadDocumental', unidadDocumental);
 var file = require('./app/api/file');
-app.use('/apifoto/file', file);
+app.use('/api/file', file);
 
 // log de todas las peticiones (request) en consola
 app.use(morgan('dev'));
