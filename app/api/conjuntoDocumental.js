@@ -240,27 +240,56 @@ var ultimaImagen = function(unidades){
 
 // Determina el periodo de tiempo de un conjunto de unidades.
 // Recibe como parámetro un conjunto de unidades documentales que pueden (o no) contener la propiedad fecha.
-// Filtra solo aquellas unidades con fecha, las ordena cronólogicamente y determina la fecha inicial y final,
-// es decir, el periodo de tiempo.
-// Devuelve un objeto con las propiedades 'inicio' y 'final' (ambas del tipo Date) para describir el periodo de tiempo.
-// En caso de que la propiedad 'inicial' y 'final' sean del mismo año, se omite la propiedad 'final'.
+// y actualiza la fecha mínima (inicio) y máxima (fin) para cada unidad documental.
+// Devuelve un objeto con las propiedades 'inicio' y 'fin' (tipo Date) para describir el periodo de tiempo.
+// junto con la propiedad 'aproximada' (tipo Boolean) para indicar que incluye al menos una fecha aproximada.
+// En caso de que la propiedad 'inicial' y 'fin' sean del mismo año, se omite la propiedad 'fin'.
 // En caso de que el conjunto de unidades como parámetro sea vacio o no contenga fechas, se devuelve el valor undefined.
 var periodoTiempo = function(unidades){
     if(unidades.length === 0)
         return undefined;
-    let allDates = [];
+    let result = {inicio: undefined, fin: undefined, aproximada: false};
     unidades.forEach(unidad => {
-        if(unidad.identificacion.fecha)
-            allDates.push(unidad.identificacion.fecha);
+        if(unidad.identificacion.fecha){
+            if(unidad.identificacion.fecha.exacta){
+                result.inicio = compareMinMax(result.inicio, unidad.identificacion.fecha.exacta, Math.min);
+                result.fin = compareMinMax(result.fin, unidad.identificacion.fecha.exacta, Math.max);
+            }
+            else if(unidad.identificacion.fecha.periodo){
+                if(unidad.identificacion.fecha.periodo.inicio){
+                    result.inicio = compareMinMax(result.inicio, unidad.identificacion.fecha.periodo.inicio, Math.min);
+                    result.fin = compareMinMax(result.fin, unidad.identificacion.fecha.periodo.inicio, Math.max);
+                }
+                if(unidad.identificacion.fecha.periodo.fin){
+                    result.inicio = compareMinMax(result.inicio, unidad.identificacion.fecha.periodo.fin, Math.min);
+                    result.fin = compareMinMax(result.fin, unidad.identificacion.fecha.periodo.fin, Math.max);
+                }
+            }
+            else if(unidad.identificacion.fecha.aproximada){
+                result.inicio = compareMinMax(result.inicio, unidad.identificacion.fecha.aproximada, Math.min);
+                result.fin = compareMinMax(result.fin, unidad.identificacion.fecha.aproximada, Math.max);
+                result.aproximada = true;
+            }
+        }
     });
-    if(allDates.length === 0)
+    if(result.inicio && result.fin)
+        if(result.inicio.getFullYear() === result.fin.getFullYear())
+            result.fin = undefined;
+    return result;
+};
+// Auxiliar para la función periodoTiempo.
+// Compara dos fechas y devuelve la fecha mínima o máxima.
+// Recibe como parámetro dos fechas y la función de comparación (Math.min ó Math.max)
+// Devuelve la fecha mínima o máxima. En caso de que una de las fechas tenga el valor undefined, devuelve la única fecha
+// y en caso de que ambas fechas sean undefined, el valor undefined es devuelto.
+var compareMinMax = function(date1, date2, compareFunction){
+    if(!date1 && !date2)
         return undefined;
-    allDates.sort(function(a, b){
-        return a.getTime() - b.getTime(); // ordenamiento cronológico
-    });
-    if(allDates[0].getFullYear() != allDates[allDates.length-1].getFullYear())
-        return {inicio: allDates[0], fin: allDates[allDates.length-1]};
-    return {inicio: allDates[0]};
+    if(date1 && !date2)
+        return date1;
+    if(!date1 && date2)
+        return date2;
+    return new Date(compareFunction(date1.getTime(), date2.getTime()));
 };
 
 // Devuelve la lista de lugares de un conjunto de unidades.

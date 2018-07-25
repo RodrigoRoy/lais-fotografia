@@ -15,6 +15,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		// fecha: { // fecha de manufactura // INFERIDO
 		// 	inicio: {type: Date},
 		// 	fin: {type: Date} // En caso de ser un periodo
+		//	aproximada: {type: Boolean} // En caso de incluir fechas aproximadas
 		// },
 		// lugarDescrito: [{ // INFERIDO (Google Maps style)
 		// 	placeId: {type: String},
@@ -60,7 +61,7 @@ var ConjuntoDocumentalSchema = new Schema({
 		reprografias: {type: String, trim: true},
 		grabadosRelacionados: {type: String, trim: true}
 	},
-	publicaciones: { // INFERIDO?
+	publicaciones: {
 		publicacion: {type: String, trim: true},
 		exposicion: {type: String, trim: true}
 	},
@@ -70,11 +71,11 @@ var ConjuntoDocumentalSchema = new Schema({
 	controlDescripcion: {
 		// documentalistas: [{type: String}], //[{type: Schema.Types.ObjectId, ref: 'Usuario'}] // INFERIDO
 		reglasNormas: {type: String, trim: true, default: 'LAIS, Lineamientos para la descripción de fotografías, 2011'},
-		//actualizacionDescripcion: {type: Date} // IMPLÍCITO
+		//actualizacionDescripcion: {type: Date} // IMPLÍCITO (updatedAt)
 	},
 	adicional:{
 		imagen: {type: String}, // Referencia nombre de la imagen
-		presentacion: {type: String}
+		presentacion: {type: String} // Texto en formato HTML
 	}
 }, { // Opciones:
 	collection: 'conjuntoDocumental',

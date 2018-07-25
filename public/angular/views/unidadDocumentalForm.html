@@ -51,9 +51,44 @@
 									</md-input-container>
 								</div>
 
-								<md-input-container class="md-block">
+								<!-- <md-input-container class="md-block">
 									<label>Fecha</label>
 									<md-datepicker ng-model="unidadDocumental.identificacion.fecha"></md-datepicker>
+								</md-input-container> -->
+
+								<md-input-container class="md-block" flex="100" flex-gt-xs="50">
+									<label>Agregar fecha</label>
+									<md-select ng-model="tipoDeFecha" ng-change="clearDate()">
+										<md-option md-option-empty></md-option>
+										<md-option value="Exacta">Exacta</md-option>
+										<md-option value="Periodo">Periodo</md-option>
+										<md-option value="Aproximada">Aproximada</md-option>
+									</md-select>
+								</md-input-container>
+
+								<md-input-container class="md-block" ng-show="tipoDeFecha == 'Exacta'">
+									<label>Fecha</label>
+									<md-datepicker ng-model="unidadDocumental.identificacion.fecha.exacta"></md-datepicker>
+								</md-input-container>
+
+								<div layout="row" layout-sm="column" layout-xs="column" layout-wrap ng-show="tipoDeFecha == 'Periodo'">
+									<md-input-container class="md-icon-float md-block" flex-xs="90" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
+										<label>Año inicial</label>
+										<md-icon><i class="material-icons">event</i></md-icon>
+										<input ng-model="auxiliar.fecha.periodo.inicio" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
+									</md-input-container>
+
+									<md-input-container class="md-icon-float md-block" flex-xs="90" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
+										<label>Año final</label>
+										<md-icon><i class="material-icons">event</i></md-icon>
+										<input ng-model="auxiliar.fecha.periodo.fin" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
+									</md-input-container>
+								</div>
+
+								<md-input-container class="md-icon-float md-block" ng-show="tipoDeFecha == 'Aproximada'" flex="100" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
+									<label>Año aproximado</label>
+									<md-icon><i class="material-icons">event</i></md-icon>
+									<input ng-model="auxiliar.fecha.aproximada" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
 								</md-input-container>
 
 								<div ng-repeat="autor in unidadDocumental.identificacion.autores">

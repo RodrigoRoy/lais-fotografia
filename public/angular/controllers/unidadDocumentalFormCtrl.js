@@ -6,6 +6,9 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
     // Se pueden inicializar algunos valores por default.
     $scope.unidadDocumental = {
     	identificacion: {
+            fecha: {
+                periodo: {}
+            },
     		autores: [{
     			tipo: '',
     			nombre: ''
@@ -49,7 +52,10 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         fotografiaConsecutiva: [{text: ''}],
         fotografiaConsecutivaOtraCamara: [{text: ''}],
         fotografiaEncuadreSimilar: [{text: ''}],
-        grabadoRelacionado: [{text: ''}]
+        grabadoRelacionado: [{text: ''}],
+        fecha: {
+            periodo: {}
+        }
     };
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
     $scope.isGoogleDefined = google ? true : false; // Determina si la variable google fue inicializada mediante llamada <script> en index
@@ -64,6 +70,44 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         }, function(res){
             console.error('Error de conexión con la base de datos', res);
         });
+    };
+
+    // Borra todas las fechas si desde la vista se ha seleccionado en md-select la opción en blanco (evita registrar erroneamente una fecha)
+    $scope.clearDate = function(){
+        if(!$scope.tipoDeFecha)
+            $scope.unidadDocumental.identificacion.fecha = {periodo: {}}; // valor por default
+    };
+
+    // Ayuda a tomar el input de una fecha (donde sólo está registrado el año como string) y lo convierte en un objeto Date
+    // Las fechas son mutuamente excluyentes, así que en caso de registrar un tipo de fecha (exacta, periodo o aproximada), las demás fechas deben borrarse
+    // Esta función está pensada para ejecutarse desde la vista en el evento ng-blur del componente md-select
+    $scope.validateDate = function(){
+        switch($scope.tipoDeFecha){
+            case 'Exacta':
+                // Limpiar los otros campos de fecha
+                $scope.unidadDocumental.identificacion.fecha.periodo = {};
+                $scope.unidadDocumental.identificacion.fecha.aproximada = undefined;
+                break;
+            case 'Periodo':
+                // Crear y asignar la fecha de inicio y fin
+                $scope.unidadDocumental.identificacion.fecha.periodo.inicio = $scope.auxiliar.fecha.periodo.inicio ? new Date($scope.auxiliar.fecha.periodo.inicio, 0) : undefined;
+                $scope.unidadDocumental.identificacion.fecha.periodo.fin = $scope.auxiliar.fecha.periodo.fin ? new Date($scope.auxiliar.fecha.periodo.fin, 0) : undefined;
+                // Limpiar los otros campos de fecha
+                $scope.unidadDocumental.identificacion.fecha.exacta = undefined;
+                $scope.unidadDocumental.identificacion.fecha.aproximada = undefined;
+                break;
+            case 'Aproximada':
+                // Crear y asignar la fecha aproximada
+                $scope.unidadDocumental.identificacion.fecha.aproximada = $scope.auxiliar.fecha.aproximada ? new Date($scope.auxiliar.fecha.aproximada, 0) : undefined;
+                // Limpiar los otros campos de fecha
+                $scope.unidadDocumental.identificacion.fecha.exacta = undefined;
+                $scope.unidadDocumental.identificacion.fecha.periodo = {};
+                break;
+            default:
+                // Limpiar el fecha de fecha (a su valor por default)
+                $scope.unidadDocumental.identificacion.fecha = {};
+                $scope.unidadDocumental.identificacion.fecha.periodo = {};
+        }
     };
 
     // Agrega un "nuevo" autor.

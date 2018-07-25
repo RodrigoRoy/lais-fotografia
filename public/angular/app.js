@@ -64,4 +64,20 @@ angular.module('laisFotoApp', [
 	// $mdThemingProvider.theme('dark').primaryPalette('deep-purple').accentPalette('indigo').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
 	$mdThemingProvider.theme('delete-dialog-theme').primaryPalette('red').accentPalette('grey').warnPalette('red').backgroundPalette('grey').dark(); // Custom theme
 	$mdThemingProvider.setDefaultTheme('dark');
+})
+
+// Traducción al español de algunos textos en el calendario y las fechas que muestra
+.config(function($mdDateLocaleProvider){
+	$mdDateLocaleProvider.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    $mdDateLocaleProvider.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    $mdDateLocaleProvider.days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    $mdDateLocaleProvider.shortDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
+    $mdDateLocaleProvider.formatDate = function(date){
+    	return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    };
+    $mdDateLocaleProvider.weekNumberFormatter = function(weekNumber){
+    	return 'Semana ' + weekNumber;
+    };
+    $mdDateLocaleProvider.msgCalendar = 'Calendario';
+    $mdDateLocaleProvider.msgOpenCalendar = 'Abrir calendario';
 });

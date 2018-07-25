@@ -14,10 +14,19 @@ var UnidadDocumentalSchema = new Schema({
 		titulo: {
 			archivoProcedencia: {type: String, trim: true},
 			inscrito: {type: String, trim: true},
-			otroObjeto: {type: String, trim: true}
+			otroObjeto: {type: String, trim: true},
+			_id: false
 		},
-		fecha: {type: Date},
-		autores: [{ // Lista de fotógrafos, editores, productores y/o comitentes.
+		fecha: {
+			exacta: {type: Date},
+			periodo: { // Ejemplo: 1990-1995
+				inicio: {type: Date},
+				fin: {type: Date},
+				_id: false
+			},
+			aproximada: {type: Date} // Ejemplo: 1990 c.a.
+		},
+		autores: [{ // Lista de nombres y tipo de personas
 			tipo: {type: String, enum: ['Comitente', 'Productor', 'Editor', 'Fotógrafo', 'Impresor', 'Taller de imprenta', 'Dibujante', 'Dirección', 'Responsable', 'Levantamiento', 'Litógrafo', 'Grabador']},
 			nombre: {type: String, trim: true},
 			_id: false

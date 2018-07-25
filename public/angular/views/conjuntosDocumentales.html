@@ -62,8 +62,12 @@
 											<td>{{conjunto.identificacion.titulo}}</td>
 										</tr>
 										<tr ng-if="conjunto.identificacion.fecha && conjunto.identificacion.fecha.inicio">
-											<td>Periodo</td>
-											<td>{{conjunto.identificacion.fecha.inicio | date:'yyyy'}} <span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span></td>
+											<td>Fecha</td>
+											<td>
+												{{conjunto.identificacion.fecha.inicio | date:'yyyy'}} 
+												<span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span> 
+												<span ng-if="conjunto.identificacion.fecha.aproximada"><small>(incluye fechas aproximadas)</small></span>
+											</td>
 										</tr>
 										<tr ng-if="conjunto.identificacion.productor">
 											<td>Productor</td>
