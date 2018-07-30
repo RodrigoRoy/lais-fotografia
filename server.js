@@ -55,6 +55,8 @@ var unidadDocumental = require('./app/api/unidadDocumental');
 app.use('/api/unidadDocumental', unidadDocumental);
 var file = require('./app/api/file');
 app.use('/api/file', file);
+var backup = require('./app/api/backup');
+app.use('/api/backup', backup);
 
 // log de todas las peticiones (request) en consola
 app.use(morgan('dev'));
