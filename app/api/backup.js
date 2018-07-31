@@ -35,29 +35,34 @@ router.route('/dump')
         fs.ensureDir(`${rootDirectory}/app/dataset`, function(err){
             if(err)
                 return res.status(500).send({success: false, message: 'No es posible crear el directorio para la copia de seguridad', err: err});
-            let dbname = /.*\/(.*)$/.exec(db)[1]; // extraer el nombre de la base de datos desde URL empleada para la conexión
-            // Script para hacer dump de la base de datos MongoDB
-            exec(`mongodump --db ${dbname} --out ${rootDirectory}/app/dataset/dump`, function(error, stdout, stderr){
-                if(error){
-                    fs.removeSync(`${rootDirectory}/app/dataset`);
-                    return res.status(500).send({success: false, message: 'No fue posible realizar copia de seguridad de la base de datos', err: error});
-                }
-                try{
-                    // Crear archivo zip con archivo de configuración, dump de base de datos y los archivos públicos (fotos/imagenes)
-                    let zip = new AdmZip();
-                    zip.addLocalFile(`${rootDirectory}/config.js`);
-                    zip.addLocalFolder(`${rootDirectory}/app/dataset/dump`, 'dump');
-                    zip.addLocalFolder(`${rootDirectory}/public/files`, 'files');
-                    zip.writeZip(`${rootDirectory}/app/dataset/backup.zip`);
-                }
-                catch(error){
-                    return res.status(500).send({success: false, message: 'No se pudo crear copia en formato zip', err: error});
-                }
-                // Eliminar archivos temporales, es decir, dump de la base de datos
-                fs.remove(`${rootDirectory}/app/dataset/dump`, function(err){
-                    if(err)
-                        return res.send({success: true, message: `Copia de seguridad creada satisfactoriamente.\nADVERTENCIA: El directorio temporal 'app/dataset/dump' debe ser borrado manualmente`});
-                    return res.send({success: true, message: `Copia de seguridad creada satisfactoriamente en 'app/dataset/'`});
+            fs.ensureDir(`${rootDirectory}/public/files`, function(err){
+                if(err)
+                    return res.status(500).send({success: false, message: 'No es posible crear el directorio para el archivo zip', err: err});
+                let dbname = /.*\/(.*)$/.exec(db)[1]; // extraer el nombre de la base de datos desde URL empleada para la conexión
+                // Script para hacer dump de la base de datos MongoDB
+                exec(`mongodump --db ${dbname} --out ${rootDirectory}/app/dataset/dump`, function(error, stdout, stderr){
+                    if(error){
+                        fs.removeSync(`${rootDirectory}/app/dataset/dump`);
+                        return res.status(500).send({success: false, message: 'No fue posible realizar copia de seguridad de la base de datos', err: error});
+                    }
+                    try{
+                        // Crear archivo zip con archivo de configuración, dump de base de datos y los archivos públicos (fotos)
+                        let zip = new AdmZip();
+                        zip.addFile('db.dat', Buffer.alloc(dbname.length, dbname), 'Nombre de la base de datos');
+                        zip.addLocalFile(`${rootDirectory}/config.js`);
+                        zip.addLocalFolder(`${rootDirectory}/app/dataset/dump`, 'dump');
+                        zip.addLocalFolder(`${rootDirectory}/public/files`, 'files');
+                        zip.writeZip(`${rootDirectory}/app/dataset/backup.zip`);
+                    }
+                    catch(error){
+                        return res.status(500).send({success: false, message: 'No se pudo crear copia en formato zip', err: error});
+                    }
+                    // Eliminar archivos temporales, es decir, dump de la base de datos
+                    fs.remove(`${rootDirectory}/app/dataset/dump`, function(err){
+                        if(err)
+                            return res.send({success: true, message: `Copia de seguridad creada satisfactoriamente.\nADVERTENCIA: El directorio temporal 'app/dataset/dump' debe ser borrado manualmente`});
+                        return res.send({success: true, message: `Copia de seguridad creada satisfactoriamente en 'app/dataset/'`});
+                    });
                 });
             });
         });
@@ -70,47 +75,46 @@ router.route('/restore')
         fs.access(`${rootDirectory}/app/dataset/backup.zip`, (fs.constants || fs).F_OK, function(err){
             if(err)
                 return res.status(500).send({success: false, message: `No existe el archivo 'backup.zip'`, err: err});
-            try{
-                // Verificar que se puede manipular archivos zip
-                let zip = new AdmZip(`${rootDirectory}/app/dataset/backup.zip`);
-                let zipEntries = zip.getEntries();
-            }
-            catch(error){
-                return res.status(500).send({success: false, message: 'No fue posible obtener información del zip', err: error});
-            }
             // Crear directorio temporal para descomprimir la copia de seguridad
             fs.ensureDir(`${rootDirectory}/app/dataset/tmp`, function(err){
                 if(err)
                     return res.status(500).send({success: false, message: 'No se pudo crear el directorio temporal', err: err});
                 try{
-                    // Asegurar que se pueden extraer los archivos
+                    // Verificar que se puede manipular archivos zip
+                    let zip = new AdmZip(`${rootDirectory}/app/dataset/backup.zip`);
                     zip.extractAllTo(`${rootDirectory}/app/dataset/tmp`, true);
                 }
                 catch(error){
-                    return res.status(500).send({success: false, message: 'No se pudo extraer el archivo zip', err: error});
+                    return res.status(500).send({success: false, message: 'No fue posible extraer archivo zip', err: error});
                 }
                 // Mover (y sobreescibir) el archivo de configuración
-                fs.move(`${rootDirectory}/app/dataset/tmp/config.js`, `${rootDirectory}/`, {overwrite: true}, function(err){
+                fs.move(`${rootDirectory}/app/dataset/tmp/config.js`, `${rootDirectory}/config.js`, {overwrite: true}, function(err){
                     if(err){
                         fs.removeSync(`${rootDirectory}/app/dataset/tmp`);
                         return res.status(500).send({success: false, message: 'No fue posible mover archivo de configuración', err: err});
                     }
-                    // Mover (y sobreescribir) los archivos públicos (fotos/imágenes)
-                    fs.move(`${rootDirectory}/app/dataset/tmp/files`, `${rootDirectory}/public`, {overwrite: true}, function(err){
+                    // Mover (y sobreescribir) los archivos públicos (fotos)
+                    fs.move(`${rootDirectory}/app/dataset/tmp/files`, `${rootDirectory}/public/files`, {overwrite: true}, function(err){
                         if(err){
                             fs.removeSync(`${rootDirectory}/app/dataset/tmp`);
                             return res.status(500).send({success: false, message: 'No fue posible mover archivos públicos', err: err});
                         }
-                        // TODO: Obtener nombre de la base de datos desde archivo zip
-                        // Script para restaurar la base de datos MongoDB
-                        exec(`mongorestore --db ${dbname} --drop ${rootDirectory}/app/dataset/tmp/dump/lais-fotografia`, function(error, stdout, stderr){
-                            if(error){
-                                fs.removeSync(`./app/dataset/tmp`);
-                                return res.status(500).send({success: false, message: 'No se pudo restaurar la base de datos', err: error});
+                        // Recuperar nombre de la base de datos desde archivo
+                        fs.readFile(`${rootDirectory}/app/dataset/tmp/db.dat`, function(err, data){
+                            if(err){
+                                fs.removeSync(`${rootDirectory}/app/dataset/tmp`);
+                                return res.status(500).send({success: false, message: 'No se pudo leer archivo temporal de configuración', err: error});
                             }
-                            // Eliminar archivos temporales, es decir, directorio tmp donde se extrajeron los archivos
-                            fs.removeSync(`${rootDirectory}/app/dataset/tmp`);
-                            return res.send({success: true, message: 'Restauración de copia de seguridad completado exitósamente'});
+                            // Script para restaurar la base de datos MongoDB
+                            exec(`mongorestore --db ${data} --drop ${rootDirectory}/app/dataset/tmp/dump/lais-fotografia`, function(error, stdout, stderr){
+                                if(error){
+                                    fs.removeSync(`./app/dataset/tmp`);
+                                    return res.status(500).send({success: false, message: 'No se pudo restaurar la base de datos', err: error});
+                                }
+                                // Eliminar archivos temporales, es decir, directorio tmp donde se extrajeron los archivos
+                                fs.removeSync(`${rootDirectory}/app/dataset/tmp`);
+                                return res.send({success: true, message: 'Restauración de copia de seguridad completado exitósamente'});
+                            });
                         });
                     });
                 });
