@@ -14,6 +14,7 @@ angular.module('laisFotoApp', [
 	'UsuarioService',
 	'AuthService',
 	'LocalStorageService',
+	'BackupService',
 
 	'IndexCtrl',
 	'InicioCtrl',

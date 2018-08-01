@@ -1,13 +1,46 @@
-<div layout="row" layout-align="center">
-	<div flex="80">
+<div layout-xs="column" layout="row" layout-align="center">
+	<div flex-xs="90" flex-sm="85" flex-gt-sm="50">
 		<h2 class="md-display-2">Área personal</h2>
-		<h3 class="md-headline" ng-if="user.fullname">{{user.fullname}} <small>({{user.username}})</small></h3>
-		<h4 class="md-subhead" nf-if="user.email">{{user.email}}</h4>
-		<md-button class="md-raised" ng-click="editarInformacion()">Editar</md-button>
+		
+		<md-card>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Perfil</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<p class="md-body-2" ng-if="user.fullname">
+					{{user.fullname}} <small>({{user.username}})</small>
+				</p>
+				<p class="md-body-1" ng-if="user.email">
+					{{user.email}}
+				</p>
+			</md-card-content>
+			<md-card-actions layout-xs="column" layout="row" layout-align="start center">
+				<md-button ng-click="editarInformacion()">Editar perfil</md-button>
+			</md-card-actions>
+		</md-card>
 
-		<div ng-if="user.admin">
-			<h3 class="md-headline">Administrador</h3>
-			<md-button class="md-raised" ng-click="listaUsuarios()">Lista de usuarios</md-button>			
-		</div>
+		<md-card ng-if="user.admin">
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">Administrador</span>
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<p class="md-body-1">
+					Como administrador puedes realizar acciones con privilegios elevados.
+				</p>
+				<p ng-show="doingBackup">
+					<span class="md-caption">Procesando. Espere por favor</span>
+					<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+				</p>
+			</md-card-content>
+			<md-card-actions layout-xs="column" layout="row" layout-align="start center" ng-show="!doingBackup">
+				<md-button ng-click="listaUsuarios()">Lista de usuarios</md-button>
+				<md-button ng-click="showDialogRespaldo($event)">Crear respaldo</md-button>
+				<md-button ng-click="showDialogRestauracion($event)">Restaurar respaldo</md-button>
+			</md-card-actions>
+		</md-card>
 	</div>
 </div>

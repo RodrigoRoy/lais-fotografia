@@ -22,11 +22,11 @@ const { db } = require('../../config');
 // const db = config.db;
 const rootDirectory = path.dirname(require.main.filename);
 
-// // Función a realizar siempre que se utilize esta API
-// router.use(function(req, res, next){
-//     // Antes de usar el API de usuario se verifica que haya token y sea válido
-//     verifyToken(req, res, next);
-// });
+// Función a realizar siempre que se utilize esta API
+router.use(function(req, res, next){
+    // Antes de usar el API de usuario se verifica que haya token y sea válido
+    verifyToken(req, res, next);
+});
 
 // En peticiones para realizar copia de seguridad
 router.route('/dump')
