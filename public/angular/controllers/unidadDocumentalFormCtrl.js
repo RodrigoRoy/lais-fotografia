@@ -72,41 +72,27 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         });
     };
 
-    // Borra todas las fechas si desde la vista se ha seleccionado en md-select la opción en blanco (evita registrar erroneamente una fecha)
+    // Borra todas las fechas cada vez que se selecciona un nuevo tipo de fecha
+    // Esto evita errores de guardado pero no permite guardar fechas previamente escritas o seleccionadas
     $scope.clearDate = function(){
-        if(!$scope.tipoDeFecha)
-            $scope.unidadDocumental.identificacion.fecha = {periodo: {}}; // valor por default
+        $scope.unidadDocumental.identificacion.fecha = {periodo: {}};
+        $scope.auxiliar.fecha = {periodo: {}};
     };
 
     // Ayuda a tomar el input de una fecha (donde sólo está registrado el año como string) y lo convierte en un objeto Date
     // Las fechas son mutuamente excluyentes, así que en caso de registrar un tipo de fecha (exacta, periodo o aproximada), las demás fechas deben borrarse
     // Esta función está pensada para ejecutarse desde la vista en el evento ng-blur del componente md-select
-    $scope.validateDate = function(){
+    $scope.parseDate = function(){
         switch($scope.tipoDeFecha){
-            case 'Exacta':
-                // Limpiar los otros campos de fecha
-                $scope.unidadDocumental.identificacion.fecha.periodo = {};
-                $scope.unidadDocumental.identificacion.fecha.aproximada = undefined;
-                break;
             case 'Periodo':
                 // Crear y asignar la fecha de inicio y fin
                 $scope.unidadDocumental.identificacion.fecha.periodo.inicio = $scope.auxiliar.fecha.periodo.inicio ? new Date($scope.auxiliar.fecha.periodo.inicio, 0) : undefined;
                 $scope.unidadDocumental.identificacion.fecha.periodo.fin = $scope.auxiliar.fecha.periodo.fin ? new Date($scope.auxiliar.fecha.periodo.fin, 0) : undefined;
-                // Limpiar los otros campos de fecha
-                $scope.unidadDocumental.identificacion.fecha.exacta = undefined;
-                $scope.unidadDocumental.identificacion.fecha.aproximada = undefined;
                 break;
             case 'Aproximada':
                 // Crear y asignar la fecha aproximada
                 $scope.unidadDocumental.identificacion.fecha.aproximada = $scope.auxiliar.fecha.aproximada ? new Date($scope.auxiliar.fecha.aproximada, 0) : undefined;
-                // Limpiar los otros campos de fecha
-                $scope.unidadDocumental.identificacion.fecha.exacta = undefined;
-                $scope.unidadDocumental.identificacion.fecha.periodo = {};
                 break;
-            default:
-                // Limpiar el fecha de fecha (a su valor por default)
-                $scope.unidadDocumental.identificacion.fecha = {};
-                $scope.unidadDocumental.identificacion.fecha.periodo = {};
         }
     };
 
@@ -435,6 +421,19 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         UnidadDocumental.get($routeParams.id)
         .then(function(res){
             $scope.unidadDocumental = res.data;
+            // Indicar el tipo de fecha para md-select y cambiar Date -> String en caso de fechas aproximadas o periodos
+            if($scope.unidadDocumental.identificacion.fecha)
+                if($scope.unidadDocumental.identificacion.fecha.exacta)
+                    $scope.tipoDeFecha = 'Exacta';
+                else if($scope.unidadDocumental.identificacion.fecha.periodo && ($scope.unidadDocumental.identificacion.fecha.periodo.inicio || $scope.unidadDocumental.identificacion.fecha.periodo.fin)){
+                    $scope.tipoDeFecha = 'Periodo';
+                    $scope.auxiliar.fecha.periodo.inicio = $scope.unidadDocumental.identificacion.fecha.periodo.inicio ? new Date($scope.unidadDocumental.identificacion.fecha.periodo.inicio).getFullYear() : undefined;
+                    $scope.auxiliar.fecha.periodo.fin = $scope.unidadDocumental.identificacion.fecha.periodo.fin ? new Date($scope.unidadDocumental.identificacion.fecha.periodo.fin).getFullYear() : undefined;
+                }
+                else if($scope.unidadDocumental.identificacion.fecha.aproximada){
+                    $scope.tipoDeFecha = 'Aproximada';
+                    $scope.auxiliar.fecha.aproximada = $scope.unidadDocumental.identificacion.fecha.aproximada ? new Date($scope.unidadDocumental.identificacion.fecha.aproximada).getFullYear() : undefined;
+                }
             // Agregar un espacio adicional para seguir agregando autores
             $scope.unidadDocumental.identificacion.autores.push({tipo: '', nombre: ''});
             // Agregar un espacio adicional para seguir agregando inscripciones (en soporte primario y secundario)

@@ -75,20 +75,20 @@
 									<md-input-container class="md-icon-float md-block" flex-xs="90" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
 										<label>Año inicial</label>
 										<md-icon><i class="material-icons">event</i></md-icon>
-										<input ng-model="auxiliar.fecha.periodo.inicio" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
+										<input ng-model="auxiliar.fecha.periodo.inicio" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="parseDate()">
 									</md-input-container>
 
 									<md-input-container class="md-icon-float md-block" flex-xs="90" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
 										<label>Año final</label>
 										<md-icon><i class="material-icons">event</i></md-icon>
-										<input ng-model="auxiliar.fecha.periodo.fin" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
+										<input ng-model="auxiliar.fecha.periodo.fin" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="parseDate()">
 									</md-input-container>
 								</div>
 
 								<md-input-container class="md-icon-float md-block" ng-show="tipoDeFecha == 'Aproximada'" flex="100" flex-gt-xs="50" flex-gt-sm="20" flex-offset="5">
 									<label>Año aproximado</label>
 									<md-icon><i class="material-icons">event</i></md-icon>
-									<input ng-model="auxiliar.fecha.aproximada" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="validateDate()">
+									<input ng-model="auxiliar.fecha.aproximada" ng-pattern="/^[1,2][0-9]{3}$/" ng-blur="parseDate()">
 								</md-input-container>
 
 								<div ng-repeat="autor in unidadDocumental.identificacion.autores">
@@ -553,5 +553,7 @@
 	</div>
 </div>
 
-<!-- <br>
-<pre>{{unidadDocumental | json}}</pre> -->
+<br>
+<pre>{{auxiliar.fecha | json}}</pre>
+<br>
+<pre>{{unidadDocumental.identificacion.fecha | json}}</pre>
