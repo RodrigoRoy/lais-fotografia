@@ -68,7 +68,7 @@
 
 								<md-input-container class="md-block" ng-show="tipoDeFecha == 'Exacta'">
 									<label>Fecha</label>
-									<md-datepicker ng-model="unidadDocumental.identificacion.fecha.exacta"></md-datepicker>
+									<md-datepicker md-min-date="minDate" md-max-date="maxDate" md-date-filter="dateFilter" ng-model="unidadDocumental.identificacion.fecha.exacta"></md-datepicker>
 								</md-input-container>
 
 								<div layout="row" layout-sm="column" layout-xs="column" layout-wrap ng-show="tipoDeFecha == 'Periodo'">

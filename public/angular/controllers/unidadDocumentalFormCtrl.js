@@ -57,6 +57,8 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             periodo: {}
         }
     };
+    $scope.minDate = new Date(1800, 0); // Cota inferior para el selector de fechas (md-datepicker)
+    $scope.maxDate = new Date(); // Cota superior para el selector de fechas (md-datepicker). Por default el día de hoy
     $scope.edit = false; // Bandera para indicar si se está editando o creando un nuevo registro
     $scope.isGoogleDefined = google ? true : false; // Determina si la variable google fue inicializada mediante llamada <script> en index
 
