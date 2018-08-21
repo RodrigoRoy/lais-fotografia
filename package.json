@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "postinstall": "bower install --allow-root && node ./scripts/install.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "update": "git checkout -- . && git pull && npm install"
   },
   "repository": {
     "type": "git",
