@@ -3,8 +3,8 @@
 const prompt = require('prompt'),
 	fs = require('fs-extra');
 
-fs.access('config.js' + decodeURI(req.path), (fs.constants || fs).F_OK, function(err){
-	if(err)
+fs.access('./config.js', (fs.constants || fs).F_OK, function(err){
+	if(!err)
 		return console.log('No se reescribió el archivo de configuración porque ya existe');
 	console.log('\n\nSe requieren algunos datos adicionales para completar la instalación:');
 	let schema = {
