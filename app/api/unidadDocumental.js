@@ -151,7 +151,7 @@ router.route('/query')
 // Devuelve una lista de resultados que coincidan con el query de búsqueda
 router.route('/search')
     .get(function(req, res){
-        if(!req.query.q)
+        if(!req.query.q || req.query.q === '')
             return res.status(400).send({success: false, message: 'No hay parametro de búsqueda (?q=)'});
         let skipValue = req.query.page ? (parseInt(req.query.page) - 1) * parseInt(req.query.limit) : 0,
             limitValue = req.query.limit ? parseInt(req.query.limit) : 10,
@@ -159,7 +159,7 @@ router.route('/search')
             sortOrder = req.query.order ? req.query.order : 'asc',
             sortObject = sortField === 'score' ? {score: {$meta: "textScore"}} : {[sortField]: sortOrder};
         UnidadDocumental.find({$text: {$search: req.query.q}}, {score: {$meta: "textScore"}})
-        .select({updatedAt: 1, createdAt: 1, adicional: 1, identificacion: 1})
+        .select({updatedAt: 1, createdAt: 1, adicional: 1, identificacion: 1, 'estructuraContenido.descripcion': 1})
         .select({score: {$meta: "textScore"}})
         .skip(skipValue)
         .limit(limitValue)

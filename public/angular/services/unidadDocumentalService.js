@@ -59,6 +59,12 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 		// Y como segundo parámetro el nombre completo de la propiedad donde se desea buscar, por ejemplo: 'identificacion.referenciaProcedencia'
 		query: function(query, propiedad){
 			return $http.get('/api/unidadDocumental/query?q=' + query + '&from=' + propiedad);
+		},
+
+		// Realiza búsquedas en la base de datos mediante textSearch
+		// Recibe la cadena de texto a buscar (query), el límite de resultados, salto/skip de resultados (page), el campo a usar para ordernar y el tipo de orden (asc/desc)
+		search: function(query, limit, page, sort, order){
+			return $http.get('/api/unidadDocumental/search?q=' + query + '&limit=' + limit + '&page=' + page + '&sort=' + sort + '&order=' + order);
 		}
 	}
 }]);

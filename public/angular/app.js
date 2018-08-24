@@ -22,6 +22,7 @@ angular.module('laisFotoApp', [
 	'UnidadesDocumentalesCtrl',
 	'ConjuntoDocumentalFormCtrl',
 	'UnidadDocumentalFormCtrl',
+	'SearchCtrl',
 	'UserListCtrl',
 	'UserFormCtrl',
 	'UserProfileCtrl',

@@ -1,0 +1,21 @@
+<div layout="column" layout-padding layout-margin layout-align="center">
+	<!-- <div flex-xs="100" flex="80">
+		<p>Hola mundo {{foo}}</p>
+	</div> -->
+
+	<div flex-xs="100" flex="80">
+		<md-list> <!-- flex -->
+			<md-list-item class="md-3-line" ng-repeat="unidad in unidadesDocumentales" ng-click="showUnidadDocumental(unidad._id, $event)">
+				<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
+				<div class="md-list-item-text"> <!-- layout="column" -->
+					<h3>{{unidad.identificacion.codigoReferencia}} <small>{{unidad._id}}</small></h3>
+					<h4>{{unidad.identificacion.titulo.inscrito}}</h4>
+					<p>{{unidad.estructuraContenido.descripcion}}</p>
+				</div>
+			</md-list-item>
+		</md-list>
+	</div>
+</div>
+
+<!-- <br>
+<pre>{{unidadesDocumentales | json}}</pre> -->

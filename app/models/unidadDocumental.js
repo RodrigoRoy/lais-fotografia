@@ -121,6 +121,25 @@ var UnidadDocumentalSchema = new Schema({
 	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}
 });
 
+// Indexar todos los campos de string para habilitar búsqueda de texto. Indicar relevancia o pesos de atributos individuales:
+UnidadDocumentalSchema.index({'$**': 'text'}, {name: 'textSearch', weights: {
+	'identificacion.titulo.archivoProcedencia': 8,
+	'identificacion.titulo.inscrito': 8,
+	'identificacion.titulo.otroObjeto': 8,
+	'identificacion.autores.nombre': 5,
+	'estructuraContenido.lugarDescrito.formattedAddress': 5,
+	'estructuraContenido.descripcion': 10,
+	'publicaciones.publicacion': 4,
+	'publicaciones.exposicion': 4,
+	'notas.notas': 3,
+	// No es posible usar valores menores a 1.0:
+	// 'identificacion.autores.tipo': 0.5,
+	// 'estructuraContenido.lugarDescrito.placeId': 0,
+	// 'caracteristicasFisicas.soportePrimario.dimension.unidad': 0.1,
+	// 'caracteristicasFisicas.soporteSecundario.dimension.unidad': 0.1,
+	// 'adicional.imagen': 0
+}});
+
 // exportar el modelo "UnidadDocumental"
 // module.exports permite pasar el modelo a otros archivos cuando es llamado
 module.exports = mongoose.model('UnidadDocumental', UnidadDocumentalSchema);

@@ -38,6 +38,11 @@ angular.module('viewsRoutes', []).config(['$routeProvider', '$locationProvider',
 			controller: 'UnidadDocumentalFormController'
 		})
 
+		.when('/search', {
+			templateUrl: 'angular/views/search.html',
+			controller: 'SearchController'
+		})
+
 		.when('/user/list', {
 			templateUrl: 'angular/views/userList.html',
 			controller: 'UserListController'
