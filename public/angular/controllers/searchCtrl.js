@@ -20,12 +20,6 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
         });
     };
 
-    // Prueba al dar clic a un elemento de la lista de resultados
-    // Recibe el id de la unidad documental y el evento o elemento del DOM (para efectos de animación, si es necesario)
-    $scope.showUnidadDocumental = function(unidadId, event){
-        console.log(`id: ${unidadId}`);
-    }
-
     // INICIALIZACIÓN
     $scope.getUnidadesDocumentales();
 });

@@ -1,6 +1,6 @@
 // Controlador principal que tiene alcanze en todo la página (incluyendo navbar y footer)
 
-angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, Auth, ConjuntoDocumental, LocalStorage){
+angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $location, $route, $rootScope, $mdSidenav, $mdToast, $mdDialog, Auth, ConjuntoDocumental, LocalStorage){
 	$scope.currentNavItem = 'inicio';
 	$scope.nombreColeccion; // Nombre de la colección
 	$scope.dynamicTheme = LocalStorage.get('theme') || 'dark'; // tema de color (definido en app.js)
@@ -87,6 +87,115 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 				.hideDelay(5000)
 		);
 	};
+
+	// Crea una nueva instancia de mdDialog para mostrar la información de una unidad documental
+    $scope.showTabDialog = function(event, id){
+        $mdDialog.show({
+            controller: DialogController,
+            templateUrl: 'angular/views/unidadDocumentalDialog.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: true,
+            scope: $scope,
+            preserveScope: true,
+            locals: {
+                unidad: id
+            }
+        })
+        .then(function(res){ // res es cualquier objeto devuelto de la llamada hide()
+            // Success
+        }, function(res){ // res es cualquier objeto devuelto de la llamada cancel()
+            // Fail
+        });
+    };
+
+    // Controlador interno para la creación de un mdDialog
+    // Incluye servicios como $scope y $mdDialog.
+    // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidad')
+    function DialogController($scope, $mdDialog, $location, $mdToast, unidad, UnidadDocumental, File){
+        $scope.unidad = {};
+
+        // Obtiene la información de la unidad documental mediante el id dado como parámetro en los services del controlador (unidad)
+        $scope.getUnidadDocumental = function(){
+            UnidadDocumental.get(unidad).
+            then(function(res){
+                $scope.unidad = res.data;
+            }, function(res){
+                console.error('Error de conexión con la base de datos', err);
+            });
+        };
+
+        // Envia a la página de edición para la unidad documental actual (mediante su Id)
+        $scope.editarUnidad = function(){
+            $mdDialog.hide();
+            $location.path('/unidad/' + $scope.unidad._id + '/edit');
+        };
+
+        // Elimina la unidad documental
+        $scope.borrarUnidad = function(){
+            UnidadDocumental.get(unidad). // Obtener la información (especialmente 'adicional.imagen')
+            then(function(res){
+                var unidadInfo = res.data;
+                UnidadDocumental.delete(unidad). // Borrar el registro de la base de datos
+                then(function(res){
+                    if(res.data.success){
+                        if(unidadInfo.adicional.imagen){ // Si la unidad tiene una imagen, borrarla
+                            var filePath = '/imagenes/' + unidadInfo.adicional.imagen; // la ubicacion por default es '/imagenes'
+                            File.delete(filePath).
+                            then(function(response){
+                                $scope.showToast(res.data.message);
+                                $mdDialog.hide();
+                                $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                            }, function(response){
+                                console.error('Error al borrar la imagen de la unidad documental', response);
+                                $scope.showToast(res.data.message);
+                                $mdDialog.hide();
+                                $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                            });
+                        }
+                        else{
+                            $scope.showToast(res.data.message);
+                            $mdDialog.hide();
+                            $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+                        }
+                    }
+                    else{
+                        console.error('Error al borrar la unidad documental', res);
+                        $scope.showToast(res.data.message);
+                    }
+                }, function(res){
+                    console.error('Error de conexión a la base de datos', res);
+                    $scope.showToast('Error de conexión');
+                });
+            }, function(res){
+                console.error('Error de conexión a la base de datos', res);
+                $scope.showToast('Error de conexión');
+            });
+
+        };
+
+        // Esconde el dialogo existente y acepta el promise devuelto desde $mdDialog.show()
+        $scope.hide = function(res){
+            $mdDialog.hide(res);
+        };
+        // Esconde el dialogo existente y rechaza el promise devuelto desde $mdDialog.show()
+        $scope.cancel = function(res){
+            $mdDialog.cancel(res);
+        };
+
+        // Muestra un mensaje simple en pantalla. Su intención es dar aviso de ciertas alertas
+        $scope.showToast = function(textMessage){
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(textMessage)
+                    .position('bottom left')
+                    .hideDelay(5000)
+            );
+        };
+
+        // INICIALIZACIÓN
+        $scope.getUnidadDocumental();
+    }
 
 	// INICIALIZACION
 	$scope.getConjuntosDocumentales();
