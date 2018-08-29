@@ -9,9 +9,29 @@
 				<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
 				<div class="md-list-item-text"> <!-- layout="column" -->
 					<h3>{{unidad.identificacion.codigoReferencia}} <small>{{unidad._id}}</small></h3>
-					<h4>{{unidad.identificacion.titulo.inscrito}}</h4>
-					<p>{{unidad.estructuraContenido.descripcion}}</p>
+					
+					<h4>
+						<span ng-if="unidad.identificacion.titulo.archivoProcedencia">{{unidad.identificacion.titulo.archivoProcedencia}}</span> 
+						<span ng-if="unidad.identificacion.titulo.inscrito">{{unidad.identificacion.titulo.inscrito}}</span> 
+						<span ng-if="unidad.identificacion.titulo.otroObjeto">{{unidad.identificacion.titulo.otroObjeto}}</span> 
+					</h4>
+					
+					<p>
+						<span ng-if="unidad.identificacion.fecha.exacta">Fecha: {{unidad.identificacion.fecha.exacta | date:"dd '/' MM '/' yyyy"}}<br></span>
+						<span ng-if="unidad.identificacion.fecha.periodo">Periodo: {{unidad.identificacion.fecha.periodo.inicio | date:"yyyy"}} - {{unidad.identificacion.fecha.periodo.fin | date:"yyyy"}}<br></span>
+						<span ng-if="unidad.identificacion.fecha.aproximada">Fecha: ca. {{unidad.identificacion.fecha.aproximada | date:"yyyy"}}<br></span>
+
+						<span ng-if="unidad.identificacion.autores" ng-repeat="autor in unidad.identificacion.autores">{{autor.tipo}}: {{autor.nombre}}<br></span>
+						<!-- <md-chips ng-if="unidad.identificacion.autores">
+							<md-chip ng-repeat="autor in unidad.identificacion.autores">{{autor.tipo}}: {{autor.nombre}}</md-chip>
+						</md-chips> -->
+
+						<span ng-if="unidad.identificacion.referenciaProcedencia">Referencia de procedencia: {{unidad.identificacion.referenciaProcedencia}}<br></span>
+
+						<span ng-if="unidad.estructuraContenido.descripcion">{{unidad.estructuraContenido.descripcion}}</span>
+					</p>
 				</div>
+				<md-divider ng-if="!$last"></md-divider>
 			</md-list-item>
 		</md-list>
 	</div>
