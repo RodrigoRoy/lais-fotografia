@@ -5,6 +5,7 @@ angular.module('laisFotoApp', [
 	'ngMaterial', // Angular Material (front end)
 	'angularTrix', // WYSIWYG text editor
 	'ngMap', // AngularJS Google Maps
+	'infinite-scroll', // Comportamiento de scroll infinito
 	
 	'viewsRoutes', // Rutas y controladores (appRoutes.js)
 
