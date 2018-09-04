@@ -1,7 +1,7 @@
 <div layout="row" layout-align="center">
 	<div flex-xs="90" flex-sm="70" flex="60">
 		<h2 class="md-display-2">Iniciar sesión</h2>
-		<form name="loginForm" novalidate>
+		<form name="loginForm" novalidate ng-submit="iniciarSesion()">
 			<div>
 				<md-input-container class="md-block">
 					<label>Usuario ó correo</label>
@@ -19,7 +19,7 @@
 					</div>
 				</md-input-container>
 
-				<md-button class="md-raised" ng-disabled="loginForm.$invalid" ng-click="iniciarSesion()" ng-show="!processingUser">Iniciar sesión</md-button>
+				<md-button type="submit" class="md-raised" ng-disabled="loginForm.$invalid" ng-click="iniciarSesion()" ng-show="!processingUser">Iniciar sesión</md-button>
 				<md-progress-circular md-mode="indeterminate" ng-show="processingUser"></md-progress-circular>
 			</div>
 		</form>

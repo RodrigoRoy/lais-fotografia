@@ -31,13 +31,15 @@
 
 				<h2 flex md-truncate><a ng-href="/">{{nombreColeccion}}</a></h2>
 
-				<!-- <md-input-container md-no-float class="md-block">
-					<label>Buscar</label>
-					<input ng-model="query" type="text">
-				</md-input-container>
-				<md-button class="md-icon-button" aria-label="Search">
+				<div flex-sm="40" flex="25" hide-xs>
+					<md-input-container class="md-block" md-no-float>
+						<input placeholder="Buscar" ng-model="query" type="text" ng-keyup="$event.keyCode == 13 && search()">
+					</md-input-container>
+				</div>
+				<md-button class="md-icon-button" aria-label="Search" ng-click="search()">
 					<i class="material-icons">search</i>
-				</md-button> -->
+				</md-button>
+
 				<md-menu>
 					<md-button aria-label="Open submenu" class="md-icon-button" ng-click="$mdMenu.open()">
 						<i class="material-icons">more_vert</i>

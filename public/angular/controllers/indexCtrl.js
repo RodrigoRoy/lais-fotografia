@@ -37,6 +37,11 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 		}
 	};
 
+    // Envia a la página de búsqueda con el texto escrito en el input correspondiente
+    $scope.search = function(){
+        $location.url(`/search?q=${$scope.query}`);
+    };
+
 	// Envia al usuario a su página personal
 	$scope.paginaPersonal = function(){
 		if($scope.user)

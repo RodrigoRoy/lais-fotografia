@@ -1,7 +1,21 @@
 <div layout="column" layout-padding layout-margin layout-align="center" infinite-scroll="loadMoreResults()" infinite-scroll-disabled="loadingResults || noMoreResults" infinite-scroll-distance="0">
-	<!-- <div flex-xs="100" flex="80">
-		<p>Hola mundo {{foo}}</p>
-	</div> -->
+	<div flex-xs="100" flex="80">
+		<div layout="row" layout-align="space-between center">
+			<div>
+				<p>Resultados de la búsqueda <em>{{query}}</em></p>
+			</div>
+			<div>
+				<md-input-container>
+					<label>Ordenar por</label>
+					<md-select ng-model="sortingMode" ng-change="setSortingMode()">
+						<md-option value="score asc">Relevancia</md-option>
+						<md-option value="referenciaProcedencia asc">Procedencia: A-Z</md-option>
+						<md-option value="referenciaProcedencia desc">Procedencia: Z-A</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+		</div>
+	</div>
 
 	<div flex-xs="100" flex="80">
 		<md-list> <!-- flex -->
