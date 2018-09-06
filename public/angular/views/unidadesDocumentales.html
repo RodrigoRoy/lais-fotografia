@@ -1,10 +1,10 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
-			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)" style="background: #b7b7b7">
-				<picture style="height: 100%"> <!-- Para que "layout-fill" en "img" funcione, requiere que sus contenedores tengan definido "height" -->
+			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)" style="background: rgba(183, 183, 183, 0); cursor: pointer;">
+				<picture style="height: 100%"> <!--Para que "layout-fill" en "img" funcione, requiere que sus contenedores tengan definido "height" -->
 					<source media="(min-width: 1280px)" ng-srcset="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_sm.jpg">
-					<img ng-if="unidad.adicional.imagen" ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_xs.jpg" layout-fill>
+					<img ng-if="unidad.adicional.imagen" ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_xs.jpg" style="object-fit: contain; height: 100%; width: 100%">
 				</picture>
 				<md-grid-tile-footer style="background: rgba(0,0,0,0.5);">
 					<div style="position: absolute; left: 0; right: 1em; top: 1em; bottom: 0; overflow: auto;">
