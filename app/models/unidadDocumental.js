@@ -118,8 +118,30 @@ var UnidadDocumentalSchema = new Schema({
 	}
 }, { // Opciones:
 	collection: 'unidadDocumental',
-	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}
+	timestamps: true, //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}
+	// toObject: {virtuals: true},
+	// toJSON: {virtuals: true}
 });
+
+// Propiedades virtuales (no se guardan, no funcionan con queries, pero funcionan con get)
+// UnidadDocumentalSchema.virtual('identificacion.titulo.unica').get(function(){
+// 	if(this.identificacion.titulo && this.identificacion.titulo.archivoProcedencia)
+// 		return this.identificacion.titulo.archivoProcedencia;
+// 	else if(this.identificacion.titulo && this.identificacion.titulo.inscrito)
+// 		return this.identificacion.titulo.inscrito;
+// 	else if(this.identificacion.titulo && this.identificacion.titulo.otroObjeto)
+// 		return this.identificacion.titulo.otroObjeto;
+// 	return undefined;
+// });
+// UnidadDocumentalSchema.virtual('identificacion.fecha.unica').get(function(){
+// 	if(this.identificacion.fecha && this.identificacion.fecha.exacta)
+// 		return this.identificacion.fecha.exacta;
+// 	else if(this.identificacion.fecha && this.identificacion.fecha.periodo)
+// 		return this.identificacion.fecha.periodo.inicio ? this.identificacion.fecha.periodo.inicio : undefined;
+// 	else if(this.identificacion.fecha && this.identificacion.fecha.aproximada)
+// 		return this.identificacion.fecha.aproximada;
+// 	return undefined;
+// });
 
 // Indexar todos los campos de string para habilitar búsqueda de texto. Indicar relevancia o pesos de atributos individuales:
 UnidadDocumentalSchema.index({'$**': 'text'}, {name: 'textSearch', weights: {

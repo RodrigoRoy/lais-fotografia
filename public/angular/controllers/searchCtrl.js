@@ -9,7 +9,9 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
     $scope.order = $routeParams.order ? $routeParams.order : 'asc'; // order de ordenación de los resultados
     $scope.loadingResults = false; // Indica si se están obteniendo resultados desde la base de datos
     $scope.noMoreResults = false; // Indica si ya no hay más resultados de la búsqueda y evita llamadas innecesarias a la base de datos
-    $scope.sortingMode = 'score asc';
+    $scope.showMoreOptions = false; // Mostrar opciones de "búsqueda avanzada"
+    $scope.searchForm = {}; // Objeto para guardar las opciones de la "búsqueda avanzada"
+    // $scope.sortingMode = 'score asc';
 
     // Petición a la base de datos para obtener resultados de la búsqueda
     // Los parámetros de búsqueda se obtienen directamente de la URL, aunque el único valor requerido es el de query (?q=)
@@ -43,29 +45,49 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
         });
     };
 
+    // Realiza búsqueda incluyendo texto literal o texto a excluir en las búsquedas (similar a "búsqueda avanzada")
+    $scope.search = function(){
+        let newQuery = "";
+        if($scope.searchForm.include)
+            newQuery += $scope.searchForm.include;
+        if($scope.searchForm.exact)
+            newQuery += `"${$scope.searchForm.exact}"`;
+        if($scope.searchForm.exclude)
+            newQuery += `-${$scope.searchForm.exclude}`;
+        $location.url(`/search?q=${newQuery}`);
+    };
+
     // Determina el tipo de ordenamiento para mostrar los resultados de la búsqueda
     // Recarga la página indicando los parámetros adecuados desde URL
-    $scope.setSortingMode = function(){
-        switch($scope.sortingMode){
-            case 'score asc':
-                $scope.sort = 'score';
-                $scope.order = 'asc';
-                break;
-            case 'referenciaProcedencia asc':
-                $scope.sort = 'referenciaProcedencia';
-                $scope.order = 'asc';
-                break;
-            case 'referenciaProcedencia desc':
-                $scope.sort = 'referenciaProcedencia';
-                $scope.order = 'desc';
-                break;
-            default:
-                $scope.sort = 'score';
-                $scope.order = 'asc';
-                break;
-        }
-        $location.url(`/search?q=${$scope.query}&sort=${$scope.sort}&order=${$scope.order}`);
-    };
+    // $scope.setSortingMode = function(){
+    //     switch($scope.sortingMode){
+    //         case 'score asc':
+    //             $scope.sort = 'score';
+    //             $scope.order = 'asc';
+    //             break;
+    //         case 'titulo asc':
+    //             $scope.sort = 'identificacion.titulo.unica';
+    //             $scope.order = 'asc';
+    //             break;
+    //         case 'titulo desc':
+    //             $scope.sort = 'identificacion.titulo.unica';
+    //             $scope.order = 'desc';
+    //             break;
+    //         case 'fecha asc':
+    //             $scope.sort = 'identificacion.fecha.unica';
+    //             $scope.order = 'asc';
+    //             break;
+    //         case 'fecha desc':
+    //             $scope.sort = 'identificacion.fecha.unica';
+    //             $scope.order = 'desc';
+    //             break;
+    //         default:
+    //             $scope.sort = 'score';
+    //             $scope.order = 'asc';
+    //             break;
+    //     }
+    //     $location.url(`/search?q=${$scope.query}&sort=${$scope.sort}&order=${$scope.order}`);
+    // };
 
     // INICIALIZACIÓN
     $scope.getUnidadesDocumentales();

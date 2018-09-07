@@ -1,29 +1,58 @@
 <div layout="column" layout-padding layout-margin layout-align="center" infinite-scroll="loadMoreResults()" infinite-scroll-disabled="loadingResults || noMoreResults" infinite-scroll-distance="0">
+	<div flex="100" ng-show="showMoreOptions">
+		<h4 class="md-title">Buscar material que contenga...</h4>
+		<form name="searchForm" novalidate ng-submit="search()">
+			<md-input-container class="md-block">
+				<label>todas estas las palabras</label>
+				<input ng-model="searchForm.include">
+			</md-input-container>
+
+			<md-input-container class="md-block">
+				<label>esta palabra o frase exactas</label>
+				<input ng-model="searchForm.exact">
+			</md-input-container>
+
+			<md-input-container class="md-block">
+				<label>ninguna de estas palabras</label>
+				<input ng-model="searchForm.exclude">
+			</md-input-container>
+
+			<md-button type="submit" class="md-raised">Buscar</md-button>
+		</form>
+	</div>
+
 	<div flex-xs="100" flex="80">
-		<div layout="row" layout-align="space-between center">
+		<div layout="row" layout-align="space-between center" layout-wrap>
 			<div>
-				<p>Resultados de la búsqueda <em>{{query}}</em></p>
+				<p><h3 class="md-headline">Resultados de la búsqueda: <em>{{query}}</em></h3></p>
 			</div>
-			<div>
+			<div ng-show="!showMoreOptions">
+				<md-button class="md-raised" ng-click="showMoreOptions = true">Opciones de búsqueda</md-button>
+			</div>
+			<!-- <div>
 				<md-input-container>
 					<label>Ordenar por</label>
 					<md-select ng-model="sortingMode" ng-change="setSortingMode()">
 						<md-option value="score asc">Relevancia</md-option>
-						<md-option value="referenciaProcedencia asc">Procedencia: A-Z</md-option>
-						<md-option value="referenciaProcedencia desc">Procedencia: Z-A</md-option>
+						<md-option value="titulo asc">Título: A-Z</md-option>
+						<md-option value="titulo desc">Título: Z-A</md-option>
+						<md-option value="fecha asc">Fecha: más reciente</md-option>
+						<md-option value="fecha desc">Fecha: menos reciente</md-option>
 					</md-select>
 				</md-input-container>
-			</div>
+			</div> -->
 		</div>
-	</div>
 
-	<div flex-xs="100" flex="80">
+		<div ng-if="unidadesDocumentales.length == 0">
+			No hay resultados
+		</div>
+
 		<md-list> <!-- flex -->
 			<md-list-item class="md-3-line" ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)">
 				<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
-				<div class="md-list-item-text"> <!-- layout="column" -->
+				<div class="md-list-item-text" style="padding: 1em 0;">
 					<h3>
-						{{unidad.identificacion.codigoReferencia}} <small>{{unidad._id}}</small>
+						{{unidad.identificacion.codigoReferencia}}
 					</h3>
 					
 					<h4>
