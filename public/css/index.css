@@ -43,3 +43,19 @@
 ng-map > div{
 	height: 90% !important;
 }
+
+/*Breadcrumbs: menú navegación horizontal al mostrar conjuntos y unidades*/
+.crumbs ol {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.crumb {
+    display: inline-block;
+}
+.crumb a::after {
+    display: inline-block;
+    content: '>';
+    font-weight: bold;
+    padding: 0 0 0 2em;
+}

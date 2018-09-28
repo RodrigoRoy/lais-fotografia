@@ -114,6 +114,22 @@ router.route('/name')
         return res.send({name: nombre});
     });
 
+// Convierte el sufijo/numeración de un conjunto a su _id
+// Requiere el parámetro ?c para indicar sufijo. Por ejemplo: ?c=3-2-1
+router.route('/convertId')
+    .get(function(req, res){
+        if(!req.query.c)
+            // return res.status(400).send({success: false, message: 'No se especifica la numeración del conjunto documental (?c=)'});
+            return res.send(); // si no hay parámetro, devolver texto vacio
+        let regex = new RegExp(`^${prefijo}-${req.query.c}$`);
+        ConjuntoDocumental.find({'identificacion.codigoReferencia': regex}).
+        exec(function(err, conjunto){
+            if(err)
+                return res.send(err);
+            return res.send(conjunto[0]._id); // devolver únicamente string _id
+        });
+    });
+
 // Auxiliar para filtrar una lista de conjuntos y devolver solamente sus subconjuntos.
 // El primer parámetro es la lista de conjuntos y el segundo parámetro es el prefijo con el que se desea filtrar
 // Devuelve la lista ordenada de conjuntos con el mismo prefijo dado como parámetro, en caso de no haber, devuelve una lista vacia
@@ -478,6 +494,54 @@ router.route('/:conjunto_id/suffix')
             let regex = new RegExp('^' + prefijo + '-(.*)$');
             let result = regex.exec(conjunto.identificacion.codigoReferencia);
             return res.send({sufijo: result[1]});
+        });
+    });
+
+// Devuelve un arreglo ordenado de conjuntos, que representan el orden en que están contenidos los conjuntos
+// Ejemplo de respuesta:
+// [{"_id": "5a62303f03e7563f969821c6",
+//     "identificacion": ...,
+//     "numeracion": "3"
+// },{
+//     "_id": "5a68c572e3bc2a0fac0a1da0",
+//     "identificacion": ...,
+//     "numeracion": "3-2"
+// },{
+//     "_id": "5a81b9f03e432e0ef74f1421",
+//     "identificacion": ...,
+//     "numeracion": "3-2-1"}]
+router.route('/:conjunto_id/breadcrumb')
+    .get(function(req, res){
+        ConjuntoDocumental.findById(req.params.conjunto_id)
+        .select({'identificacion.codigoReferencia': 1})
+        .exec(function(err, conjuntoById){
+            if(err)
+                return res.send(err);
+            let regex = new RegExp(`^${prefijo}-(.*)$`);
+            let result = regex.exec(conjuntoById.identificacion.codigoReferencia); // obtener numeración, i.e. 3-2-1
+            let numbers = result[1].split('-'); // [3, 2, 1]
+            let conjuntosNumeracion = []; // numeraciones consecutivas
+            for(let i in numbers){
+                conjuntosNumeracion.push(conjuntosNumeracion.length === 0 ? `${numbers[i]}` : `${conjuntosNumeracion[conjuntosNumeracion.length-1]}-${numbers[i]}`);
+            } // [3, 3-2, 3-2-1]
+            let conjuntosId = []; // versiones con codigo de referencia completo (agregar prefijo)
+            conjuntosNumeracion.forEach(function(numeracion){
+                conjuntosId.push(`${prefijo}-${numeracion}`);
+            }); // [MXIM-3, MXIM-3-2, MXIM-3-2-1] <-- para buscar en base de datos
+            ConjuntoDocumental.find({'identificacion.codigoReferencia': {$in: conjuntosId}}).
+            select({'identificacion.codigoReferencia': 1, 'identificacion.titulo': 1}).
+            lean(). // para agregar propiedades adicionales, i.e. numeracion
+            exec(function(err, conjuntos){
+                if(err)
+                    return res.send(err);
+                conjuntos.forEach(function(conjunto){
+                    conjunto.numeracion = regex.exec(conjunto.identificacion.codigoReferencia)[1];
+                }); // agregar propiedad numeración, i.e. 3-2-1
+                conjuntos.sort(function(a, b){ // ordenar los resultados de menor a mayor contención
+                    return a.numeracion.length - b.numeracion.length || a.localeCompare(b);
+                });
+                return res.send(conjuntos);
+            });
         });
     });
 

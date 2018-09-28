@@ -66,6 +66,16 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 		// En caso de que el parámetro sea vacío, se considera como la cadena vacia, haciendo referencia al conjunto documental "raíz"
 		next: function(conjuntoDocumentalPrefijo){
 			return $http.get('/api/conjuntoDocumental/next?prefix=' + (conjuntoDocumentalPrefijo ? conjuntoDocumentalPrefijo : ''));
+		},
+
+		// Dado el sufijo o numeración de un conjunto como parámetro, se devuelve el id del conjunto
+		convertId: function(conjuntoNum){
+			return $http.get('/api/conjuntoDocumental/convertId?c=' + conjuntoNum);
+		},
+
+		// Obtiene una lista ordenada con los conjuntos contenidos desde el conjunto actual hasta el conjunto principal de mayor alcance
+		breadcrumb: function(conjuntoDocumentalId){
+			return $http.get('/api/conjuntoDocumental/' + conjuntoDocumentalId + '/breadcrumb');
 		}
 	}
 }]);

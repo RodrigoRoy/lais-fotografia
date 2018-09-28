@@ -65,6 +65,11 @@ angular.module('UnidadDocumentalService', []).factory('UnidadDocumental', ['$htt
 		// Recibe la cadena de texto a buscar (query), el límite de resultados, salto/skip de resultados (page), el campo a usar para ordernar y el tipo de orden (asc/desc)
 		search: function(query, limit, page, sort, order){
 			return $http.get('/api/unidadDocumental/search?q=' + query + '&limit=' + limit + '&page=' + page + '&sort=' + sort + '&order=' + order);
-		}
+		},
+
+		// Obtiene una lista ordenada con los conjuntos contenidos desde el conjunto actual hasta el conjunto principal de mayor alcance
+		// breadcrumb: function(unidadDocumentalId){
+		// 	return $http.get('/api/unidadDocumental/' + unidadDocumentalId + '/breadcrumb');
+		// }
 	}
 }]);

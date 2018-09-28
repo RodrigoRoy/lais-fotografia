@@ -1,5 +1,14 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
+
+		<nav class="crumbs">
+			<ol>
+				<li class="crumb"><md-button ng-href="/conjunto?c=">{{nombreColeccion}}</md-button></li>
+				<li ng-repeat="conjunto in breadcrumb" class="crumb" ng-if="!$last"><md-button ng-href="/conjunto?c={{conjunto.numeracion}}" target="_self">{{conjunto.identificacion.titulo}}</md-button></li>
+				<li class="crumb"><md-button ng-disabled="true">{{breadcrumb[breadcrumb.length-1].identificacion.titulo}}</md-button></li>
+			</ol>
+		</nav>
+
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
 			<md-grid-tile ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)" style="background: rgba(183, 183, 183, 0); cursor: pointer;">
 				<picture style="height: 100%"> <!--Para que "layout-fill" en "img" funcione, requiere que sus contenedores tengan definido "height" -->

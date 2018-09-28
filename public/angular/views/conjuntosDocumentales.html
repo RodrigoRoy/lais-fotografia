@@ -1,5 +1,15 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
+		
+		<nav class="crumbs" ng-if="breadcrumb.length != 0">
+			<ol>
+				<li class="crumb"><md-button ng-href="/conjunto?c=">{{nombreColeccion}}</md-button></li>
+				<li ng-repeat="conjunto in breadcrumb" class="crumb" ng-if="!$last"><md-button ng-href="/conjunto?c={{conjunto.numeracion}}" target="_self">{{conjunto.identificacion.titulo}}</md-button></li>
+				<li class="crumb"><md-button ng-disabled="true">{{breadcrumb[breadcrumb.length-1].identificacion.titulo}}</md-button></li>
+			</ol>
+		</nav>
+
+
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
 			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showTabDialog($event, conjunto._id)" style="background: rgba(183, 183, 183, 0); cursor: pointer;">
 				<picture style="height: 100%">
@@ -14,6 +24,7 @@
 						<div flex ng-if="conjunto.identificacion.fecha"><h3 md-truncate>{{conjunto.identificacion.fecha.inicio | date:'yyyy'}} <span ng-if="conjunto.identificacion.fecha.fin">- {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span></h3></div>
 					</div>
 				</md-grid-tile-footer>
+				<i class="material-icons" style="position: absolute; top: 0; right: 0; font-size: 2.5em;">collections</i>
 			</md-grid-tile>
 		</md-grid-list>
 
@@ -39,7 +50,7 @@
 					</md-button>
 				</div>
 			</md-toolbar>
-			<md-dialog-content style="max-width:800px;max-height:810px;">
+			<md-dialog-content>
 				<md-tabs md-dynamic-height md-border-bottom md-swipe-content class="md-accent md-hue-3">
 					<md-tab label="Presentación" ng-if="conjunto.adicional.presentacion">
 						<md-content class="md-padding">
