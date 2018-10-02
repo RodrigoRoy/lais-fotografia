@@ -41,7 +41,7 @@ var ConjuntoDocumentalSchema = new Schema({
 	contexto: {
 		historiaInstitucionalBiografica: {type: String, trim: true},
 		historiaArchivoProcedencia: {type: String, trim: true},
-		formaIngreso: [{type: String, trim: true}] // enum: [Reproducciones, Préstamos, Donaciones, Compra, Intercambio, etc]
+		formaIngreso: [{type: String, trim: true}] // enum: [Producción propia, Reproducciones, Préstamos, Donaciones, Compra, Intercambio, etc]
 	},
 	estructuraContenido: {
 		alcanceContenido: {type: String, trim: true},
