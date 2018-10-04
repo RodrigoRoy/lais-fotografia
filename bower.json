@@ -11,7 +11,7 @@
     "social",
     "science"
   ],
-  "license": "MIT",
+  "license": "GNU GPLv3",
   "homepage": "https://github.com/RodrigoRoy/lais-fotografia",
   "private": true,
   "ignore": [
