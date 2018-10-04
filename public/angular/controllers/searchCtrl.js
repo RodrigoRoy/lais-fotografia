@@ -51,10 +51,10 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
         if($scope.searchForm.include)
             newQuery += $scope.searchForm.include;
         if($scope.searchForm.exact)
-            newQuery += `"${$scope.searchForm.exact}"`;
+            newQuery += ` "${$scope.searchForm.exact}"`;
         if($scope.searchForm.exclude)
-            newQuery += `-${$scope.searchForm.exclude}`;
-        $location.url(`/search?q=${newQuery}`);
+            newQuery += ` -${$scope.searchForm.exclude}`;
+        $location.url(`/search?q=${newQuery.trim()}`);
     };
 
     // Determina el tipo de ordenamiento para mostrar los resultados de la búsqueda
