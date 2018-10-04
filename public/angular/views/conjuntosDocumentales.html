@@ -1,6 +1,6 @@
 <div layout="row" layout-align="center start">
 	<div flex="90">
-		
+
 		<nav class="crumbs" ng-if="breadcrumb.length != 0">
 			<ol>
 				<li class="crumb"><md-button ng-href="/conjunto?c=">{{nombreColeccion}}</md-button></li>
@@ -77,8 +77,8 @@
 										<tr ng-if="conjunto.identificacion.fecha && conjunto.identificacion.fecha.inicio">
 											<td>Fecha</td>
 											<td>
-												{{conjunto.identificacion.fecha.inicio | date:'yyyy'}} 
-												<span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span> 
+												{{conjunto.identificacion.fecha.inicio | date:'yyyy'}}
+												<span ng-if="conjunto.identificacion.fecha.fin">&ndash; {{conjunto.identificacion.fecha.fin | date:'yyyy'}}</span>
 												<span ng-if="conjunto.identificacion.fecha.aproximada"><small>(incluye fechas aproximadas)</small></span>
 											</td>
 										</tr>
@@ -109,11 +109,11 @@
 											<td>Soporte</td>
 											<td>{{conjunto.identificacion.soporte}}</td>
 										</tr>
-										<tr ng-if="conjunto.identificacion.lugar">
+										<tr ng-if="conjunto.identificacion.lugar && conjunto.identificacion.lugar.length > 0">
 											<td>Lugar</td>
 											<td>
 												<ng-map center="19.3760674,-99.1871402" zoom="15" zoom-to-include-markers="true">
-													<marker ng-repeat="place in conjunto.identificacion.lugar" position="{{[place.location.lat, place.location.lng]}}"></marker> 
+													<marker ng-repeat="place in conjunto.identificacion.lugar" position="{{[place.location.lat, place.location.lng]}}"></marker>
 												</ng-map>
 											</td>
 										</tr>

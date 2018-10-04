@@ -84,7 +84,7 @@ router.route('/')
     // Agregar un nuevo conjunto documental
     .post(function(req, res){
         var conjunto = new ConjuntoDocumental();
-        
+
         // You can check specific properties before update
         if(req.body)
             conjunto = new ConjuntoDocumental(req.body);
@@ -93,8 +93,8 @@ router.route('/')
             if(err)
                 return res.send(err);
             return res.json({
-                success: true, 
-                message: 'Se ha creado correctamente el conjunto documental "' + conjunto.identificacion.titulo + '"', 
+                success: true,
+                message: 'Se ha creado correctamente el conjunto documental "' + conjunto.identificacion.titulo + '"',
                 data: conjunto
             });
         })
@@ -177,13 +177,13 @@ router.route('/tree')
                 conjuntosSuffix[i].sufijo = regex.exec(conjuntosSuffix[i].identificacion.codigoReferencia)[1];
             tree = recursiveTree(conjuntos, prefijo);
             return res.send(tree);
-        });        
+        });
     });
 
 // Obtiene un arreglo de todos los subconjuntos contenido en un conjunto en particular.
 // Se debe incluir el parámetro "prefix" para indicar la numeración del conjunto documental
 // Por ejemplo: GET http://localhost:8080/api/conjuntoDocumental/contains?prefix=3-1
-// El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos: 
+// El resultado es un objeto con la propiedad "subconjuntos" que es un arreglo de objetos:
 // {"_id", "identificacion.codigoReferencia", "identificacion.titulo", "adicional.imagen"}
 router.route('/contains')
     .get(function(req, res){
@@ -317,12 +317,12 @@ var listaLugares = function(unidades){
         return undefined;
     let allPlaces = [];
     unidades.forEach(unidad => {
-        if(unidad.estructuraContenido.lugarDescrito){
+        if(unidad.estructuraContenido.lugarDescrito && unidad.estructuraContenido.lugarDescrito.placeId && unidad.estructuraContenido.lugarDescrito.location){
             let repeticion = allPlaces.some(place => {
-                return place.placeId == unidad.estructuraContenido.lugarDescrito.placeId;
+              return place.placeId == unidad.estructuraContenido.lugarDescrito.placeId;
             });
             if(!repeticion)
-                allPlaces.push(unidad.estructuraContenido.lugarDescrito);
+              allPlaces.push(unidad.estructuraContenido.lugarDescrito);
         }
     });
     if(allPlaces.length === 0)
@@ -442,7 +442,7 @@ router.route('/:conjunto_id')
         ConjuntoDocumental.findById(req.params.conjunto_id, function(err, conjunto){
             if(err)
                 return res.send(err);
-            
+
             // You can check specific properties before update
             if(req.body.identificacion)
                 conjunto.identificacion = req.body.identificacion;
