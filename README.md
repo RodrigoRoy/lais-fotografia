@@ -1,8 +1,6 @@
 # Proyecto de catalogación fotográfica para la investigación social
 
-![](https://i.postimg.cc/yNTn52J9/lais-preview.gif)
-
-[TOC]
+![Vista general del proyecto](https://media.giphy.com/media/25azClD47Y0ASjDakC/giphy.gif)
 
 ## Presentación
 
