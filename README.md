@@ -73,18 +73,18 @@ npm install
 
 Al finalizar la instalación se solicitan algunos datos para configurar el proyecto:
 
-1. **Nombre de la fototeca**. Es el nombre principal de la colección de conjuntos y unidades documentales/fotográficas.
-2. **Prefijo del código de referencia**. Se recomienda usar un identificador breve que consigne el país y la institución a la que representa. Por ejemplo: México, Instituto Mora es representado como *MXIM*.
-3. **Nombre de la base de datos**. Se recomienda un nombre igual o similar al de la fototeca. No será visible para los usuarios.
-4. **Frase privada de seguridad**. Identifica de manera única y segura al proyecto para encriptar contraseñas e información sensible. No es neceario recordarla porque sólo se pide en esta ocasión.
-5. **Puerto de red**. Se recomienda usar el puerto 8080 (default) y evitar usar el 8000 (puede provocar conflictos con otros proyectos web).
+1. Nombre de la fototeca: Es el nombre principal de la colección de conjuntos y unidades documentales/fotográficas.
+2. Prefijo del código de referencia: Se recomienda usar un identificador breve que consigne el país y la institución a la que representa. Por ejemplo: México, Instituto Mora es representado como *MXIM*.
+3. Nombre de la base de datos: Se recomienda un nombre igual o similar al de la fototeca. No será visible para los usuarios.
+4. Frase privada de seguridad: Identifica de manera única y segura al proyecto para encriptar contraseñas e información sensible. No es neceario recordarla porque sólo se pide en esta ocasión.
+5. Puerto de red: Se recomienda usar el puerto 8080 (default) y evitar usar el 8000 (puede provocar conflictos con otros proyectos web).
 
 ### Ejecutar proyecto
 
-Inmediatamente después de realizar la instalación, ubicados en la carpeta/directorio del proyecto (`lais-fotografia`) ejecutar el siguiente comando desde consola o terminal:
+Después de haber realizado la instalación, ubicarse en la carpeta/directorio del proyecto (`lais-fotografia`) y ejecutar el siguiente comando desde consola o terminal:
 
 ```bash
-npm install
+npm run
 ```
 
 ## Utilización (cliente/usuario)
