@@ -84,7 +84,7 @@ Al finalizar la instalación se solicitan algunos datos para configurar el proye
 Después de haber realizado la instalación, ubicarse en la carpeta/directorio del proyecto (`lais-fotografia`) y ejecutar el siguiente comando desde consola o terminal:
 
 ```bash
-npm run
+npm start
 ```
 
 ## Utilización (cliente/usuario)
