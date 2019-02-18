@@ -5,7 +5,7 @@ angular.module('ConjuntosDocumentalesCtrl',[]).controller('ConjuntosDocumentales
     $scope.isEmpty = true; // Indica si el conjunto está completamente vacio (sin subconjuntos ni unidades)
     $scope.breadcrumb = []; // Lista con los datos mínimos requeridos para indicar la ruta completa de conjuntos
 
-    // Obtiene la información de los conjuntos documentales. Se filtran solo aquellas de pertenecen a una colección.
+    // Obtiene la información de los conjuntos documentales. Se filtran solo aquellas que pertenecen a una colección.
     // En este caso se debe indicar mediante el parámetro 'c' en la URL para indicar la numeración del conjunto
     $scope.getConjuntosDocumentales = function(){
         ConjuntoDocumental.contains($routeParams.c ? $routeParams.c : '').
