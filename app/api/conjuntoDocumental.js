@@ -218,7 +218,7 @@ router.route('/contains')
                             if(!subconjunto.adicional)
                                 subconjunto.adicional = {imagen: ''}; // Evita referencias undefined al asignar 'adicional.imagen'
                             if(!subconjunto.adicional.imagen) // Solamente asignar a conjuntos sin imagen
-                                subconjunto.adicional.imagen = ultimaImagen(unidadesFiltradas);
+                                subconjunto.adicional.imagen = ultimaImagen(unidadesFiltradas); // Código de referencia de última imagen actualizada
                             if(!subconjunto.identificacion.fecha)
                                 subconjunto.identificacion.fecha = periodoTiempo(unidadesFiltradas);
                         });
@@ -243,15 +243,19 @@ var filtrarUnidades = function(prefix, unidades){
 };
 
 // Auxiliar para obtener la referencia (string) de la última imagen actualizada de un conjunto de unidades.
-// Devuelve el elemento 'unidadDocumental.adicional.imagen' actualizado más recientemente,
+// Devuelve el código de referencia ('unidadDocumental.identificacion.codigoReferencia') de la imagen actualizada más recientemente,
 // en caso de que el conjunto sea vacio, devuelve la cadena vacia.
 var ultimaImagen = function(unidades){
     if(unidades.length === 0)
         return '';
     unidades.sort(function(a, b){
-        return a.updatedAt.getTime() - b.updatedAt.getTime(); // ordenamiento cronológico
+        return b.updatedAt.getTime() - a.updatedAt.getTime(); // ordenamiento cronológico
     });
-    return unidades[unidades.length - 1].adicional.imagen;
+    // Verificar que la última unidad actualizada realmente contenga una imagen, de lo contrario, revisar siguientes
+    for(var i = 0; i < unidades.length - 1; i++)
+      if(unidades[i].adicional && unidades[i].adicional.imagen)
+        return unidades[i].identificacion.codigoReferencia;
+    return '';
 };
 
 // Determina el periodo de tiempo de un conjunto de unidades.

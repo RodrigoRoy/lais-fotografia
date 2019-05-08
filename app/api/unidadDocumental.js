@@ -71,7 +71,7 @@ router.route('/')
     // Agregar una nueva unidad documental
     .post(function(req, res){
         var unidad = new UnidadDocumental();
-        
+
         // You can check specific properties before update
         if(req.body)
             unidad = new UnidadDocumental(req.body);
@@ -93,7 +93,7 @@ router.route('/prefix')
         return res.send({prefijo: prefijo});
     });
 
-// Obtener el nombre principal de todas las unidades docuemntales
+// Obtener el nombre principal de todas las unidades documentales
 router.route('/name')
     .get(function(req, res){
         return res.send({name: nombre});
@@ -115,7 +115,7 @@ router.route('/name')
 //         });
 //     });
 
-// Obtiene la información sobre qué numeración continua al desear crear una nueva unidad documental
+// Obtiene la información sobre qué numeración continúa al desear crear una nueva unidad documental
 // Se debe incluir el parámetro "from" para indicar el conjunto documental de pertenencia
 // Por ejemplo: GET http://localhost:8080/api/unidadDocumental/next?from=3-1
 // El resultado es un objeto con las propiedades {"next", "str"} que indica el número consecutivo y su representación en texto
@@ -161,7 +161,7 @@ router.route('/query')
     });
 
 // Busqueda de contenido de una unidad documental mediante operador $text
-// Recibe como parámetros una cadena de texto (para usarse con el operador $text), límite de resultados a mostrar, la página a mostrar (skip), 
+// Recibe como parámetros una cadena de texto (para usarse con el operador $text), límite de resultados a mostrar, la página a mostrar (skip),
 // el método de ordenamiento (por score, text o time) y el orden (ascendente o descendente).
 // Ejemplo: ?q[uery]=mexico&limit=10&page=1&sort=score&order=asc
 // Devuelve una lista de resultados que coincidan con el query de búsqueda
@@ -205,7 +205,7 @@ router.route('/:unidad_id')
         UnidadDocumental.findById(req.params.unidad_id, function(err, unidad){
             if(err)
                 return res.send(err);
-            
+
             // You can check specific properties before update
             if(req.body.identificacion)
                 unidad.identificacion = req.body.identificacion;

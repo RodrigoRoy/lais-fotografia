@@ -13,7 +13,8 @@
 		<md-grid-list md-cols="4" md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-row-height="1:1" md-gutter="1em">
 			<md-grid-tile ng-repeat="conjunto in conjuntosDocumentales" ng-click="showConjuntoTabDialog($event, conjunto._id)" style="background: rgba(183, 183, 183, 0); cursor: pointer;">
 				<picture style="height: 100%">
-					<img ng-if="conjunto.adicional.imagen" ng-src="{{'files/imagenes/' + conjunto.adicional.imagen}}" style="object-fit: contain; height: 100%; width: 100%">
+					<source media="(min-width: 1280px)" ng-srcset="files/imagenes/resize/{{conjunto.adicional.imagen}}_sm.jpg">
+					<img ng-if="conjunto.adicional.imagen" ng-src="{{'files/imagenes/resize/' + conjunto.adicional.imagen + '_xs.jpg'}}" style="object-fit: contain; height: 100%; width: 100%">
 				</picture>
 				<md-grid-tile-footer style="background: rgba(0,0,0,0.5); height: 64px;">
 					<div style="position: absolute; left: 0; right: 1em; top: 1em; bottom: 0; overflow: auto;">
