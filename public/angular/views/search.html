@@ -48,19 +48,19 @@
 		</div>
 
 		<md-list> <!-- flex -->
-			<md-list-item class="md-3-line" ng-repeat="unidad in unidadesDocumentales" ng-click="showTabDialog($event, unidad._id)">
+			<md-list-item class="md-3-line" ng-repeat="unidad in unidadesDocumentales" ng-click="showUnidadTabDialog($event, unidad._id)">
 				<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
 				<div class="md-list-item-text" style="padding: 1em 0;">
 					<h3>
 						{{unidad.identificacion.codigoReferencia}}
 					</h3>
-					
+
 					<h4>
-						<span ng-if="unidad.identificacion.titulo.archivoProcedencia">{{unidad.identificacion.titulo.archivoProcedencia}}</span> 
-						<span ng-if="unidad.identificacion.titulo.inscrito">{{unidad.identificacion.titulo.inscrito}}</span> 
-						<span ng-if="unidad.identificacion.titulo.otroObjeto">{{unidad.identificacion.titulo.otroObjeto}}</span> 
+						<span ng-if="unidad.identificacion.titulo.archivoProcedencia">{{unidad.identificacion.titulo.archivoProcedencia}}</span>
+						<span ng-if="unidad.identificacion.titulo.inscrito">{{unidad.identificacion.titulo.inscrito}}</span>
+						<span ng-if="unidad.identificacion.titulo.otroObjeto">{{unidad.identificacion.titulo.otroObjeto}}</span>
 					</h4>
-					
+
 					<p>
 						<span ng-if="unidad.identificacion.fecha.exacta">Fecha: {{unidad.identificacion.fecha.exacta | date:"dd '/' MM '/' yyyy"}}<br></span>
 						<span ng-if="unidad.identificacion.fecha.periodo">Periodo: {{unidad.identificacion.fecha.periodo.inicio | date:"yyyy"}} - {{unidad.identificacion.fecha.periodo.fin | date:"yyyy"}}<br></span>
