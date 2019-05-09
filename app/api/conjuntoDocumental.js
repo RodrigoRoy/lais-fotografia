@@ -423,7 +423,6 @@ router.route('/:conjunto_id')
         exec(function(err, conjunto){
             if(err)
                 return res.send(err);
-            // res.json(conjunto);
             var regex = new RegExp('^' + conjunto.identificacion.codigoReferencia);
             UnidadDocumental.
                 find({'identificacion.codigoReferencia': regex}).
@@ -479,10 +478,10 @@ router.route('/:conjunto_id')
     .delete(function(req, res){
         ConjuntoDocumental.remove({
             _id: req.params.conjunto_id
-        }, function(err, conjunto){
+        }, function(err){
             if(err)
                 return res.send(err);
-            return res.json({success: true, message: 'Se ha borrado la información del conjunto documental "' + conjunto.identificacion.titulo + '"'});
+            return res.json({success: true, message: 'Se ha borrado la información del conjunto documental'});
         });
     });
 

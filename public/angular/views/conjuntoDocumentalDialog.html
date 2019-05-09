@@ -277,7 +277,7 @@
       <md-button class="md-icon-button" aria-label="Editar" ng-show="user && user.permisos.update" ng-click="editarConjunto()">
         <i class="material-icons">edit</i>
       </md-button>
-      <md-button class="md-icon-button md-warn" ng-disabled="true" aria-label="Borrar" ng-show="user && user.permisos.delete">
+      <md-button class="md-icon-button md-warn" aria-label="Borrar" ng-show="user && user.permisos.delete" ng-click="borrarConjunto()"> <!--ng-disabled="true"-->
         <i class="material-icons">delete</i>
       </md-button>
       <span flex></span>

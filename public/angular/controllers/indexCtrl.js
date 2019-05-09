@@ -117,7 +117,7 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
   // Controlador interno para la creación de un mdDialog
   // Incluye servicios como $scope y $mdDialog.
   // Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'unidad')
-  function UnidadDialogController($scope, $mdDialog, $location, $mdToast, unidad, UnidadDocumental, File){
+  function UnidadDialogController($scope, $mdDialog, $location, $route, $mdToast, unidad, UnidadDocumental, File){
       $scope.unidad = {};
 
       // Obtiene la información de la unidad documental mediante el id dado como parámetro en los services del controlador (unidad)
@@ -150,18 +150,18 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
                           then(function(response){
                               $scope.showToast(res.data.message);
                               $mdDialog.hide();
-                              $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+															$route.reload(); // Recargar la página para no mostrar la unidad borrada
                           }, function(response){
                               console.error('Error al borrar la imagen de la unidad documental', response);
                               $scope.showToast(res.data.message);
                               $mdDialog.hide();
-                              $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+															$route.reload(); // Recargar la página para no mostrar la unidad borrada
                           });
                       }
                       else{
                           $scope.showToast(res.data.message);
                           $mdDialog.hide();
-                          $scope.getUnidadesDocumentales(); // Recargar la lista de unidades documentales
+													$route.reload(); // Recargar la página para no mostrar la unidad borrada
                       }
                   }
                   else{
@@ -226,7 +226,7 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 	// Controlador interno para la creación de un mdDialog
 	// Incluye servicios como $scope y $mdDialog.
 	// Adicionalmente se puede inyectar el objeto "locals" del método $mdDialog.show() (que en este caso es 'conjunto')
-	function ConjuntoDialogController($scope, $mdDialog, $location, conjunto, ConjuntoDocumental){
+	function ConjuntoDialogController($scope, $mdDialog, $location, $route, conjunto, ConjuntoDocumental){
 			$scope.conjunto = {};
 
 			// Obtiene la información del conjunto documental mediante el id dado como parámetro en los services del controlador (conjunto)
@@ -245,6 +245,25 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 					$location.path('/conjunto/' + $scope.conjunto._id + '/edit');
 			};
 
+			// Elimina la unidad documental
+      $scope.borrarConjunto = function(){
+				if($scope.conjunto.identificacion.cantidad > 0){
+					$scope.showToast(`La colección debe estar vacía para borrarse`);
+				}
+				else{
+					ConjuntoDocumental.delete(conjunto).
+					then(function(res){
+						$scope.showToast(res.data.message);
+						$mdDialog.hide();
+						$route.reload(); // Recargar la página para no mostrar el conjunto borrado
+					}, function(res){
+						console.error('Error de conexión a la base de datos', res);
+	          $scope.showToast('Error de conexión');
+					})
+				}
+      };
+
+			// Acción para consultar o ir a la página del conjunto documental
 			$scope.verConjunto = function(codigoReferencia){
 					$mdDialog.hide();
 					ConjuntoDocumental.suffix($scope.conjunto._id).
