@@ -245,22 +245,48 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 					$location.path('/conjunto/' + $scope.conjunto._id + '/edit');
 			};
 
-			// Elimina la unidad documental
+			// Elimina el conjunto documental, si y sólo si no contiene unidades ni conjuntos al interior de éste
       $scope.borrarConjunto = function(){
-				if($scope.conjunto.identificacion.cantidad > 0){
-					$scope.showToast(`La colección debe estar vacía para borrarse`);
-				}
-				else{
-					ConjuntoDocumental.delete(conjunto).
-					then(function(res){
-						$scope.showToast(res.data.message);
-						$mdDialog.hide();
-						$route.reload(); // Recargar la página para no mostrar el conjunto borrado
-					}, function(res){
-						console.error('Error de conexión a la base de datos', res);
-	          $scope.showToast('Error de conexión');
-					})
-				}
+				// Para verificar que no contenga otros conjuntos se requiere obtener el prefijo (suffix)
+				ConjuntoDocumental.suffix($scope.conjunto._id). // $scope.conjunto_id == conjunto
+				then(function(res){
+						let prefijo = res.data.sufijo;
+						// Con el prefijo, es posible verificar si contiene otros conjuntos
+						ConjuntoDocumental.contains(prefijo).
+						then(function(res){
+								if(res.data){
+									if(res.data.length === 0){ // si no contiene otros conjuntos
+										// checar si contiene unidades. Si es así, no se puede borrar
+										if($scope.conjunto.identificacion.cantidad > 0){
+											$scope.showToast(`La colección debe estar vacía para borrarse`);
+										}
+										else{ // en caso contrario, no contiene ni subconjuntos ni unidades y se procede a borrar
+											ConjuntoDocumental.delete(conjunto).
+											then(function(res){
+												$scope.showToast(res.data.message);
+												$mdDialog.hide();
+												$route.reload(); // Recargar la página para no mostrar el conjunto borrado
+											}, function(res){
+												console.error('Error de conexión a la base de datos', res);
+												$scope.showToast('Error de conexión');
+											})
+										}
+									}
+									else {
+										// Cuando no es posible borrar debido a que hay otros conjuntos al interior
+										$scope.showToast(`La colección debe estar vacía para borrarse`);
+									}
+								}
+								else {
+									// No hay información que devuelve el API
+									console.error('Código de referencia incorrecto en conjunto documental');
+								}
+						}, function(res){
+								console.error('Error de conexión con la base de datos', res);
+						});
+				}, function(res){
+						console.error('Error de conexión con la base de datos', res);
+				});
       };
 
 			// Acción para consultar o ir a la página del conjunto documental
