@@ -69,6 +69,7 @@ Abrir consola (Windows) o terminal (Mac, Linux) y ejecutar:
 git clone https://github.com/RodrigoRoy/lais-fotografia.git
 cd lais-fotografia
 npm install
+npm run init
 ```
 
 Al finalizar la instalación se solicitan algunos datos para configurar el proyecto:
@@ -84,7 +85,7 @@ Al finalizar la instalación se solicitan algunos datos para configurar el proye
 Después de haber realizado la instalación, ubicarse en la carpeta/directorio del proyecto (`lais-fotografia`) y ejecutar el siguiente comando desde consola o terminal:
 
 ```bash
-npm start
+npm run serve
 ```
 
 ## Utilización (cliente/usuario)

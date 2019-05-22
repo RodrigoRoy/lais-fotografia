@@ -4,8 +4,8 @@
   "description": "Herramienta de catalogación fotográfica para la investigación social",
   "main": "server.js",
   "scripts": {
-    "postinstall": "bower install --allow-root && node ./scripts/install.js",
-    "start": "nodemon server.js",
+    "init": "bower install --allow-root && node ./scripts/install.js",
+    "serve": "nodemon server.js",
     "update": "git checkout -- . && git pull && npm install"
   },
   "repository": {
