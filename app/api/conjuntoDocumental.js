@@ -234,7 +234,7 @@ router.route('/contains')
 // Devuelve un arreglo vacio en caso de que haya unidades que cumplan con el criterio anterior.
 var filtrarUnidades = function(prefix, unidades){
     let unidadesFiltradas = [];
-    let regex = new RegExp('^' + prefix);
+    let regex = new RegExp('^' + prefix + '-.*');
     unidades.forEach(unidad => {
         if(regex.test(unidad.identificacion.codigoReferencia))
             unidadesFiltradas.push(unidad);
@@ -423,7 +423,7 @@ router.route('/:conjunto_id')
         exec(function(err, conjunto){
             if(err)
                 return res.send(err);
-            var regex = new RegExp('^' + conjunto.identificacion.codigoReferencia);
+            var regex = new RegExp('^' + conjunto.identificacion.codigoReferencia + '-.*');
             UnidadDocumental.
                 find({'identificacion.codigoReferencia': regex}).
                 select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'estructuraContenido.lugarDescrito': 1, 'caracteristicasFisicas.tipo': 1}).
