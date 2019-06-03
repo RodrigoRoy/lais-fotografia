@@ -42,10 +42,10 @@
 										<td>
 											<span ng-if="unidad.identificacion.fecha && unidad.identificacion.fecha.exacta">{{unidad.identificacion.fecha.exacta | date:"dd 'de' MMMM 'de' yyyy"}}</span>
 											<span ng-if="unidad.identificacion.fecha && unidad.identificacion.fecha.periodo">
-												<span ng-if="unidad.identificacion.fecha.periodo.inicio">{{unidad.identificacion.fecha.periodo.inicio | date:'yyyy'}}</span>&ndash; 
+												<span ng-if="unidad.identificacion.fecha.periodo.inicio">{{unidad.identificacion.fecha.periodo.inicio | date:'yyyy'}}</span>&ndash;
 												<span ng-if="unidad.identificacion.fecha.periodo.fin">{{unidad.identificacion.fecha.periodo.fin | date:'yyyy'}}</span>
 											</span>
-											<span ng-if="unidad.identificacion.fecha && unidad.identificacion.fecha.aproximada">{{unidad.identificacion.fecha.aproximada | date:"yyyy 'c.a.'"}}</span>
+											<span ng-if="unidad.identificacion.fecha && unidad.identificacion.fecha.aproximada">{{unidad.identificacion.fecha.aproximada | date:"yyyy 'ca.'"}}</span>
 										</td>
 									</tr>
 									<tr ng-if="unidad.identificacion.autores && unidad.identificacion.autores.length > 0">
