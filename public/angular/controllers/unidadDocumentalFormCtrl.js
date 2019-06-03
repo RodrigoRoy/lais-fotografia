@@ -1,7 +1,7 @@
 // Controlador del formulario para un Conjunto Documental
 
 angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, UnidadDocumental, ConjuntoDocumental, File, NgMap, NavigatorGeolocation, GeoCoder){
-	
+
     // Objeto que representa toda la información de la unidad documental, como se describe en el modelo unidadDocumental.
     // Se pueden inicializar algunos valores por default.
     $scope.unidadDocumental = {
@@ -315,9 +315,13 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado = $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado.length > 0 ? $scope.unidadDocumental.documentacionAsociada.grabadoRelacionado : undefined;
         // Agregar documentalista (persona que hace el registro, excepto si ya está incluido)
         if($scope.user)
-            if($scope.unidadDocumental.controlDescripcion.documentalistas.length > 0)
-                if($scope.unidadDocumental.controlDescripcion.documentalistas.filter(documentalista => documentalista._id === $scope.user.id).length === 0)
-                    $scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
+					if($scope.unidadDocumental.controlDescripcion.documentalistas.length > 0){
+						if($scope.unidadDocumental.controlDescripcion.documentalistas.filter(documentalista => documentalista._id === $scope.user.id).length === 0)
+						$scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
+					}
+					else{
+						$scope.unidadDocumental.controlDescripcion.documentalistas.push($scope.user.id);
+					}
     };
 
     // Sube una imagen al servidor.
@@ -329,7 +333,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             if(res.data){
                 if(res.data.success){
                     $scope.unidadDocumental.adicional.imagen = res.data.imagen; // Respuesta del API
-                    
+
                     // Preview image. Source: https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
                     let img = document.getElementById('img-preview');
                     img.file = element.files[0];
@@ -443,7 +447,7 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
             $scope.unidadDocumental.caracteristicasFisicas.soporteSecundario.inscripciones.push({transcripcion: '', ubicacion: ''});
             // Agregar un espacio adicional para seguir agregando sellos
             $scope.unidadDocumental.caracteristicasFisicas.sellos.push({transcripcion: '', ubicacion: ''});
-            // Parse para agregar valores de arreglos de texto en $scope.unidadDocumental a $scope.auxiliar. 
+            // Parse para agregar valores de arreglos de texto en $scope.unidadDocumental a $scope.auxiliar.
             // Se agrega un espacio en blanco para seguir agregando publicaciones. La misma técnica se emplea para varias propiedades.
             // publicaciones
             if($scope.unidadDocumental.publicaciones && $scope.unidadDocumental.publicaciones.publicacion && $scope.unidadDocumental.publicaciones.publicacion.length > 0){
