@@ -205,7 +205,7 @@ router.route('/contains')
                     return first-second;
                 });
                 // Obtener las últimas 'portadas' para cada subconjunto (ya que la mayoría de conjuntos no tienen imagen propia):
-                regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix) : new RegExp('^' + prefijo);
+                regex = req.query.prefix ? new RegExp('^' + prefijo + '-' + req.query.prefix) : new RegExp('^' + prefijo + '-.*');
                 UnidadDocumental.
                     find({'identificacion.codigoReferencia': regex, 'adicional.imagen': {$exists: true}}).
                     select({'identificacion.codigoReferencia': 1, 'identificacion.fecha': 1, 'adicional.imagen': 1, 'updatedAt': 1}).
@@ -252,7 +252,7 @@ var ultimaImagen = function(unidades){
         return b.updatedAt.getTime() - a.updatedAt.getTime(); // ordenamiento cronológico
     });
     // Verificar que la última unidad actualizada realmente contenga una imagen, de lo contrario, revisar siguientes
-    for(var i = 0; i < unidades.length - 1; i++)
+    for(var i = 0; i < unidades.length; i++)
       if(unidades[i].adicional && unidades[i].adicional.imagen)
         return unidades[i].identificacion.codigoReferencia;
     return '';
