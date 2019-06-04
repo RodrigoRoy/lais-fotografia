@@ -401,7 +401,12 @@ angular.module('UnidadDocumentalFormCtrl',[]).controller('UnidadDocumentalFormCo
         then(function(res){
             if(res.data.success){
                 $scope.showToast(res.data.message);
-                $location.url('/unidad?c=' + $routeParams.c);
+                if($routeParams.c) // Regresar al conjunto
+                  $location.url('/unidad?c=' + $routeParams.c);
+                else if($routeParams.q) // Regresar a la búsqueda
+                  $location.url('/search?q=' + $routeParams.q);
+                else // Regresar a página inicial en caso contrario
+                  $location.url('/');
             }
             else{
                 console.error('Error al actualizar la unidad documental', res);

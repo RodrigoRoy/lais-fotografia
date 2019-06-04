@@ -1,7 +1,7 @@
 // Controlador del formulario para un Conjunto Documental
 
 angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFormController', function ($scope, $timeout, $q, $location, $routeParams, $route, $mdToast, ConjuntoDocumental, File){
-	
+
     // Objeto que representa toda la información del conjunto documental, como se describe en el modelo conjuntoDocumental.
     // Se pueden inicializar algunos valores por default.
     $scope.conjuntoDocumental = {
@@ -116,7 +116,12 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
         then(function(res){
             if(res.data.success){
                 $scope.showToast(res.data.message);
-                $location.url('/conjunto?c=' + $routeParams.c);
+								if($routeParams.c) // Regresar al conjunto
+                	$location.url('/conjunto?c=' + $routeParams.c);
+								else if($routeParams.q) // Regresar a la búsqueda
+                  $location.url('/search?q=' + $routeParams.q);
+                else // Regresar a página inicial en caso contrario
+                  $location.url('/');
             }
             else{
                 console.error('Error al actualizar el conjunto documental', res);
@@ -137,7 +142,7 @@ angular.module('ConjuntoDocumentalFormCtrl',[]).controller('ConjuntoDocumentalFo
             $scope.showToast('Acceso denegado. No tienes permisos para editar');
             $location.url('/');
         }
-        
+
         $scope.edit = true;
         ConjuntoDocumental.get($routeParams.id)
         .then(function(res){
