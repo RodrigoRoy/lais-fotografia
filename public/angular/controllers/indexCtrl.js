@@ -37,10 +37,10 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 		}
 	};
 
-    // Envia a la página de búsqueda con el texto escrito en el input correspondiente
-    $scope.search = function(){
-        $location.url(`/search?q=${$scope.query}`);
-    };
+  // Envia a la página de búsqueda con el texto escrito en el input correspondiente
+  $scope.search = function(){
+      $location.url(`/search?q=${$scope.query}`);
+  };
 
 	// Envia al usuario a su página personal
 	$scope.paginaPersonal = function(){
@@ -61,7 +61,7 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
 	}
 
 	// Reenvia a la página del conjunto documental con el prefijo dado (que es en realidad el sufijo de la colección)
-	$scope.verConjunto = function(suffix){
+	$scope.verConjuntoBySuffix = function(suffix){
         ConjuntoDocumental.isLeaf(suffix).
         then(function(res){
             if(res.data)
@@ -186,16 +186,6 @@ angular.module('IndexCtrl',[]).controller('IndexController', function ($scope, $
       // Esconde el dialogo existente y rechaza el promise devuelto desde $mdDialog.show()
       $scope.cancel = function(res){
           $mdDialog.cancel(res);
-      };
-
-      // Muestra un mensaje simple en pantalla. Su intención es dar aviso de ciertas alertas
-      $scope.showToast = function(textMessage){
-          $mdToast.show(
-              $mdToast.simple()
-                  .textContent(textMessage)
-                  .position('bottom left')
-                  .hideDelay(5000)
-          );
       };
 
       // INICIALIZACIÓN
