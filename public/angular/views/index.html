@@ -22,7 +22,7 @@
 	</head>
 
 	<body ng-app="laisFotoApp" ng-controller="IndexController" md-theme="{{dynamicTheme}}" md-theme-watch>
-		
+
 		<md-toolbar>
 			<div class="md-toolbar-tools">
 				<md-button class="md-icon-button" aria-label="Menu" ng-click="toggleMenu()">
@@ -88,7 +88,7 @@
 		<md-content flex>
 			<div ng-view></div>
 		</md-content>
-		
+
 		<md-sidenav md-component-id="menu">
 			<md-toolbar>
 				<h1 class="md-toolbar-tools"><a href="/conjunto?c=">Colección</a></h1>
@@ -96,7 +96,7 @@
 			<md-content layout-padding>
 				<md-list>
 					<div ng-repeat="conjunto in subconjuntos"> <!-- Uso de ng-repeat y ng-include para crear lista de conjuntos recursivamente -->
-						<md-list-item ng-click="verConjunto(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
+						<md-list-item ng-click="verConjuntoBySuffix(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 						<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 					</div>
 				</md-list>
@@ -134,7 +134,7 @@
 		<script type="text/ng-template" id="menu.html">
 			<md-list>
 				<div ng-repeat="conjunto in conjunto.subconjuntos">
-					<md-list-item ng-click="verConjunto(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
+					<md-list-item ng-click="verConjuntoBySuffix(conjunto.sufijo)">{{conjunto.identificacion.titulo}}</md-list-item>
 					<md-list-item ng-if="conjunto.subconjuntos.length != 0" ng-include="'menu.html'"></md-list-item>
 				</div>
 			</md-list>
