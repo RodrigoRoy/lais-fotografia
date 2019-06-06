@@ -1,4 +1,5 @@
-<div layout="column" layout-padding layout-margin layout-align="center" infinite-scroll="loadMoreResults()" infinite-scroll-disabled="loadingResults || noMoreResults" infinite-scroll-distance="0">
+<!-- <div layout="column" layout-padding layout-margin layout-align="center" infinite-scroll="loadMoreResults()" infinite-scroll-disabled="loadingResults || noMoreResults" infinite-scroll-distance="0"> -->
+<div layout="column" layout-padding layout-margin layout-align="center">
 	<div flex="100" ng-show="showMoreOptions">
 		<h4 class="md-title">Buscar material que contenga...</h4>
 		<form name="searchForm" novalidate ng-submit="search()">
@@ -48,41 +49,72 @@
 		</div>
 
 		<md-list> <!-- flex -->
-			<md-list-item class="md-3-line" ng-repeat="unidad in unidadesDocumentales" ng-click="showUnidadTabDialog($event, unidad._id)">
-				<img ng-src="files/imagenes/resize/{{unidad.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
-				<div class="md-list-item-text" style="padding: 1em 0;">
-					<h3>
-						{{unidad.identificacion.codigoReferencia}}
-					</h3>
+			<div ng-repeat="resultado in resultados">
+				<!-- UNIDADES DOCUMENTALES -->
+				<md-list-item ng-if="resultado.tipo === 'unidad'" class="md-3-line" ng-click="showUnidadTabDialog($event, resultado._id)">
+					<img ng-if="resultado.adicional.imagen" ng-src="files/imagenes/resize/{{resultado.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
+					<div class="md-list-item-text" style="padding: 1em 0;">
+						<h3>
+							{{resultado.identificacion.codigoReferencia}}
+						</h3>
 
-					<h4>
-						<span ng-if="unidad.identificacion.titulo.archivoProcedencia">{{unidad.identificacion.titulo.archivoProcedencia}}</span>
-						<span ng-if="unidad.identificacion.titulo.inscrito">{{unidad.identificacion.titulo.inscrito}}</span>
-						<span ng-if="unidad.identificacion.titulo.otroObjeto">{{unidad.identificacion.titulo.otroObjeto}}</span>
-					</h4>
+						<h4>
+							<span ng-if="resultado.identificacion.titulo.archivoProcedencia">{{resultado.identificacion.titulo.archivoProcedencia}}</span>
+							<span ng-if="resultado.identificacion.titulo.inscrito">{{resultado.identificacion.titulo.inscrito}}</span>
+							<span ng-if="resultado.identificacion.titulo.otroObjeto">{{resultado.identificacion.titulo.otroObjeto}}</span>
+						</h4>
 
-					<p>
-						<span ng-if="unidad.identificacion.fecha.exacta">Fecha: {{unidad.identificacion.fecha.exacta | date:"dd '/' MM '/' yyyy"}}<br></span>
-						<span ng-if="unidad.identificacion.fecha.periodo">Periodo: {{unidad.identificacion.fecha.periodo.inicio | date:"yyyy"}} - {{unidad.identificacion.fecha.periodo.fin | date:"yyyy"}}<br></span>
-						<span ng-if="unidad.identificacion.fecha.aproximada">Fecha: ca. {{unidad.identificacion.fecha.aproximada | date:"yyyy"}}<br></span>
+						<p>
+							<span ng-if="resultado.identificacion.fecha.exacta">Fecha: {{resultado.identificacion.fecha.exacta | date:"dd '/' MM '/' yyyy"}}<br></span>
+							<span ng-if="resultado.identificacion.fecha.periodo">Periodo: {{resultado.identificacion.fecha.periodo.inicio | date:"yyyy"}} - {{resultado.identificacion.fecha.periodo.fin | date:"yyyy"}}<br></span>
+							<span ng-if="resultado.identificacion.fecha.aproximada">Fecha: ca. {{resultado.identificacion.fecha.aproximada | date:"yyyy"}}<br></span>
 
-						<span ng-if="unidad.identificacion.autores" ng-repeat="autor in unidad.identificacion.autores">{{autor.tipo}}: {{autor.nombre}}<br></span>
+							<span ng-if="resultado.identificacion.autores" ng-repeat="autor in resultado.identificacion.autores">{{autor.tipo}}: {{autor.nombre}}<br></span>
 
-						<span ng-if="unidad.identificacion.referenciaProcedencia">Referencia de procedencia: {{unidad.identificacion.referenciaProcedencia}}<br></span>
+							<span ng-if="resultado.identificacion.referenciaProcedencia">Referencia de procedencia: {{resultado.identificacion.referenciaProcedencia}}<br></span>
 
-						<span ng-if="unidad.estructuraContenido.descripcion">{{unidad.estructuraContenido.descripcion}}</span>
-					</p>
-				</div>
-				<md-divider ng-if="!$last"></md-divider>
-			</md-list-item>
+							<span ng-if="resultado.estructuraContenido.descripcion">{{resultado.estructuraContenido.descripcion}}</span>
+
+							<!-- <br/><span><small>{{resultado.score}}</small></span> -->
+						</p>
+					</div>
+					<md-divider ng-if="!$last"></md-divider>
+				</md-list-item>
+
+				<!-- CONJUNTOS DOCUMENTALES -->
+				<md-list-item ng-if="resultado.tipo === 'conjunto'" class="md-3-line" ng-click="showConjuntoTabDialog($event, resultado._id)">
+					<img ng-if="resultado.adicional.imagen" ng-src="files/imagenes/resize/{{resultado.identificacion.codigoReferencia}}_thumb.jpg" class="md-avatar" style="width: 80px; height: auto; border-radius: 0">
+					<div class="md-list-item-text" style="padding: 1em 0;">
+						<h3>
+							{{resultado.identificacion.codigoReferencia}}
+						</h3>
+
+						<h4>
+							<span ng-if="resultado.identificacion.titulo">{{resultado.identificacion.titulo}}</span>
+						</h4>
+
+						<p>
+							<span ng-if="resultado.identificacion.autores" ng-repeat="autor in resultado.identificacion.autores">{{autor.tipo}}: {{autor.nombre}}<br></span>
+
+							<span ng-if="resultado.identificacion.institucion">Institución: {{resultado.identificacion.institucion}}<br></span>
+
+							<span ng-if="resultado.estructuraContenido.alcanceContenido">{{resultado.estructuraContenido.alcanceContenido}}</span>
+
+							<!-- <br/><span><small>{{resultado.score}}</small></span> -->
+						</p>
+					</div>
+					<md-divider ng-if="!$last"></md-divider>
+				</md-list-item>
+			</div>
 		</md-list>
 
 		<div ng-show="loadingResults">
-			<md-progress-circular md-mode="indeterminate"></md-progress-circular> <small>Cargando más resultados</small>
+			<!-- <md-progress-circular md-mode="indeterminate"></md-progress-circular> <small>Cargando más resultados</small> -->
+			<md-progress-circular md-mode="indeterminate"></md-progress-circular> <small>Cargando resultados</small>
 		</div>
 
 	</div>
 </div>
 
 <!-- <br>
-<pre>{{unidadesDocumentales | json}}</pre> -->
+<pre>{{resultados | json}}</pre> -->

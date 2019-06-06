@@ -414,6 +414,33 @@ router.route('/next')
             })
     });
 
+// Busqueda de contenido de un conjunto documental mediante operador $text
+// Recibe como parámetros una cadena de texto (para usarse con el operador $text), límite de resultados a mostrar, la página a mostrar (skip),
+// el método de ordenamiento (por score, text o time) y el orden (ascendente o descendente).
+// Ejemplo: ?q[uery]=mexico&limit=10&page=1&sort=score&order=asc
+// Devuelve una lista de resultados que coincidan con el query de búsqueda
+router.route('/search')
+    .get(function(req, res){
+        if(!req.query.q || req.query.q === '')
+            return res.status(400).send({success: false, message: 'No hay parametro de búsqueda (?q=)'});
+        let skipValue = req.query.page ? (parseInt(req.query.page) - 1) * parseInt(req.query.limit) : 0,
+            limitValue = req.query.limit ? parseInt(req.query.limit) : 10,
+            sortField = req.query.sort ? req.query.sort : 'score',
+            sortOrder = req.query.order ? req.query.order : 'asc',
+            sortObject = sortField === 'score' ? {score: {$meta: "textScore"}} : {[sortField]: sortOrder};
+        ConjuntoDocumental.find({$text: {$search: req.query.q}}, {score: {$meta: "textScore"}})
+        .select({updatedAt: 1, createdAt: 1, adicional: 1, identificacion: 1, 'estructuraContenido.alcanceContenido': 1})
+        .select({score: {$meta: "textScore"}})
+        .skip(skipValue)
+        .limit(limitValue)
+        .sort(sortObject)
+        .exec(function(err, conjuntos){
+            if(err)
+                return res.send(err);
+            return res.send(conjuntos);
+        });
+    });
+
 // En peticiones con un ID
 router.route('/:conjunto_id')
 	// Obtener un conjunto documental particular (mediante el ID)

@@ -82,6 +82,24 @@ var ConjuntoDocumentalSchema = new Schema({
 	timestamps: true //timestamps: {createdAt: 'creacion', updatedAt: 'actualizacion'}
 });
 
+// Indexar todos los campos de string para habilitar búsqueda de texto. Indicar relevancia o pesos de atributos individuales:
+ConjuntoDocumentalSchema.index({'$**': 'text'}, {name: 'textSearch', weights: {
+	'identificacion.titulo': 8,
+	'identificacion.autores.nombre': 5,
+	'estructuraContenido.lugarDescrito.formattedAddress': 5,
+	'estructuraContenido.alcanceContenido': 10,
+	'publicaciones.publicacion': 4,
+	'publicaciones.exposicion': 4,
+	'notas.notas': 3,
+	'adicional.presentacion': 5,
+	// No es posible usar valores menores a 1.0:
+	// 'identificacion.autores.tipo': 0.5,
+	// 'estructuraContenido.lugarDescrito.placeId': 0,
+	// 'caracteristicasFisicas.soportePrimario.dimension.unidad': 0.1,
+	// 'caracteristicasFisicas.soporteSecundario.dimension.unidad': 0.1,
+	// 'adicional.imagen': 0
+}});
+
 // exportar el modelo "ConjuntoDocumental"
 // module.exports permite pasar el modelo a otros archivos cuando es llamado
 module.exports = mongoose.model('ConjuntoDocumental', ConjuntoDocumentalSchema);

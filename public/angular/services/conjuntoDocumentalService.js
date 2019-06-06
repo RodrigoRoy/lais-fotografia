@@ -68,6 +68,12 @@ angular.module('ConjuntoDocumentalService', []).factory('ConjuntoDocumental', ['
 			return $http.get('/api/conjuntoDocumental/next?prefix=' + (conjuntoDocumentalPrefijo ? conjuntoDocumentalPrefijo : ''));
 		},
 
+		// Realiza búsquedas en la base de datos mediante textSearch
+		// Recibe la cadena de texto a buscar (query), el límite de resultados, salto/skip de resultados (page), el campo a usar para ordernar y el tipo de orden (asc/desc)
+		search: function(query, limit, page, sort, order){
+			return $http.get('/api/conjuntoDocumental/search?q=' + query + '&limit=' + limit + '&page=' + page + '&sort=' + sort + '&order=' + order);
+		},
+
 		// Dado el sufijo o numeración de un conjunto como parámetro, se devuelve el id del conjunto
 		convertId: function(conjuntoNum){
 			return $http.get('/api/conjuntoDocumental/convertId?c=' + conjuntoNum);

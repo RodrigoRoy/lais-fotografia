@@ -1,9 +1,9 @@
 // Controlador para las búsquedas de unidades documentales: lógica, vista y acciones a realizar
-angular.module('SearchCtrl',[]).controller('SearchController', function ($scope, $routeParams, $location, UnidadDocumental){
+angular.module('SearchCtrl',[]).controller('SearchController', function ($scope, $routeParams, $location, UnidadDocumental, ConjuntoDocumental){
     $scope.unidadesDocumentales = []; // Lista de unidades documentales que coinciden con el query de búsqueda
     // Parámetros de búsqueda:
     $scope.query = $routeParams.q ? $routeParams.q : ''; // texto a buscar
-    $scope.limit = $routeParams.limit ? $routeParams.limit : '10'; // cantidad de resultados a obtener
+    $scope.limit = $routeParams.limit ? $routeParams.limit : '0'; // cantidad de resultados a obtener (default 10 para paginación ó 0 para totales)
     $scope.page = $routeParams.page ? parseInt($routeParams.page) : 1; // índice o página actual
     $scope.sort = $routeParams.sort ? $routeParams.sort : 'score', // forma de ordenar los resultados
     $scope.order = $routeParams.order ? $routeParams.order : 'asc'; // order de ordenación de los resultados
@@ -24,6 +24,42 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
             if(res.data && !res.data.success && res.data.message)
                 $scope.showToast(res.data.message);
         });
+    };
+
+    // Petición a la base de datos de obtener resultados de la búsqueda incluyendo unidades y conjuntos
+    // Los parámetros de búsqueda se obtienen directamente de la URL, aunque el único valor requerido es el de query (?q=)
+    $scope.getResultados = function(){
+      $scope.loadingResults = true;
+      $scope.resultados = [];
+      UnidadDocumental.search($scope.query, $scope.limit, $scope.page, $scope.sort, $scope.order).
+      then(function(res){
+          $scope.unidadesDocumentales = res.data;
+          $scope.unidadesDocumentales.forEach(function(unidad){
+            unidad.tipo = 'unidad';
+            $scope.resultados.push(unidad);
+          });
+          ConjuntoDocumental.search($scope.query, $scope.limit, $scope.page, $scope.sort, $scope.order).
+          then(function(res){
+            $scope.conjuntosDocumentales = res.data;
+            $scope.conjuntosDocumentales.forEach(function(conjunto){
+              conjunto.tipo = 'conjunto';
+              $scope.resultados.push(conjunto);
+            });
+            // Ordenar por score
+            $scope.resultados.sort(function(a, b){
+              return b.score - a.score;
+            });
+            $scope.loadingResults = false;
+          }, function(res){
+            console.error('Error con la base de datos', res);
+            if(res.data && !res.data.success && res.data.message)
+                $scope.showToast(res.data.message);
+          });
+      }, function(res){
+          console.error('Error con la base de datos', res);
+          if(res.data && !res.data.success && res.data.message)
+              $scope.showToast(res.data.message);
+      });
     };
 
     // Obtención de más resultados desde la base de datos asíncronamente
@@ -90,5 +126,6 @@ angular.module('SearchCtrl',[]).controller('SearchController', function ($scope,
     // };
 
     // INICIALIZACIÓN
-    $scope.getUnidadesDocumentales();
+    // $scope.getUnidadesDocumentales();
+    $scope.getResultados();
 });
