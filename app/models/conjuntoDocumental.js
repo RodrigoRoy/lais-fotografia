@@ -33,7 +33,7 @@ var ConjuntoDocumentalSchema = new Schema({
 			nombre: {type: String, trim: true},
 			_id: false
 		}],
-		nivelDescripcion: {type: String, enum: ['Fondo', 'Subfondo', 'Colección', 'Serie', 'Subserie', 'Unidad documental compuesta', 'Expediente', 'Grupo']},
+		nivelDescripcion: {type: String, enum: ['Fondo', 'Subfondo', 'Colección', 'Serie', 'Subserie', 'Unidad documental compuesta', 'Expediente', 'Grupo', 'Subgrupo']},
 		// cantidad: {type: Number, min: 0}, // INFERIDO
 		// soporte: {type: String}, // INFERIDO
 		// conjuntoPertenencia: {type: String} //{type: Schema.Types.ObjectId, ref: 'ConjuntoDocumental'} // INFERIDO
