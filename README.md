@@ -1,4 +1,4 @@
-# Proyecto de catalogación fotográfica para la investigación social
+# Sistema informático de documentación fotográfica y audiovisual para investigación social (primera fase)
 
 ![Vista general del proyecto](https://media.giphy.com/media/25azClD47Y0ASjDakC/giphy.gif)
 
