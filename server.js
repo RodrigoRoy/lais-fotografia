@@ -21,11 +21,7 @@ var config = require('./config');
 // base de datos
 var port = config.port || process.env.PORT || 8080; // establecer puerto
 mongoose.Promise = global.Promise // Use native promise (avoid DeprecationWarning with mongoose default promise library)
-mongoose.connect(config.db, {useMongoClient: true}); // conectar a base de datos mongoDB
-// mongoose.connect(config.db); // conectar a base de datos mongoDB
-// mongoose.connect(config.db, {keepAlive: true, reconnectTries: Number.MAX_VALUE, useMongoClient: true, promiseLibrary: global.Promise}); // conectar a base de datos mongoDB
-//mongoose.connect(config.db, {keepAlive: true, reconnectTries: Number.MAX_VALUE, useMongoClient: true}); // conectar a base de datos mongoDB
-//mongoose.connect(config.db, {useMongoClient: true, promiseLibrary: global.Promise}); // conectar a base de datos mongoDB
+mongoose.connect(config.db, {family: 4}); // conectar a base de datos mongoDB
 
 // permite obtener datos de los parámetros del cuerpo/body (POST)
 // también permite poblar req.body correctamente (http://expressjs.com/en/api.html#req.body)

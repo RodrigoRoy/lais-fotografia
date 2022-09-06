@@ -1,6 +1,6 @@
 {
   "name": "lais-fotografia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Herramienta de catalogación fotográfica para la investigación social",
   "main": "server.js",
   "scripts": {
@@ -37,12 +37,12 @@
     "http-proxy-middleware": "^0.18.0",
     "jsonwebtoken": "^8.1.0",
     "method-override": "^2.3.10",
-    "mongoose": "^4.13.6",
+    "mongoose": "^6.5.4",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
     "prompt": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^2.0.19"
   }
 }
